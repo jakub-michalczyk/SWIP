@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { fromEvent } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
+import { TopbarComponent } from './core/components/topbar/topbar.component';
 
 @Component({
   selector: 'swip-root',
-  imports: [ServiceWorkerModule, MatButtonModule],
+  imports: [ServiceWorkerModule, MatButtonModule, TopbarComponent],
   templateUrl: './swip.component.html',
 })
 export class SwipComponent implements OnInit {

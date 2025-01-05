@@ -6,12 +6,11 @@ import { fromEvent } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-root',
+  selector: 'swip-root',
   imports: [ServiceWorkerModule, MatButtonModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  templateUrl: './swip.component.html',
 })
-export class AppComponent implements OnInit {
+export class SwipComponent implements OnInit {
   private installEvent: any;
 
   ngOnInit() {

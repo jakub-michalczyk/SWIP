@@ -8,12 +8,16 @@ module.exports = {
         "3.5xl": ["2rem", { lineHeight: "1.2" }],
       },
       fontFamily: {
-        sans: ["Afcad", "sans-serif"],
+        sans: ["Afacad", "serif"],
       },
       colors: {
         "red-650": "#DB4A2B",
         "neutral-950": "#1B1919",
         "gray-150": "#F5ECEC",
+      },
+      backgroundImage: {
+        "home-desktop": "url('/images/desktop_bg.png')",
+        "home-mobile": "url('/images/mobile_bg.png')",
       },
     },
   },

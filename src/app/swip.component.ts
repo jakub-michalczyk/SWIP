@@ -1,21 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { fromEvent } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
+import { TopbarComponent } from './core/components/topbar/topbar.component';
+import { MobileService } from './shared/services/mobile/mobile.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'swip-root',
-  imports: [ServiceWorkerModule, MatButtonModule],
+  imports: [
+    ServiceWorkerModule,
+    MatButtonModule,
+    TopbarComponent,
+    CommonModule,
+    TranslateModule,
+    MatButtonModule,
+  ],
   templateUrl: './swip.component.html',
 })
 export class SwipComponent implements OnInit {
-  private installEvent: any;
+  private installEvent?: BeforeInstallPromptEvent;
+  private readonly destroyerRef = inject(DestroyRef);
+  isMobile: boolean = false;
+
+  constructor(private mobileService: MobileService) {}
 
   ngOnInit() {
     this.registerServiceWorker();
     this.setUpPWASub();
+    this.setUpMobileServiceSub();
   }
 
   registerServiceWorker() {
@@ -39,15 +55,25 @@ export class SwipComponent implements OnInit {
       'beforeinstallprompt'
     );
 
-    installPrompt$.subscribe((event) => {
-      this.installEvent = event; // Catch event
-    });
+    installPrompt$
+      .pipe(takeUntilDestroyed(this.destroyerRef))
+      .subscribe((event) => {
+        this.installEvent = event; // Catch event
+      });
+  }
+
+  setUpMobileServiceSub() {
+    this.mobileService.isMobile$
+      .pipe(takeUntilDestroyed(this.destroyerRef))
+      .subscribe((isMobile) => {
+        this.isMobile = isMobile;
+      });
   }
 
   installApp() {
     if (this.installEvent) {
       this.installEvent.prompt();
-      this.installEvent = null;
+      this.installEvent = undefined;
     }
   }
 }

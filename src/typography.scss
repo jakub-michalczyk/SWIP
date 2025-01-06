@@ -1,15 +1,21 @@
 @layer utilities {
   .h1 {
-    @apply text-6.5xl font-sans font-bold;
+    @apply text-8xl font-sans font-bold;
   }
   .h2 {
-    @apply text-4xl font-sans font-bold;
+    @apply text-6.5xl font-sans font-bold leading-none;
   }
   .h3 {
-    @apply text-3.5xl font-sans font-bold;
+    @apply text-4xl font-sans font-bold;
   }
   .h4 {
+    @apply text-3.5xl font-sans font-bold;
+  }
+  .h5 {
     @apply text-2xl font-sans font-bold;
+  }
+  .s1 {
+    @apply text-5xl font-sans font-normal;
   }
   .body-1 {
     @apply text-2xl font-sans;

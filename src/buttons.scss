@@ -1,0 +1,40 @@
+@use "@angular/material" as mat;
+
+$red-650: #db4a2b;
+$white: #ffffff;
+$border-radius: 4px;
+$padding: 20px;
+$button-height: 40px;
+$font-family: "Afacad, serif";
+$font-size: 20px;
+$font-weight: 400;
+
+:root {
+  @include mat.button-overrides(
+    (
+      // Flat button
+      filled-container-color: $red-650,
+      filled-label-text-color: $white,
+      filled-container-shape: $border-radius,
+      filled-horizontal-padding: $padding,
+      filled-container-height: $button-height,
+      filled-label-text-font: $font-family,
+      filled-label-text-size: $font-size,
+      filled-label-text-weight: $font-weight,
+
+      // Stroked button
+      outlined-outline-color: $white,
+      outlined-label-text-color: $white,
+      outlined-container-shape: $border-radius,
+      outlined-horizontal-padding: $padding,
+      outlined-container-height: $button-height,
+      outlined-label-text-font: $font-family,
+      outlined-label-text-size: $font-size,
+      outlined-label-text-weight: $font-weight
+    )
+  );
+}
+
+.mat-mdc-outlined-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}

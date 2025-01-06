@@ -1,5 +1,24 @@
-<div class="w-full p-6">
+<div class="w-full p-6 flex justify-between items-center">
   <div>
     <img src="images/logo.svg" />
+  </div>
+
+  <!-- LANG BUTTONS -->
+  <div>
+    @if(lang === 'en'){
+    <button (click)="switchLanguage('en')" class="mr-4" mat-flat-button>
+      {{ "LANG_NAME_EN" | translate }}
+    </button>
+    <button (click)="switchLanguage('pl')" mat-stroked-button>
+      {{ "LANG_NAME_PL" | translate }}
+    </button>
+    } @else {
+    <button (click)="switchLanguage('en')" class="mr-4" mat-stroked-button>
+      {{ "LANG_NAME_EN" | translate }}
+    </button>
+    <button (click)="switchLanguage('pl')" mat-flat-button>
+      {{ "LANG_NAME_PL" | translate }}
+    </button>
+    }
   </div>
 </div>

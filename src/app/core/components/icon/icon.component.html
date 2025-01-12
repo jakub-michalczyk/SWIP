@@ -1,0 +1,25 @@
+@if (!isButton) {
+  @if (icon.value.includes('swip')) {
+    <ng-container *ngTemplateOutlet="customIcon; context: { icon: icon }"> </ng-container>
+  } @else {
+    <ng-container *ngTemplateOutlet="reguralIcon; context: { icon: icon }"> </ng-container>
+  }
+} @else {
+  @if (icon.value.includes('swip')) {
+    <button mat-icon-button [class]="classNames" icon>
+      <ng-container *ngTemplateOutlet="customIcon; context: { icon: icon }"> </ng-container>
+    </button>
+  } @else {
+    <button mat-icon-button [class]="classNames">
+      <ng-container *ngTemplateOutlet="reguralIcon; context: { icon: icon }"></ng-container>
+    </button>
+  }
+}
+
+<ng-template #customIcon let-icon="icon">
+  <mat-icon [class]="classNames" aria-hidden="false" [svgIcon]="icon.value"></mat-icon>
+</ng-template>
+
+<ng-template #reguralIcon let-icon="icon">
+  <mat-icon [class]="classNames" aria-hidden="false" [fontIcon]="icon.value"></mat-icon>
+</ng-template>

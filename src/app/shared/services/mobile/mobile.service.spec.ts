@@ -19,11 +19,7 @@ describe('MobileService', () => {
     const spy = spyOn(window, 'matchMedia').and.returnValue({
       matches: true,
     } as any);
-    const userAgentSpy = spyOnProperty(
-      navigator,
-      'userAgent',
-      'get'
-    ).and.returnValue('iPhone');
+    const userAgentSpy = spyOnProperty(navigator, 'userAgent', 'get').and.returnValue('iPhone');
 
     expect(service['checkIfMobile']()).toBeTrue();
     expect(spy).toHaveBeenCalledWith('(max-width: 768px)');
@@ -36,11 +32,7 @@ describe('MobileService', () => {
     const matchMediaSpy = spyOn(window, 'matchMedia').and.returnValue({
       matches: true,
     } as any);
-    const userAgentSpy = spyOnProperty(
-      navigator,
-      'userAgent',
-      'get'
-    ).and.returnValue('Android');
+    const userAgentSpy = spyOnProperty(navigator, 'userAgent', 'get').and.returnValue('Android');
 
     window.dispatchEvent(new Event('resize'));
 

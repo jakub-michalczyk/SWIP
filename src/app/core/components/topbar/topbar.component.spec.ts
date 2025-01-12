@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { TopbarComponent } from './topbar.component';
+import { MatButtonModule } from '@angular/material/button';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { ELanguageCode } from '../../../shared/enums/language.enum';
-import { MatButtonModule } from '@angular/material/button';
+import { TopbarComponent } from './topbar.component';
 
 describe('TopbarComponent', () => {
   let component: TopbarComponent;
@@ -13,9 +13,7 @@ describe('TopbarComponent', () => {
   beforeEach(() => {
     onDefaultLangChange$ = new Subject();
 
-    translateServiceMock = jasmine.createSpyObj('TranslateService', [
-      'setDefaultLang',
-    ]);
+    translateServiceMock = jasmine.createSpyObj('TranslateService', ['setDefaultLang']);
 
     translateServiceMock.currentLang = ELanguageCode.EN;
     translateServiceMock.defaultLang = ELanguageCode.EN;
@@ -26,9 +24,7 @@ describe('TopbarComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [MatButtonModule],
-      providers: [
-        { provide: TranslateService, useValue: translateServiceMock },
-      ],
+      providers: [{ provide: TranslateService, useValue: translateServiceMock }],
     }).compileComponents();
 
     const fixture = TestBed.createComponent(TopbarComponent);
@@ -62,13 +58,9 @@ describe('TopbarComponent', () => {
 
   it('should call TranslateService setDefaultLang when switchLanguage is invoked', () => {
     component.switchLanguage(ELanguageCode.PL);
-    expect(translateServiceMock.setDefaultLang).toHaveBeenCalledWith(
-      ELanguageCode.PL
-    );
+    expect(translateServiceMock.setDefaultLang).toHaveBeenCalledWith(ELanguageCode.PL);
 
     component.switchLanguage(ELanguageCode.EN);
-    expect(translateServiceMock.setDefaultLang).toHaveBeenCalledWith(
-      ELanguageCode.EN
-    );
+    expect(translateServiceMock.setDefaultLang).toHaveBeenCalledWith(ELanguageCode.EN);
   });
 });

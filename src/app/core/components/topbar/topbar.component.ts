@@ -18,14 +18,10 @@ export class TopbarComponent {
   }
 
   setUpLang() {
-    this.lang =
-      (this.translate.currentLang as ELanguageCode) ||
-      (this.translate.defaultLang as ELanguageCode);
-    this.translate.onDefaultLangChange
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((langData) => {
-        this.lang = langData.lang as ELanguageCode;
-      });
+    this.lang = (this.translate.currentLang as ELanguageCode) || (this.translate.defaultLang as ELanguageCode);
+    this.translate.onDefaultLangChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((langData) => {
+      this.lang = langData.lang as ELanguageCode;
+    });
   }
 
   switchLanguage(language: string): void {

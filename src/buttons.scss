@@ -30,11 +30,31 @@ $font-weight: 400;
       outlined-container-height: $button-height,
       outlined-label-text-font: $font-family,
       outlined-label-text-size: $font-size,
-      outlined-label-text-weight: $font-weight
+      outlined-label-text-weight: $font-weight,
+    )
+  );
+
+  @include mat.icon-button-overrides(
+    (
+      icon-size: 36px
     )
   );
 }
 
 .mat-mdc-outlined-button:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+.mdc-icon-button {
+  padding: 0 !important;
+  .mat-icon svg {
+    transition: opacity .3s;
+    &:hover {
+      opacity: 0.7;
+    }
+    @media only screen and (max-width: 768px) {
+      width: 24px;
+      height: 24px;
+    }
+  }
 }

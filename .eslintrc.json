@@ -36,6 +36,7 @@
           {
             "type": "attribute",
             "prefix": "swip",
+            "prefix": "app",
             "style": "camelCase"
           }
         ],

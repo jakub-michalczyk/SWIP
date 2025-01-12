@@ -1,6 +1,6 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
-import { BehaviorSubject, fromEvent } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject, fromEvent } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,8 @@ export class MobileService {
     const userAgent = navigator.userAgent;
     const isMobileUserAgent = /android|iphone|ipad|iPod/i.test(userAgent);
 
-    return isSmallScreen && isMobileUserAgent;
+    // If user is in fact a mobile user or we resize window in the browser
+    return (isSmallScreen && isMobileUserAgent) || (isSmallScreen && !isMobileUserAgent);
   }
 
   get isMobile$() {

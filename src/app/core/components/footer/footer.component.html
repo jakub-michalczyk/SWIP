@@ -1,0 +1,52 @@
+<footer class="p-6 bg-neutral-950 md:border-t-[10px] md:border-red-650 md:py-9 md:px-12 xl:px-32">
+  <div class="flex justify-between md:border-red-650 md:pb-12 md:border-b">
+    <div>
+      <img src="images/logo.svg" alt="Logo Contrast" />
+    </div>
+    <div class="flex-col md:flex-row flex justify-between md:w-auto md:min-w-[75%] lg:min-w-[50%]">
+      @for (footerCol of columns; track $index) {
+        <div [ngClass]="{ 'mb-6 ml-6': isMobile && !$last }">
+          <ng-container *ngTemplateOutlet="footerColumn; context: { footerCol: footerCol }"> </ng-container>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="text-gray-150 body-3 opacity-1 text-left pt-4 md:opacity-30 md:text-center md:py-6">
+    &copy; {{ year }} swip
+  </div>
+</footer>
+
+<ng-template #footerColumn let-column="footerCol">
+  @if (!isMobile) {
+    <div class="text-red-650 h5">{{ column.heading }}</div>
+  }
+  <ul class="text-right md:mt-6 md:text-left">
+    @for (link of column.data; track $index) {
+      <a [routerLink]="link.link" [class.inline-block]="isMobile">
+        <li
+          [routerLink]="link.link"
+          class="text-white hover:!text-gray-150 transition-all"
+          [class.mb-3]="!$last && !isMobile"
+          [class.inline-block]="link.isIcon"
+          [ngClass]="{
+            'block ': link.isIcon,
+            'mx-3': link.isIcon && !$first && !$last,
+            'ml-3': isMobile && !$first,
+            'body-2': !isMobile,
+            'body-3': isMobile,
+          }"
+        >
+          @if (!link.isIcon) {
+            {{ link.value }}
+          } @else {
+            @if (isMobile) {
+              <swip-icon class="w-6 h-6 !text-2xl block" [isButton]="true" [icon]="link"></swip-icon>
+            } @else {
+              <swip-icon class="w-9 h-9 !text-3xl block" [isButton]="true" [icon]="link"></swip-icon>
+            }
+          }
+        </li>
+      </a>
+    }
+  </ul>
+</ng-template>

@@ -27,7 +27,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "app",
+            "prefix": "swip",
             "style": "kebab-case"
           }
         ],
@@ -35,6 +35,7 @@
           "error",
           {
             "type": "attribute",
+            "prefix": "swip",
             "prefix": "app",
             "style": "camelCase"
           }

@@ -18,7 +18,7 @@
 
 <ng-template #footerColumn let-column="footerCol">
   @if (!isMobile) {
-    <div class="text-red-650 h5">{{ column.heading }}</div>
+    <div class="text-red-650 h5">{{ column.headingCode | translate }}</div>
   }
   <ul class="text-right md:mt-6 md:text-left">
     @for (link of column.data; track $index) {

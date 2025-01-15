@@ -9,6 +9,7 @@ import { fromEvent } from 'rxjs';
 import { environment } from '../environments/enviroment.example';
 import { FooterComponent } from './core/components/footer/footer.component';
 import { TopbarComponent } from './core/components/topbar/topbar.component';
+import { StandaloneService } from './core/services/standalone/standalone.service';
 import { MobileService } from './shared/services/mobile/mobile.service';
 
 @Component({
@@ -28,8 +29,12 @@ export class SwipComponent implements OnInit {
   private installEvent?: BeforeInstallPromptEvent;
   private readonly destroyerRef = inject(DestroyRef);
   isMobile: boolean = false;
+  isPWA: boolean = false;
 
-  constructor(private mobileService: MobileService) {}
+  constructor(
+    private mobileService: MobileService,
+    private standaloneService: StandaloneService
+  ) {}
 
   ngOnInit() {
     this.registerServiceWorker();
@@ -58,6 +63,10 @@ export class SwipComponent implements OnInit {
     installPrompt$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((event) => {
       this.installEvent = event; // Catch event
     });
+
+    this.standaloneService.isStandaloneMode$
+      .pipe(takeUntilDestroyed(this.destroyerRef))
+      .subscribe((value: boolean) => (this.isPWA = value));
   }
 
   setUpMobileServiceSub() {

@@ -1,5 +1,5 @@
 export interface IFooterColumn {
-  heading: string;
+  headingCode: string;
   data: IFooterLink[];
 }
 

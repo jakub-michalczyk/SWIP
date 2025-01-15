@@ -1,4 +1,7 @@
 {
   "HOMEPAGE_TITLE": "Przesuń do swojej przyszłości",
-  "HOMEPAGE_SUBTITLE": "Odkryj nieskończone możliwości z każdym przesunięciem - Twoja wymarzona kariera jest na wyciągnięcie ręki!"
+  "HOMEPAGE_SUBTITLE": "Odkryj nieskończone możliwości z każdym przesunięciem - Twoja wymarzona kariera jest na wyciągnięcie ręki!",
+  "NOT_MOBILE_DEVICE_INFO": "Niestety, <span class='text-red-650'>aplikacja</span> jest przystosowana do pracy na urządzeniach mobilnych.",
+  "PLEASE_INSTALL": "Proszę zainstalować aplikację na swoim urządzeniu mobilnym"
+
 }

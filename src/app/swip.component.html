@@ -44,10 +44,8 @@
 
     @if (isPWA && !isMobile) {
       <div class="lg:w-3/4 xl:w-2/3 px-16 lg:px-32">
-        <h1 class="h2 text-white">
-          Unfortunately, the <span class="text-red-650">application</span> is designed to work on mobile devices.
-        </h1>
-        <h2 class="body-1 text-white mt-4">Please install the application on your mobile device.</h2>
+        <h1 class="h2 text-white" [innerHTML]="'NOT_MOBILE_DEVICE_INFO' | translate"></h1>
+        <h2 class="body-1 text-white mt-4" [innerHTML]="'PLEASE_INSTALL' | translate"></h2>
       </div>
     }
   </div>

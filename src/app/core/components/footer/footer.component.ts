@@ -3,6 +3,7 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
 import { IconComponent } from '../icon/icon.component';
 import { FOOTER_DATA } from './footer.data';
@@ -10,7 +11,7 @@ import { IFooterColumn, IFooterLink } from './footer.interface';
 
 @Component({
   selector: 'swip-footer',
-  imports: [CommonModule, MatIconModule, IconComponent, RouterModule],
+  imports: [CommonModule, MatIconModule, IconComponent, RouterModule, TranslateModule],
   templateUrl: './footer.component.html',
 })
 export class FooterComponent {
@@ -43,8 +44,8 @@ export class FooterComponent {
       );
 
       this.columns = [
-        { heading: '', data: textLinks },
-        { heading: '', data: icons },
+        { headingCode: '', data: textLinks },
+        { headingCode: '', data: icons },
       ];
     } else {
       this.columns = FOOTER_DATA;

@@ -1,6 +1,6 @@
 export const FOOTER_DATA = [
   {
-    heading: 'Policies',
+    headingCode: 'POLICIES',
     data: [
       {
         value: 'Terms',
@@ -15,7 +15,7 @@ export const FOOTER_DATA = [
     ],
   },
   {
-    heading: 'Socials',
+    headingCode: 'SOCIALS',
     data: [
       {
         value: 'swip_instagram',
@@ -35,7 +35,7 @@ export const FOOTER_DATA = [
     ],
   },
   {
-    heading: 'More',
+    headingCode: 'MORE',
     data: [
       {
         value: 'Find out more',

@@ -3,6 +3,7 @@
   <mat-form-field class="w-full mt-6">
     @let email = form.controls['email'];
     @let password = form.controls['password'];
+    @let confirmPassword = form.controls['confirmPassword'];
 
     <mat-label>Email</mat-label>
     <input type="email" matInput placeholder="Ex. john.doe@example.com" formControlName="email" />
@@ -49,6 +50,9 @@
   <mat-form-field class="w-full mt-6 transition-all">
     <mat-label>Confirm your password</mat-label>
     <input matInput type="password" (paste)="disablePaste($event)" formControlName="confirmPassword" />
+    @if (confirmPassword?.hasError('required')) {
+      <mat-error class="!text-white !flex items-center"> • Confrm password is required </mat-error>
+    }
     @if (form.hasError('passwordMismatch')) {
       <mat-error class="!text-white !flex items-center"> • Passwords do not match </mat-error>
     }

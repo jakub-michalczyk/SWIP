@@ -17,6 +17,9 @@ module.exports = {
         "30": "7.5rem",
         "17/20": "85%"
       },
+      width: {
+        "3/10": "30%"
+      },
       colors: {
         "red-650": "#DB4A2B",
         "neutral-950": "#1B1919",

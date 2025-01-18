@@ -13,6 +13,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideServiceWorker } from '@angular/service-worker';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { InitializeService } from './core/services/initialize/initialize.service';
 import { ELanguageCode } from './shared/enums/language.enum';
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    provideEnvironmentNgxMask(),
     provideHttpClient(),
     provideAppInitializer(() => inject(InitializeService).initializeApp()),
     importProvidersFrom(

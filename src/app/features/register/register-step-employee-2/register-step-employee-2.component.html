@@ -1,0 +1,41 @@
+<div [formGroup]="form">
+  <!-- EMAIL -->
+  <mat-form-field class="w-full mt-6">
+    @let contactEmail = form.controls['contactEmail'];
+
+    <mat-label>Email</mat-label>
+    <input type="email" matInput placeholder="Ex. john.doe@example.com" formControlName="contactEmail" />
+    @if (contactEmail.hasError('email') && !contactEmail.hasError('required')) {
+      <mat-error class="!text-white !flex items-center">
+        <span>• Please enter a valid email address</span>
+      </mat-error>
+    }
+    @if (contactEmail.hasError('required')) {
+      <mat-error class="!text-white !flex items-center">
+        <span>• Email is required</span>
+      </mat-error>
+    }
+  </mat-form-field>
+
+  <div class="flex justify-between">
+    <!-- Select for Country Code -->
+    <mat-form-field class="w-3/10 mt-6">
+      <mat-select
+        [(value)]="selectedCountryCode"
+        formControlName="countryCode"
+        (selectionChange)="onCountryCodeChange($event)"
+      >
+        <mat-option value="+48">(+48)</mat-option>
+        <mat-option value="+1">(+1)</mat-option>
+        <mat-option value="+44">(+44)</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- PHONE -->
+    <mat-form-field class="w-2/3 mt-6">
+      <mat-label>Phone number</mat-label>
+      <input type="text" matInput [placeholder]="placeholder" formControlName="tel" [mask]="phoneMask" />
+      <mat-icon matSuffix>phone</mat-icon>
+    </mat-form-field>
+  </div>
+</div>

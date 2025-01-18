@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BulletsService } from '../../services/bullets/bullets.service';
 import { IBullet } from './bullets.interface';
 
 @Component({
@@ -8,8 +10,13 @@ import { IBullet } from './bullets.interface';
   templateUrl: './bullets.component.html',
 })
 export class BulletsComponent implements OnInit {
+  private destroyerRef = inject(DestroyRef);
   @Input() steps = 0;
   bullets: IBullet[] = [];
+
+  constructor(private bulletsService: BulletsService) {
+    this.setUpBulletsSub();
+  }
 
   ngOnInit() {
     for (let i = 0; i < this.steps; i++) {
@@ -20,7 +27,17 @@ export class BulletsComponent implements OnInit {
     }
   }
 
+  setUpBulletsSub() {
+    this.bulletsService.activeBullet$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((activeId) => {
+      this.chooseStep(activeId);
+    });
+  }
+
   chooseStep(id: number) {
-    this.bullets.map((bullet) => (bullet.id <= id ? (bullet.isActive = true) : (bullet.isActive = false)));
+    this.bullets = this.bullets.map((bullet) => ({
+      ...bullet,
+      isActive: bullet.id <= id,
+    }));
+    this.bulletsService.setActiveBullet(id);
   }
 }

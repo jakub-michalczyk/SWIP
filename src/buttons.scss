@@ -1,6 +1,6 @@
 @use "variables";
 @use "@angular/material" as mat;
-
+@use "sass:color";
 
 $padding: 20px;
 $button-height: 40px;
@@ -85,4 +85,8 @@ $mobile-icon-size: 24px;
   border: 1px solid variables.$white !important;
   color: variables.$white !important;
   padding: $padding !important;
+  &:disabled {
+    background: transparent !important;
+    opacity: 0.5 !important
+  }
 }

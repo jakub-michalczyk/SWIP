@@ -1,0 +1,56 @@
+<div [formGroup]="form">
+  <!-- EMAIL -->
+  <mat-form-field class="w-full mt-6">
+    @let email = form.controls['email'];
+    @let password = form.controls['password'];
+
+    <mat-label>Email</mat-label>
+    <input type="email" matInput placeholder="Ex. john.doe@example.com" formControlName="email" />
+    @if (email.hasError('email') && !email.hasError('required')) {
+      <mat-error class="!text-white !flex items-center">
+        <span>• Please enter a valid email address</span>
+      </mat-error>
+    }
+    @if (email.hasError('required')) {
+      <mat-error class="!text-white !flex items-center">
+        <span>• Email is required</span>
+      </mat-error>
+    }
+  </mat-form-field>
+
+  <!-- PASSWORD -->
+  <mat-form-field class="w-full mt-6">
+    <mat-label>Enter your password</mat-label>
+    <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" />
+    <button
+      class="mx-4"
+      mat-icon-button
+      matSuffix
+      (click)="togglePasswordVisibility($event)"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide()"
+    >
+      <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+    </button>
+    @if (password?.hasError('required')) {
+      <mat-error class="!text-white !flex items-center"> • Password is required </mat-error>
+    }
+    @if (password?.hasError('minlength')) {
+      <mat-error class="!text-white !flex items-center"> • Password must be at least 8 characters long </mat-error>
+    }
+    @if (password?.hasError('pattern')) {
+      <mat-error class="!text-white !flex w-full justify-between">
+        • Password must include letters, numbers, and special characters
+      </mat-error>
+    }
+  </mat-form-field>
+
+  <!-- CONFIRM PASSWORD -->
+  <mat-form-field class="w-full mt-6 transition-all">
+    <mat-label>Confirm your password</mat-label>
+    <input matInput type="password" (paste)="disablePaste($event)" formControlName="confirmPassword" />
+    @if (form.hasError('passwordMismatch')) {
+      <mat-error class="!text-white !flex items-center"> • Passwords do not match </mat-error>
+    }
+  </mat-form-field>
+</div>

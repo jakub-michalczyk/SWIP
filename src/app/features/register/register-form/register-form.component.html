@@ -1,0 +1,17 @@
+<form class="w-full h-full bg-red-650 p-6 text-white" [formGroup]="form">
+  <div class="w-full flex items-center justify-between">
+    <swip-bullets [steps]="4"></swip-bullets>
+    <swip-toggle [values]="['Employee', 'Employer']"></swip-toggle>
+  </div>
+  <div class="mt-12 density-settings--1">
+    <h3 class="h3">{{ title() }}</h3>
+
+    <!-- STEP 1 -->
+    <swip-register-step-1 [form]="form"></swip-register-step-1>
+
+    <!-- NEXT STEP -->
+    <div class="mt-6">
+      <button mat-fab extended type="submit">Next step<mat-icon>keyboard_arrow_right</mat-icon></button>
+    </div>
+  </div>
+</form>

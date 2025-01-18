@@ -1,0 +1,12 @@
+<div class="flex">
+  @for (bullet of bullets; track $index) {
+    <div
+      tabindex="0"
+      role="button"
+      (click)="chooseStep(bullet.id)"
+      (keypress)="chooseStep(bullet.id)"
+      class="rounded-full w-4 h-4 border-white border"
+      [ngClass]="{ 'mr-2': !$last, 'bg-white': bullet.isActive }"
+    ></div>
+  }
+</div>

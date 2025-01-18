@@ -1,15 +1,17 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { fromEvent } from 'rxjs';
 import { environment } from '../environments/enviroment.example';
 import { FooterComponent } from './core/components/footer/footer.component';
 import { TopbarComponent } from './core/components/topbar/topbar.component';
 import { StandaloneService } from './core/services/standalone/standalone.service';
+import { RegisterFormComponent } from './features/register/register-form/register-form.component';
 import { MobileService } from './shared/services/mobile/mobile.service';
 
 @Component({
@@ -22,6 +24,8 @@ import { MobileService } from './shared/services/mobile/mobile.service';
     TranslateModule,
     MatButtonModule,
     FooterComponent,
+    RegisterFormComponent,
+    MatIconModule,
   ],
   templateUrl: './swip.component.html',
 })
@@ -30,6 +34,7 @@ export class SwipComponent implements OnInit {
   private readonly destroyerRef = inject(DestroyRef);
   isMobile: boolean = false;
   isPWA: boolean = false;
+  formExpanded = signal(false);
 
   constructor(
     private mobileService: MobileService,
@@ -80,5 +85,9 @@ export class SwipComponent implements OnInit {
       this.installEvent.prompt();
       this.installEvent = undefined;
     }
+  }
+
+  toggleForm() {
+    this.formExpanded.set(!this.formExpanded());
   }
 }

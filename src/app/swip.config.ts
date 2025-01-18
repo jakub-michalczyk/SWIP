@@ -1,21 +1,22 @@
 import {
   ApplicationConfig,
-  provideZoneChangeDetection,
-  isDevMode,
-  provideAppInitializer,
   importProvidersFrom,
   inject,
+  isDevMode,
+  provideAppInitializer,
+  provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { routes } from './swip.routes';
+import { HttpBackend, provideHttpClient } from '@angular/common/http';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideServiceWorker } from '@angular/service-worker';
-import { InitializeService } from './core/services/initialize/initialize.service';
-import { HttpBackend, provideHttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { ELanguageCode } from './shared/enums/language.enum';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
+import { InitializeService } from './core/services/initialize/initialize.service';
+import { ELanguageCode } from './shared/enums/language.enum';
+import { routes } from './swip.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -38,6 +39,12 @@ export const appConfig: ApplicationConfig = {
         defaultLanguage: ELanguageCode.EN,
       })
     ),
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        subscriptSizing: 'dynamic',
+      },
+    },
   ],
 };
 

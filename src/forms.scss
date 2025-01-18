@@ -1,0 +1,86 @@
+@use '@angular/material' as mat;
+@use "variables";
+@use "typography";
+
+// TOGGLE 
+
+@include mat.button-toggle-overrides((
+    legacy-height: 38px,
+    legacy-text-color: variables.$white,
+    legacy-selected-state-background-color: variables.$white,
+    legacy-selected-state-text-color: variables.$red-650,
+    legacy-shape: variables.$border-radius,
+    shape: variables.$border-radius,
+    divider-color: variables.$white
+  ));
+
+  .mat-button-toggle {
+    @extend .body-2;
+    width: 50%;
+    padding: 0 !important;
+
+    &:first-of-type {
+      margin-right: 2px;
+    }
+    &:last-of-type {
+      margin-left: 2px;
+    }
+
+    &-group {
+      min-width: 224px;
+      width: auto;
+      box-sizing: border-box;
+      height: 48px;
+    }
+
+    &-standalone:not([class*=mat-elevation-z]), &-group:not([class*=mat-elevation-z]) {
+      box-shadow: none !important;
+      border: 1px solid variables.$white;
+      padding: variables.$border-radius;
+    }
+    &-checked {
+      border-radius: variables.$border-radius;
+    }
+    &-checkbox-wrapper {
+      display: none !important;
+    }
+    &-checked &-button:has(&-checkbox-wrapper) {
+      padding-left: 0 !important;
+    }
+  }
+
+//----------------
+
+//INPUT
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: variables.$white !important;
+}
+
+.mat-mdc-form-field-error-wrapper {
+  @extend .body-3;
+  padding: .25rem 0 !important;
+}
+
+.mat-mdc-text-field-wrapper {
+  border-radius: 4px !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple {
+  &::before, &::after {
+    display: none;
+  }
+}
+
+.mdc-floating-label {
+  color: variables.$red-650 !important
+}
+
+.mat-mdc-form-field-infix {
+  min-height: 36px !important;
+}
+
+.density-settings--1 {
+  @include mat.form-field-density(-1);
+}
+//----------------

@@ -15,6 +15,7 @@ import { ToggleComponent } from '../../../shared/components/toggle/toggle.compon
 import { BulletsService } from '../../../shared/services/bullets/bullets.service';
 import { RegisterStep1Component } from '../register-step-1/register-step-1.component';
 import { RegisterStepEmployee2Component } from '../register-step-employee-2/register-step-employee-2.component';
+import { RegisterStepEmployee3Component } from '../register-step-employee-3/register-step-employee-3.component';
 
 @Component({
   selector: 'swip-register-form',
@@ -27,6 +28,7 @@ import { RegisterStepEmployee2Component } from '../register-step-employee-2/regi
     ReactiveFormsModule,
     RegisterStep1Component,
     RegisterStepEmployee2Component,
+    RegisterStepEmployee3Component,
   ],
   templateUrl: './register-form.component.html',
 })
@@ -36,6 +38,7 @@ export class RegisterFormComponent {
   form: FormGroup;
   currentStep = signal(0);
   maxSteps = 4;
+  employeeTitles = ['Register', 'Contact Data', 'Personal Data'];
 
   constructor(
     private fb: FormBuilder,
@@ -59,6 +62,9 @@ export class RegisterFormComponent {
           '',
           [Validators.required, Validators.pattern(/^\d{9}$|^\d{3}[-.\s]?\d{3}[-.\s]?\d{4}$|^\d{4}[-.\s]?\d{6}$/)],
         ],
+        firstName: ['', [Validators.required]],
+        lastName: ['', [Validators.required]],
+        city: [''],
       },
       { validators: this.passwordMatchValidator } as FormControlOptions
     );
@@ -68,6 +74,7 @@ export class RegisterFormComponent {
   setUpBulletsSub() {
     this.bulletsService.activeBullet$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((activeId) => {
       this.currentStep.set(activeId);
+      this.title.set(this.employeeTitles[activeId]);
     });
   }
 
@@ -90,12 +97,7 @@ export class RegisterFormComponent {
     const password = this.form.get('password')?.value;
     const confirmPassword = this.form.get('confirmPassword')?.value;
     const passwordsMatch = password === confirmPassword;
-    console.log(
-      this.form.get('email')?.valid,
-      this.form.get('password')?.valid,
-      this.form.get('confirmPassword')?.valid,
-      passwordsMatch
-    );
+
     return (
       this.form.get('email')?.valid &&
       this.form.get('password')?.valid &&

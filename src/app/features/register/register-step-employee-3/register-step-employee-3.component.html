@@ -1,0 +1,19 @@
+<div [formGroup]="form">
+  <!-- FIRST NAME -->
+  <mat-form-field class="w-full mt-6">
+    <mat-label>First name</mat-label>
+    <input type="text" matInput placeholder="Ex. John" formControlName="firstName" />
+  </mat-form-field>
+
+  <!-- LAST NAME -->
+  <mat-form-field class="w-full mt-6">
+    <mat-label>Last name</mat-label>
+    <input type="text" matInput placeholder="Ex. Doe" formControlName="lastName" />
+  </mat-form-field>
+
+  <!-- CITY -->
+  <mat-form-field class="w-full mt-6">
+    <mat-label>City</mat-label>
+    <input type="text" matInput placeholder="Ex. Warsaw" formControlName="city" />
+  </mat-form-field>
+</div>

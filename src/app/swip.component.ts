@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { fromEvent } from 'rxjs';
 import { environment } from '../environments/enviroment.example';
 import { FooterComponent } from './core/components/footer/footer.component';
+import { IconComponent } from './core/components/icon/icon.component';
 import { TopbarComponent } from './core/components/topbar/topbar.component';
 import { StandaloneService } from './core/services/standalone/standalone.service';
 import { RegisterFormComponent } from './features/register/register-form/register-form.component';
@@ -26,6 +27,7 @@ import { MobileService } from './shared/services/mobile/mobile.service';
     FooterComponent,
     RegisterFormComponent,
     MatIconModule,
+    IconComponent,
   ],
   templateUrl: './swip.component.html',
 })

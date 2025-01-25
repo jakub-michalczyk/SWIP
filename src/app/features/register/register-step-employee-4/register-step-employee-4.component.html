@@ -1,0 +1,25 @@
+<div class="text-white mb-12">
+  <div>
+    <h3 class="h4">{{ 'PERSONAL_DATA' | translate }}</h3>
+    <ul>
+      <li class="body-2">{{ 'FIRST_NAME' | translate }}: {{ name }}</li>
+      <li class="body-2">{{ 'LAST_NAME' | translate }}: {{ lastName }}</li>
+      @if (city) {
+        <li class="body-2">{{ 'CITY' | translate }}: {{ city }}</li>
+      }
+    </ul>
+  </div>
+  <div class="mt-6">
+    <h3 class="h4">{{ 'CONTACT_DATA' | translate }}</h3>
+    <ul>
+      <li class="body-2">{{ 'PHONE_NUMBER' | translate }}: {{ telephone }}</li>
+      <li class="body-2">{{ 'EMAIL' | translate }}: {{ email }}</li>
+    </ul>
+  </div>
+  <div class="mt-6">
+    <h3 class="h4">CV</h3>
+    <ul>
+      <li class="body-2">{{ cv }}</li>
+    </ul>
+  </div>
+</div>

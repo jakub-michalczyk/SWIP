@@ -1,0 +1,15 @@
+{
+   "EMPLOYEE": "Employee",
+   "EMPLOYER": "Employer",
+   "NEXT_STEP": "Next step",
+   "PREVIOUS_STEP": "Previous step",
+   "REGISTER": "Register",
+   "CONTACT_DATA": "Contact data",
+   "PERSONAL_DATA": "Personal Data",
+   "EXAMPLE_EMAIL": "Ex. john.doe@example.com",
+   "ENTER_PASSWORD": "Enter your password",
+   "CONFIRM_PASSWORD": "Confirm your password",
+   "EXAMPLE_FIRST_NAME": "Ex. John",
+   "EXAMPLE_LAST_NAME": "Ex. Doe",
+   "EXAMPLE_CITY": "Ex. Warsaw"
+}

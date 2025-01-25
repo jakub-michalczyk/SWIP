@@ -13,5 +13,5 @@ export class IconComponent {
   @Input() icon = {} as IIcon;
   @Input() isButton?: boolean = false;
 
-  classNames = '!w-full !h-full !text-[length:inherit]';
+  classNames = '!w-full !h-full !text-[length:inherit] !text-inherit';
 }

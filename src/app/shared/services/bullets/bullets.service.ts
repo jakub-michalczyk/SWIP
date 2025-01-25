@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { IStep } from '../../../features/register/register-form/register-form.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BulletsService {
-  private activeBulletSubject = new BehaviorSubject<number>(0);
-  activeBullet$ = this.activeBulletSubject.asObservable();
+  private bulletsSubject = new BehaviorSubject<IStep[]>([]);
+  bullets$ = this.bulletsSubject.asObservable();
 
-  setActiveBullet(id: number): void {
-    const currentValue = this.activeBulletSubject.getValue();
-    if (currentValue !== id) {
-      this.activeBulletSubject.next(id);
-    }
+  updateStepStatus(steps: IStep[]) {
+    this.bulletsSubject.next(steps);
   }
 
-  getCurrentBullet(): number {
-    return this.activeBulletSubject.getValue();
+  getCurrentBullet(): IStep[] {
+    return this.bulletsSubject.getValue();
+  }
+
+  resetBullets(steps: IStep[]) {
+    steps.forEach((s) => (s.isActive = false));
   }
 }

@@ -62,5 +62,15 @@ function HttpLoaderFactory2(http: HttpBackend) {
       suffix: '.json',
       optional: true,
     },
+    {
+      prefix: 'translation/register/',
+      suffix: '.json',
+      optional: true,
+    },
+    {
+      prefix: 'translation/errors/',
+      suffix: '.json',
+      optional: true,
+    },
   ]);
 }

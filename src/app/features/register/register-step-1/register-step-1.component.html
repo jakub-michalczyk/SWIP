@@ -5,23 +5,23 @@
     @let password = form.controls['password'];
     @let confirmPassword = form.controls['confirmPassword'];
 
-    <mat-label>Email</mat-label>
-    <input type="email" matInput placeholder="Ex. john.doe@example.com" formControlName="email" />
+    <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+    <input type="email" matInput [placeholder]="'EXAMPLE_EMAIL' | translate" formControlName="email" />
     @if (email.hasError('email') && !email.hasError('required')) {
       <mat-error class="!text-white !flex items-center">
-        <span>• Please enter a valid email address</span>
+        <span>• {{ 'VALID_EMAIL' | translate }}</span>
       </mat-error>
     }
     @if (email.hasError('required')) {
       <mat-error class="!text-white !flex items-center">
-        <span>• Email is required</span>
+        <span>• {{ 'REQUIRED_EMAIL' | translate }}</span>
       </mat-error>
     }
   </mat-form-field>
 
   <!-- PASSWORD -->
   <mat-form-field class="w-full mt-6">
-    <mat-label>Enter your password</mat-label>
+    <mat-label>{{ 'ENTER_PASSWORD' | translate }}</mat-label>
     <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" />
     <button
       class="mx-4"
@@ -34,27 +34,25 @@
       <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
     </button>
     @if (password?.hasError('required')) {
-      <mat-error class="!text-white !flex items-center"> • Password is required </mat-error>
+      <mat-error class="!text-white !flex items-center"> • {{ 'REQUIRED_PASSWORD' | translate }} </mat-error>
     }
     @if (password?.hasError('minlength')) {
-      <mat-error class="!text-white !flex items-center"> • Password must be at least 8 characters long </mat-error>
+      <mat-error class="!text-white !flex items-center"> • {{ 'MIN_LENGTH_PASSWORD' | translate }} </mat-error>
     }
     @if (password?.hasError('pattern')) {
-      <mat-error class="!text-white !flex w-full justify-between">
-        • Password must include letters, numbers, and special characters
-      </mat-error>
+      <mat-error class="!text-white !flex w-full justify-between"> • {{ 'PATTERN_PASSWORD' | translate }} </mat-error>
     }
   </mat-form-field>
 
   <!-- CONFIRM PASSWORD -->
   <mat-form-field class="w-full mt-6 transition-all">
-    <mat-label>Confirm your password</mat-label>
+    <mat-label>{{ 'CONFIRM_PASSWORD' | translate }}</mat-label>
     <input matInput type="password" (paste)="disablePaste($event)" formControlName="confirmPassword" />
     @if (confirmPassword?.hasError('required')) {
-      <mat-error class="!text-white !flex items-center"> • Confrm password is required </mat-error>
+      <mat-error class="!text-white !flex items-center"> • {{ 'REQUIRED_CONFIRM_PASSWORD' | translate }} </mat-error>
     }
     @if (form.hasError('passwordMismatch')) {
-      <mat-error class="!text-white !flex items-center"> • Passwords do not match </mat-error>
+      <mat-error class="!text-white !flex items-center"> • {{ 'NOT_MATCH_PASSWORD' | translate }} </mat-error>
     }
   </mat-form-field>
 </div>

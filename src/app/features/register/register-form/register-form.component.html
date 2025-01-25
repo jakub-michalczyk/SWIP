@@ -1,10 +1,10 @@
-<form class="w-full h-full bg-red-650 p-6 text-white" [formGroup]="form">
-  <div class="w-full flex items-center justify-between">
-    <swip-bullets [steps]="maxSteps"></swip-bullets>
-    <swip-toggle [values]="['Employee', 'Employer']"></swip-toggle>
+<form class="w-full h-full bg-red-650 px-6 pb-6 text-white" [formGroup]="form">
+  <div class="w-full flex items-center justify-between flex-wrap">
+    <swip-bullets></swip-bullets>
+    <swip-toggle [values]="['EMPLOYEE' | translate, 'EMPLOYER' | translate]" class="block py-6"></swip-toggle>
   </div>
-  <div class="mt-12 density-settings--1">
-    <h3 class="h3">{{ title() }}</h3>
+  <div class="mt-6 density-settings--1">
+    <h3 class="h3">{{ employeeTitlesCode()[currentStep()] | translate }}</h3>
 
     @switch (currentStep()) {
       @case (0) {
@@ -19,15 +19,27 @@
         <!-- STEP 3 -->
         <swip-register-step-employee-3 [form]="form"></swip-register-step-employee-3>
       }
+      @case (3) {
+        <!-- STEP 4 -->
+        <swip-register-step-employee-4 [form]="form"></swip-register-step-employee-4>
+      }
     }
 
     <!-- NEXT STEP -->
-    <div class="mt-6 flex justify-between">
+    <div class="mt-6 flex">
       @if (currentStep() >= 1) {
-        <button mat-fab extended (click)="prevStep()">Previous step<mat-icon>keyboard_arrow_left</mat-icon></button>
+        <button mat-fab extended (click)="prevStep()" class="mr-4">
+          {{ 'PREVIOUS_STEP' | translate }}<mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
       }
-      @if (currentStep() < maxSteps) {
-        <button mat-fab extended (click)="nextStep()">Next step<mat-icon>keyboard_arrow_right</mat-icon></button>
+      @if (currentStep() < steps.length - 1) {
+        <button mat-fab extended (click)="nextStep()" [disabled]="isNextDisabled">
+          {{ 'NEXT_STEP' | translate }}
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+      }
+      @if (currentStep() === steps.length - 1) {
+        <button mat-stroked-button class="w-full ml-4">{{ 'SAVE' | translate }}</button>
       }
     </div>
   </div>

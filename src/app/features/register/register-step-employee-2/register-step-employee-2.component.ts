@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { TranslateModule } from '@ngx-translate/core';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
@@ -18,6 +19,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     NgxMaskDirective,
     MatIconModule,
     MatSelectModule,
+    TranslateModule,
   ],
   providers: [provideNgxMask()],
   templateUrl: './register-step-employee-2.component.html',

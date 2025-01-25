@@ -1,43 +1,50 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IStep } from '../../../features/register/register-form/register-form.interface';
 import { BulletsService } from '../../services/bullets/bullets.service';
-import { IBullet } from './bullets.interface';
 
 @Component({
   selector: 'swip-bullets',
   imports: [CommonModule],
   templateUrl: './bullets.component.html',
 })
-export class BulletsComponent implements OnInit {
+export class BulletsComponent {
   private destroyerRef = inject(DestroyRef);
-  @Input() steps = 0;
-  bullets: IBullet[] = [];
+  bullets: IStep[] = [];
 
   constructor(private bulletsService: BulletsService) {
     this.setUpBulletsSub();
   }
 
-  ngOnInit() {
-    for (let i = 0; i < this.steps; i++) {
-      this.bullets.push({
-        id: i,
-        isActive: i === 0 ? true : false,
-      });
-    }
-  }
-
   setUpBulletsSub() {
-    this.bulletsService.activeBullet$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((activeId) => {
-      this.chooseStep(activeId);
+    this.bulletsService.bullets$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((steps) => {
+      this.bullets = steps;
     });
   }
 
   chooseStep(id: number) {
+    if (!this.bullets[id - 1]?.valid && id !== 0) {
+      return;
+    }
+    this.bulletsService.resetBullets(this.bullets);
+    this.bullets[id].isActive = true;
+    this.bulletsService.updateStepStatus(this.bullets);
+  }
+
+  updateBullets(activeId: number) {
     this.bullets = this.bullets.map((bullet) => ({
       ...bullet,
-      isActive: bullet.id <= id,
+      isActive: bullet.id === activeId,
     }));
-    this.bulletsService.setActiveBullet(id);
+  }
+
+  isBulletFilled(bullet: IStep) {
+    const active = this.bullets.find((b) => b.isActive)!;
+    return bullet.isActive || bullet.id < active.id;
+  }
+
+  isBulletValid(bullet: IStep) {
+    return bullet.id > 0 && !this.bullets[bullet.id - 1].valid ? true : false;
   }
 }

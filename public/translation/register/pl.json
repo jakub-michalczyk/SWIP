@@ -1,0 +1,15 @@
+{
+   "EMPLOYEE": "Pracownik",
+   "EMPLOYER": "Pracodawca",
+   "NEXT_STEP": "Dalej",
+   "PREVIOUS_STEP": "Wróc",
+   "REGISTER": "Rejestracja",
+   "CONTACT_DATA": "Dane kontaktowe",
+   "PERSONAL_DATA": "Dane personalne",
+   "EXAMPLE_EMAIL": "np. bartosz.nowak@example.com",
+   "ENTER_PASSWORD": "Wpisz hasło",
+   "CONFIRM_PASSWORD": "Potwierdź swoje hasło",
+   "EXAMPLE_FIRST_NAME": "np. Bartosz",
+   "EXAMPLE_LAST_NAME": "np. Nowak",
+   "EXAMPLE_CITY": "np. Warszawa"
+}

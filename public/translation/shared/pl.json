@@ -8,5 +8,12 @@
   "MORE": "Więcej",
   "TERMS": "Regulaminy",
   "PRIVACY_POLICY": "Polityka prywatności",
-  "FIND_OUT_MORE": "Dowiedz się więcej" 
+  "FIND_OUT_MORE": "Dowiedz się więcej", 
+  "SAVE": "Zapisz",
+  "EMAIL": "E-mail" ,
+  "PHONE_NUMBER": "Numer telefonu",
+  "FIRST_NAME": "Imię",
+  "LAST_NAME": "Nazwisko",
+  "CITY": "Miasto",
+   "UPLOAD_CV": "Prześlij CV"
 }

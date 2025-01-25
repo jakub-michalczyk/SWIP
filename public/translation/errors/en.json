@@ -1,0 +1,11 @@
+{
+    "VALID_EMAIL": "Please enter a valid email address",
+    "REQUIRED_EMAIL": "E-mail is required",
+    "REQUIRED_PASSWORD": "Password is required",
+    "MIN_LENGTH_PASSWORD": "Password must be at least 8 characters long",
+    "PATTERN_PASSWORD": "Password must start with capital letter, include letters, numbers, and special characters",
+    "REQUIRED_CONFIRM_PASSWORD": "Confrm password is required",
+    "NOT_MATCH_PASSWORD": "Passwords do not match",
+    "REQUIRED_PHONE": "Phone is required",
+    "REQUIRED_CV": "CV is required"
+}

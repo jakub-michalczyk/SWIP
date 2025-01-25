@@ -21,6 +21,7 @@ $mobile-icon-size: 24px;
       filled-label-text-font: $font-family,
       filled-label-text-size: $font-size,
       filled-label-text-weight: $font-weight,
+      filled-ripple-color: rgba(variables.$red-650, 20%),
 
       // Stroked button
       outlined-outline-color: variables.$white,
@@ -31,6 +32,7 @@ $mobile-icon-size: 24px;
       outlined-label-text-font: $font-family,
       outlined-label-text-size: $font-size,
       outlined-label-text-weight: $font-weight,
+      outlined-ripple-color: rgba(variables.$red-650, 20%)
     )
   );
 
@@ -55,9 +57,7 @@ $mobile-icon-size: 24px;
   );
 }
 
-.mat-mdc-outlined-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
+
 
 .mdc-icon-button {
   padding: 0 !important;
@@ -88,5 +88,10 @@ $mobile-icon-size: 24px;
   &:disabled {
     background: transparent !important;
     opacity: 0.5 !important
+  }
+  .mat-icon {
+    order: 2;
+    margin-left: 12px !important;
+    margin-right: -8px !important;
   }
 }

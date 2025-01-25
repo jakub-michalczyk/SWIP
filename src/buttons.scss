@@ -8,6 +8,7 @@ $button-height: 40px;
 $font-family: "Afacad, serif";
 $font-size: 20px;
 $font-weight: 400;
+$mobile-icon-size: 24px;
 
 :root {
   @include mat.button-overrides(
@@ -52,9 +53,16 @@ $font-weight: 400;
     &:hover {
       opacity: 0.7;
     }
-    @media only screen and (max-width: 768px) {
-      width: 24px;
-      height: 24px;
+    & {
+      @media only screen and (max-width: 768px) {
+        width: $mobile-icon-size;
+        height: $mobile-icon-size;
+      }
     }
   }
+}
+
+.pwa .mdc-icon-button .mat-icon svg {
+    width: $mobile-icon-size !important;
+    height: $mobile-icon-size !important;
 }

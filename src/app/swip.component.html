@@ -1,29 +1,22 @@
-<div
-  class="h-screen relative bg-cover flex items-center"
-  [ngClass]="{
-    'bg-home-desktop bg-center 2xl:bg-left-top': !isMobile && !isPWA,
-    'bg-neutral-950 ': !isMobile && isPWA,
-    'bg-home-mobile': isMobile,
-  }"
->
-  <!-- TOP BAR -->
-  <swip-topbar class="absolute z-10 top-0 left-0 w-full"></swip-topbar>
+<div class="flex items-center flex-col">
+  <div
+    class="h-screen relative bg-cover flex items-center max-w-3xl md:max-w-full w-full"
+    [ngClass]="
+      !isMobile && !isPWA ? 'bg-home-desktop bg-center 2xl:bg-left-top' : 'bg-home-mobile md:!max-w-3xl w-auto'
+    "
+  >
+    <!-- TOP BAR -->
+    <swip-topbar class="absolute z-10 top-0 left-0 w-full"></swip-topbar>
 
-  <!-- OVERLAYER -->
-  @if (!isMobile && !isPWA) {
-    <div class="block xl:hidden w-full h-full bg-black opacity-50 absolute z-0 top-0 left-0"></div>
-  }
+    <!-- OVERLAYER -->
+    @if (!isMobile && !isPWA) {
+      <div class="block xl:hidden w-full h-full bg-black opacity-50 absolute z-0 top-0 left-0"></div>
+    }
 
-  <!-- PWA BG -->
-  @if (!isMobile && isPWA) {
-    <div class="w-full h-full absolute top-0 left-0 bg-auto bg-circles bg-no-repeat bg-right-bottom"></div>
-  }
-
-  <!-- CONTENT -->
-  <div class="relative z-10">
-    @if ((isPWA && isMobile) || !isPWA) {
+    <!-- CONTENT -->
+    <div class="relative z-10">
       <ng-container>
-        <div class="text-white pb-8 px-6 md:px-32 w-full lg:w-3/4">
+        <div class="text-white pb-8 px-6 md:px-32 w-full lg:w-3/4" [ngClass]="{ '!px-6': isPWA }">
           <h1 class="h2 w-full sm:w-3/4 md:w-full">
             {{ 'HOMEPAGE_TITLE' | translate }}
           </h1>
@@ -40,15 +33,8 @@
           </div>
         </div>
       </ng-container>
-    }
-
-    @if (isPWA && !isMobile) {
-      <div class="lg:w-3/4 xl:w-2/3 px-16 lg:px-32">
-        <h1 class="h2 text-white" [innerHTML]="'NOT_MOBILE_DEVICE_INFO' | translate"></h1>
-        <h2 class="body-1 text-white mt-4" [innerHTML]="'PLEASE_INSTALL' | translate"></h2>
-      </div>
-    }
+    </div>
   </div>
-</div>
 
-<swip-footer></swip-footer>
+  <swip-footer class="w-full" [ngClass]="{ 'max-w-3xl': isPWA }"></swip-footer>
+</div>

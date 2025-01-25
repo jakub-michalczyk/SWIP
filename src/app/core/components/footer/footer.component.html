@@ -1,48 +1,69 @@
-<footer class="p-6 bg-neutral-950 md:border-t-[10px] md:border-red-650 md:py-9 md:px-12 xl:px-32">
-  <div class="flex justify-between md:border-red-650 md:pb-12 md:border-b">
+<footer
+  class="p-6 bg-neutral-950"
+  [ngClass]="{
+    'md:border-t-[10px] md:border-red-650 md:py-9 md:px-12 xl:px-32': !isPWA || isMobile,
+    'p-6': isPWA || isMobile,
+  }"
+>
+  <div
+    class="flex justify-between md:border-red-650 md:border-b"
+    [ngClass]="{ 'md:border-b': !isPWA || isMobile, 'pb-12': !isPWA && !isMobile }"
+  >
     <div>
       <img src="images/logo.svg" alt="Logo Contrast" />
     </div>
-    <div class="flex-col md:flex-row flex justify-between md:w-auto md:min-w-[75%] lg:min-w-[50%]">
+    <div
+      class="flex-col md:flex-row flex justify-between md:w-auto md:min-w-[75%] lg:min-w-[50%]"
+      [ngClass]="{ 'flex-col': isMobile || isPWA, 'md:flex-row': !(isMobile || isPWA) }"
+    >
       @for (footerCol of columns; track $index) {
-        <div [ngClass]="{ 'mb-6 ml-6': isMobile && !$last }">
+        <div [ngClass]="{ 'mb-6 ml-6': (isMobile || isPWA) && !$last }">
           <ng-container *ngTemplateOutlet="footerColumn; context: { footerCol: footerCol }"> </ng-container>
         </div>
       }
     </div>
   </div>
-  <div class="text-gray-150 body-3 opacity-1 text-left pt-4 md:opacity-30 md:text-center md:py-6">
+  <div
+    class="text-gray-150 body-3 text-left pt-4 md:text-center md:py-6"
+    [ngClass]="{
+      'text-left pt-4 opacity-1': isMobile || isPWA,
+      'md:text-center md:py-6 opacity-30': !(isMobile || isPWA),
+    }"
+  >
     &copy; {{ year }} swip
   </div>
 </footer>
 
 <ng-template #footerColumn let-column="footerCol">
-  @if (!isMobile) {
+  @if (!isMobile && !isPWA) {
     <div class="text-red-650 h5">{{ column.headingCode | translate }}</div>
   }
-  <ul class="text-right md:mt-6 md:text-left">
+  <ul
+    class="text-right md:text-left"
+    [ngClass]="{ 'text-right mt-0': isMobile || isPWA, 'md:text-left mt-6': !(isMobile || isPWA) }"
+  >
     @for (link of column.data; track $index) {
-      <a [routerLink]="link.link" [class.inline-block]="isMobile">
+      <a [routerLink]="link.path" [class.inline-block]="isMobile || isPWA">
         <li
-          [routerLink]="link.link"
+          [routerLink]="link.path"
           class="text-white hover:!text-gray-150 transition-all"
-          [class.mb-3]="!$last && !isMobile"
-          [class.inline-block]="link.isIcon"
           [ngClass]="{
-            'block ': link.isIcon,
+            'mb-3': !$last && !(isMobile || isPWA),
+            'inline-block': link.isIcon,
+            block: link.isIcon,
             'mx-3': link.isIcon && !$first && !$last,
-            'ml-3': isMobile && !$first,
-            'body-2': !isMobile,
-            'body-3': isMobile,
+            'ml-3': !link.isIcon && (isMobile || isPWA) && !$first,
+            'body-2': !(isMobile || isPWA),
+            'body-3': isMobile || isPWA,
           }"
         >
           @if (!link.isIcon) {
-            {{ link.value }}
+            {{ link.titleCode || link.data.titleCode | translate }}
           } @else {
-            @if (isMobile) {
-              <swip-icon class="w-6 h-6 !text-2xl block" [isButton]="true" [icon]="link"></swip-icon>
+            @if (isMobile || isPWA) {
+              <swip-icon class="w-6 h-6 !text-2xl block" [isButton]="true" [icon]="getIcon(link)"></swip-icon>
             } @else {
-              <swip-icon class="w-9 h-9 !text-3xl block" [isButton]="true" [icon]="link"></swip-icon>
+              <swip-icon class="w-9 h-9 !text-3xl block" [isButton]="true" [icon]="getIcon(link)"></swip-icon>
             }
           }
         </li>
@@ -50,3 +71,5 @@
     }
   </ul>
 </ng-template>
+
+<ng-template #footerLink let-link="footerLink" let-first="first" let-last="last"> </ng-template>

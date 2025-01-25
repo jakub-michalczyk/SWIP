@@ -4,7 +4,7 @@ export interface IFooterColumn {
 }
 
 export interface IFooterLink {
-  value: string;
-  link: string;
-  isIcon: boolean;
+  path: string;
+  translationCode: string;
+  isIcon?: boolean;
 }

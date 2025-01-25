@@ -1,20 +1,24 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { BehaviorSubject, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StandaloneService {
   private isStandaloneSubject = new BehaviorSubject<boolean>(this.checkIfPwa());
+  private renderer: Renderer2;
 
-  constructor() {
+  constructor(private rendererFactory: RendererFactory2) {
+    this.renderer = this.rendererFactory.createRenderer(null, null);
     this.checkIfPwa();
+    this.addBodyClass();
   }
 
   private checkIfPwa() {
     const mqStandAlone = '(display-mode: standalone)';
     const isStandalone = window.matchMedia(mqStandAlone).matches;
     const isDevMode = this.getCookie('isPWA') === 'true'; // REMOVE AFTER GOING TO PROD
+
     return isStandalone || isDevMode;
   }
 
@@ -23,6 +27,14 @@ export class StandaloneService {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
     return null;
+  }
+
+  private addBodyClass() {
+    this.isStandaloneMode$
+      .pipe(take(1))
+      .subscribe((mode) =>
+        mode ? this.renderer.addClass(document.body, 'pwa') : this.renderer.removeClass(document.body, 'pwa')
+      );
   }
 
   get isStandaloneMode$() {

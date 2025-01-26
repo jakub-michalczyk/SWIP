@@ -9,12 +9,16 @@ import {
 import { provideRouter } from '@angular/router';
 
 import { HttpBackend, provideHttpClient } from '@angular/common/http';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideServiceWorker } from '@angular/service-worker';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
+import { environment } from '../environments/enviroment.example';
 import { InitializeService } from './core/services/initialize/initialize.service';
 import { ELanguageCode } from './shared/enums/language.enum';
 import { routes } from './swip.routes';
@@ -47,6 +51,9 @@ export const appConfig: ApplicationConfig = {
         subscriptSizing: 'dynamic',
       },
     },
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
 };
 

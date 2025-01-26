@@ -40,7 +40,7 @@
       <mat-error class="!text-white !flex items-center"> • {{ 'MIN_LENGTH_PASSWORD' | translate }} </mat-error>
     }
     @if (password?.hasError('pattern')) {
-      <mat-error class="!text-white !flex w-full justify-between"> • {{ 'PATTERN_PASSWORD' | translate }} </mat-error>
+      <mat-error class="!text-white !flex w-full items-center"> • {{ 'PATTERN_PASSWORD' | translate }} </mat-error>
     }
   </mat-form-field>
 

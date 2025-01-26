@@ -1,11 +1,11 @@
-<form class="w-full h-full bg-red-650 px-6 pb-6 text-white" [formGroup]="form">
+<form class="w-full h-full bg-red-650 px-6 pb-12 text-white overflow-auto" [formGroup]="form">
   <div class="w-full flex items-center justify-between flex-wrap">
     <swip-bullets></swip-bullets>
     <swip-toggle [values]="['EMPLOYEE' | translate, 'EMPLOYER' | translate]" class="block py-6"></swip-toggle>
   </div>
   <div class="mt-6 density-settings--1">
     @if (!submitted()) {
-      <h3 class="h3">{{ employeeTitlesCode()[currentStep()] | translate }}</h3>
+      <h3 class="h3 mb-6">{{ employeeTitlesCode()[currentStep()] | translate }}</h3>
     }
 
     @if (!submitted()) {
@@ -29,7 +29,7 @@
       }
 
       <!-- NEXT STEP -->
-      <div class="mt-6 flex">
+      <div class="mt-12 flex">
         @if (currentStep() >= 1) {
           <button mat-fab extended (click)="prevStep()" class="mr-4">
             {{ 'PREVIOUS_STEP' | translate }}<mat-icon>keyboard_arrow_left</mat-icon>
@@ -42,7 +42,9 @@
           </button>
         }
         @if (currentStep() === steps.length - 1) {
-          <button (click)="register()" mat-stroked-button class="w-full ml-4">{{ 'REGISTER' | translate }}</button>
+          <button (click)="register()" mat-flat-button class="_contrast-flat">
+            {{ 'REGISTER' | translate }}
+          </button>
         }
       </div>
     } @else {

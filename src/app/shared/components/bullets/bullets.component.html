@@ -6,7 +6,11 @@
       (click)="chooseStep(bullet.id)"
       (keypress)="chooseStep(bullet.id)"
       class="rounded-full w-4 h-4 border-white border"
-      [ngClass]="{ 'mr-2': !$last, 'bg-white': isBulletFilled(bullet), 'opacity-50': isBulletValid(bullet) }"
+      [ngClass]="{
+        'mr-2': !$last,
+        'bg-white': isBulletFilled(bullet),
+        'opacity-50 cursor-auto': isBulletNotValid(bullet),
+      }"
     ></div>
   }
 </div>

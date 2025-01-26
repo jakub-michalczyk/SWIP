@@ -43,8 +43,8 @@
 
     @if (isPWA || isMobile) {
       <div
-        class="w-full absolute z-20 bottom-0 transition-all h-30 duration-500 overflow-hidden"
-        [ngClass]="{ '!h-17/20 overflow-auto': formExpanded() }"
+        class="w-full flex justify-end flex-col absolute z-20 bottom-0 transition-all h-30 duration-500 overflow-hidden"
+        [ngClass]="{ '!h-17/20': formExpanded() }"
       >
         @if (formExpanded()) {
           <div

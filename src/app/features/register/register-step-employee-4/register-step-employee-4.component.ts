@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { IconComponent } from '../../../core/components/icon/icon.component';
 
 @Component({
   selector: 'swip-register-step-employee-4',
-  imports: [TranslateModule],
+  imports: [TranslateModule, IconComponent],
   templateUrl: './register-step-employee-4.component.html',
 })
 export class RegisterStepEmployee4Component {

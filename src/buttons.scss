@@ -57,6 +57,22 @@ $mobile-icon-size: 24px;
   );
 }
 
+._contrast-flat {
+  @include mat.button-overrides(
+    (
+      filled-container-color: variables.$white,
+      filled-label-text-color: variables.$red-650,
+      filled-container-shape: variables.$border-radius,
+      filled-horizontal-padding: $padding,
+      filled-container-height: $button-height,
+      filled-label-text-font: $font-family,
+      filled-label-text-size: $font-size,
+      filled-label-text-weight: $font-weight,
+      filled-ripple-color: rgba(variables.$white, 20%),
+    )
+  )
+}
+
 
 
 .mdc-icon-button {

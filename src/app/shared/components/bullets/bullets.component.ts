@@ -24,8 +24,10 @@ export class BulletsComponent {
   }
 
   chooseStep(id: number) {
-    if (!this.bullets[id - 1]?.valid && id !== 0) {
-      return;
+    for (let i = 0; i < id; i++) {
+      if (!this.bullets[i].valid) {
+        return;
+      }
     }
     this.bulletsService.resetBullets(this.bullets);
     this.bullets[id].isActive = true;
@@ -44,7 +46,12 @@ export class BulletsComponent {
     return bullet.isActive || bullet.id < active.id;
   }
 
-  isBulletValid(bullet: IStep) {
-    return bullet.id > 0 && !this.bullets[bullet.id - 1].valid ? true : false;
+  isBulletNotValid(bullet: IStep) {
+    for (let i = 0; i < bullet.id; i++) {
+      if (!this.bullets[i].valid) {
+        return true;
+      }
+    }
+    return false;
   }
 }

@@ -1,7 +1,10 @@
 <div class="w-full">
   @let cv = form.controls[fieldKey];
 
-  <label for="upload-photo" class="bg-white rounded px-5 h-[52px] text-red-650 flex items-center justify-center">
+  <label
+    for="upload-photo"
+    class="bg-transparent border border-white rounded px-5 h-[52px] text-white flex items-center justify-center cursor-pointer hover:bg-white hover:text-red-650 transition-colors"
+  >
     @if (!selectedFile) {
       <span class="body-2 pr-2">{{ beforeUploadCopy | translate }}</span>
       <mat-icon>upload</mat-icon>

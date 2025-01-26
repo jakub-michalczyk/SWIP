@@ -72,7 +72,9 @@ export class RegisterFormComponent {
           [
             Validators.required,
             Validators.minLength(8),
-            Validators.pattern(/^[A-Z](?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/),
+            Validators.pattern(
+              /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])(?=(.*[A-Za-z]){4,})[A-Za-z\d@$!%*?&]{7,}$/
+            ),
           ],
         ],
         confirmPassword: ['', [Validators.required]],
@@ -167,7 +169,7 @@ export class RegisterFormComponent {
                         email,
                         firstName: this.form.get('firstName')?.value,
                         lastName: this.form.get('lastName')?.value,
-                        telephone: this.form.get('tel')?.value,
+                        telephone: `${this.form.get('countryCode')?.value}${this.form.get('tel')?.value}`,
                         city: this.form.get('city')?.value,
                         cvBase64,
                       };
@@ -182,12 +184,8 @@ export class RegisterFormComponent {
         })
       )
       .subscribe({
-        next: () => {
-          alert('Rejestracja zakończona pomyślnie!');
-        },
         error: (error: Error) => {
-          console.error('Błąd rejestracji:', error);
-          alert('Błąd rejestracji: ' + error.message);
+          console.error('Error:', error);
         },
       });
   }

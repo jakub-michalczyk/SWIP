@@ -1,14 +1,28 @@
 <div [formGroup]="form">
   <!-- FIRST NAME -->
   <mat-form-field class="w-full mt-6">
+    @let firstName = form.controls['firstName'];
+
     <mat-label>{{ 'FIRST_NAME' | translate }}</mat-label>
     <input type="text" matInput [placeholder]="'EXAMPLE_FIRST_NAME' | translate" formControlName="firstName" />
+    @if (firstName.hasError('required')) {
+      <mat-error class="!text-white !flex items-center">
+        <span>• {{ 'FIRST_NAME_REQUIRED' | translate }}</span>
+      </mat-error>
+    }
   </mat-form-field>
 
   <!-- LAST NAME -->
   <mat-form-field class="w-full mt-6">
+    @let lastName = form.controls['lastName'];
+
     <mat-label>{{ 'LAST_NAME' | translate }}</mat-label>
     <input type="text" matInput [placeholder]="'EXAMPLE_LAST_NAME' | translate" formControlName="lastName" />
+    @if (lastName.hasError('required')) {
+      <mat-error class="!text-white !flex items-center">
+        <span>• {{ 'LAST_NAME_REQUIRED' | translate }}</span>
+      </mat-error>
+    }
   </mat-form-field>
 
   <!-- CITY -->
@@ -18,11 +32,13 @@
   </mat-form-field>
 
   <!-- CV -->
-  <swip-upload-file
-    class="mt-6 block"
-    [form]="form"
-    beforeUploadCopy="UPLOAD_CV"
-    fieldKey="cv"
-    errorCopy="REQUIRED_CV"
-  ></swip-upload-file>
+  <div class="w-64">
+    <swip-upload-file
+      class="mt-6 block"
+      [form]="form"
+      beforeUploadCopy="UPLOAD_CV"
+      fieldKey="cv"
+      errorCopy="REQUIRED_CV"
+    ></swip-upload-file>
+  </div>
 </div>

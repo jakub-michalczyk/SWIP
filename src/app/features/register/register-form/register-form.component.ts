@@ -11,6 +11,11 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { UserCredential } from 'firebase/auth';
+import 'firebase/compat/storage';
+import { EMPTY, switchMap, tap } from 'rxjs';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { FileService } from '../../../core/services/file/file.service';
 import { BulletsComponent } from '../../../shared/components/bullets/bullets.component';
 import { ToggleComponent } from '../../../shared/components/toggle/toggle.component';
 import { BulletsService } from '../../../shared/services/bullets/bullets.service';
@@ -40,13 +45,17 @@ import { IStep } from './register-form.interface';
 export class RegisterFormComponent {
   private destroyerRef = inject(DestroyRef);
   form!: FormGroup;
-  currentStep = signal(0);
   employeeTitlesCode = signal(['REGISTER', 'CONTACT_DATA', 'PERSONAL_DATA']);
   steps: IStep[] = [];
+  currentStep = signal(0);
+  submitted = signal(false);
+  verified = signal(false);
 
   constructor(
     private fb: FormBuilder,
-    private bulletsService: BulletsService
+    private bulletsService: BulletsService,
+    private authService: AuthService,
+    private fileService: FileService
   ) {
     this.initForm();
     this.setUpFormSub();
@@ -133,6 +142,54 @@ export class RegisterFormComponent {
     this.steps[this.currentStep()].isActive = true;
     this.steps[this.currentStep() - 1].valid = true;
     this.bulletsService.updateStepStatus(this.steps);
+  }
+
+  register(): void {
+    const email = this.form.get('email')?.value;
+    const password = this.form.get('password')?.value;
+    const cv = this.form.get('cv')?.value;
+
+    this.authService
+      .register(email, password)
+      .pipe(
+        switchMap((userCredential: UserCredential) => {
+          return this.authService.sendVerificationEmail().pipe(
+            tap(() => this.submitted.set(true)),
+            switchMap(() => {
+              return this.authService.waitForEmailVerification(userCredential.user).pipe(
+                switchMap(() => {
+                  const cvBase64$ = cv ? this.fileService.convertFileToBase64(cv) : EMPTY;
+
+                  this.verified.set(true);
+                  return cvBase64$.pipe(
+                    switchMap((cvBase64: string | null) => {
+                      const userData = {
+                        email,
+                        firstName: this.form.get('firstName')?.value,
+                        lastName: this.form.get('lastName')?.value,
+                        telephone: this.form.get('tel')?.value,
+                        city: this.form.get('city')?.value,
+                        cvBase64,
+                      };
+
+                      return this.authService.saveUserData(userCredential.user.uid, userData);
+                    })
+                  );
+                })
+              );
+            })
+          );
+        })
+      )
+      .subscribe({
+        next: () => {
+          alert('Rejestracja zakończona pomyślnie!');
+        },
+        error: (error: Error) => {
+          console.error('Błąd rejestracji:', error);
+          alert('Błąd rejestracji: ' + error.message);
+        },
+      });
   }
 
   get isStep1Valid(): boolean | undefined {

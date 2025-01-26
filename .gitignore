@@ -43,6 +43,7 @@ Thumbs.db
 
 # Enviroments
 src/environments/environment.ts
+
 # Firebase
 .firebase
 *-debug.log

@@ -11,5 +11,8 @@
    "CONFIRM_PASSWORD": "Potwierdź swoje hasło",
    "EXAMPLE_FIRST_NAME": "np. Bartosz",
    "EXAMPLE_LAST_NAME": "np. Nowak",
-   "EXAMPLE_CITY": "np. Warszawa"
+   "EXAMPLE_CITY": "np. Warszawa",
+   "VERIFICATION_SENT": "Prawie gotowe! Link aktywacyjny został wysłany na Twój e-mail",
+   "DO_NOT_CLOSE_TAB": "Nie zamykaj tej karty przed zaakceptowaniem wiadomości. Twoje CV zostanie przesłane po akceptacji.",
+   "EMAIL_VERIFIED": "Twój e-mail został zweryfikowany! Możesz już teraz korzystać z SWIP."
 }

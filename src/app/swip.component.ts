@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { fromEvent } from 'rxjs';
-import { environment } from '../environments/enviroment.example';
+import { environment } from '../environments/enviroment';
 import { FooterComponent } from './core/components/footer/footer.component';
 import { IconComponent } from './core/components/icon/icon.component';
 import { TopbarComponent } from './core/components/topbar/topbar.component';

@@ -15,5 +15,6 @@
   "FIRST_NAME": "First name",
   "LAST_NAME": "Last name",
   "CITY": "City",
-  "UPLOAD_CV": "Upload CV"
+  "UPLOAD_CV": "Upload CV",
+  "REGISTER": "Register"
 }

@@ -23,6 +23,13 @@
       }
     </div>
   </div>
+
+  @if (isPWA) {
+    <div class="flex justify-end mt-6">
+      <swip-language-buttons></swip-language-buttons>
+    </div>
+  }
+
   <div
     class="text-gray-150 body-3 text-left pt-4 md:text-center md:py-6"
     [ngClass]="{

@@ -15,7 +15,8 @@
   "FIRST_NAME": "Imię",
   "LAST_NAME": "Nazwisko",
   "CITY": "Miasto",
-   "UPLOAD_CV": "Prześlij CV",
-   "REGISTER": "Zarejestruj",
-   "EX": "np."
+  "UPLOAD_CV": "Prześlij CV",
+  "REGISTER": "Zarejestruj",
+  "EX": "np.",
+  "SIGN_IN": "Zaloguj"
 }

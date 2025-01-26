@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Route, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,12 +11,21 @@ import { IIcon } from '../../model/icon.model';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { StandaloneService } from '../../services/standalone/standalone.service';
 import { IconComponent } from '../icon/icon.component';
+import { LanguageButtonsComponent } from '../language-buttons/language-buttons.component';
 import { FOOTER_DATA } from './footer.data';
 import { IFooterColumn, IFooterLink } from './footer.interface';
 
 @Component({
   selector: 'swip-footer',
-  imports: [CommonModule, MatIconModule, IconComponent, RouterModule, TranslateModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    IconComponent,
+    RouterModule,
+    TranslateModule,
+    MatButtonModule,
+    LanguageButtonsComponent,
+  ],
   templateUrl: './footer.component.html',
 })
 export class FooterComponent {

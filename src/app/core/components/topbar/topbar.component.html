@@ -3,22 +3,14 @@
     <img src="images/logo.svg" alt="Logo" />
   </div>
 
-  <!-- LANG BUTTONS -->
+  <!-- BUTTONS -->
   <div>
-    @if (lang === 'en') {
-      <button (click)="switchLanguage('en')" class="mr-4" mat-flat-button>
-        {{ 'LANG_NAME_EN' | translate }}
-      </button>
-      <button (click)="switchLanguage('pl')" mat-stroked-button>
-        {{ 'LANG_NAME_PL' | translate }}
+    @if (isPWA) {
+      <button class="ml-4" mat-flat-button>
+        {{ 'SIGN_IN' | translate }}
       </button>
     } @else {
-      <button (click)="switchLanguage('en')" class="mr-4" mat-stroked-button>
-        {{ 'LANG_NAME_EN' | translate }}
-      </button>
-      <button (click)="switchLanguage('pl')" mat-flat-button>
-        {{ 'LANG_NAME_PL' | translate }}
-      </button>
+      <swip-language-buttons></swip-language-buttons>
     }
   </div>
 </div>

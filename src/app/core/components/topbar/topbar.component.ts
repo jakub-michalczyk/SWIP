@@ -1,30 +1,26 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ELanguageCode } from '../../../shared/enums/language.enum';
+import { TranslateModule } from '@ngx-translate/core';
+import { StandaloneService } from '../../services/standalone/standalone.service';
+import { LanguageButtonsComponent } from '../language-buttons/language-buttons.component';
 
 @Component({
   selector: 'swip-topbar',
-  imports: [MatButtonModule, TranslateModule],
+  imports: [MatButtonModule, TranslateModule, LanguageButtonsComponent],
   templateUrl: './topbar.component.html',
 })
 export class TopbarComponent {
-  private readonly destroyRef = inject(DestroyRef);
-  lang: ELanguageCode = ELanguageCode.EN;
+  private readonly destroyerRef = inject(DestroyRef);
+  isPWA = false;
 
-  constructor(private translate: TranslateService) {
-    this.setUpLang();
+  constructor(private standaloneService: StandaloneService) {
+    this.setUpPWASub();
   }
 
-  setUpLang() {
-    this.lang = (this.translate.currentLang as ELanguageCode) || (this.translate.defaultLang as ELanguageCode);
-    this.translate.onDefaultLangChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((langData) => {
-      this.lang = langData.lang as ELanguageCode;
+  setUpPWASub() {
+    this.standaloneService.isStandaloneMode$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((value: boolean) => {
+      this.isPWA = value;
     });
-  }
-
-  switchLanguage(language: string): void {
-    this.translate.setDefaultLang(language);
   }
 }

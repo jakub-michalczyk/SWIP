@@ -1,0 +1,22 @@
+<div class="w-full">
+  @let cv = form.controls[fieldKey];
+
+  <label
+    for="upload-photo"
+    class="bg-transparent border border-white rounded px-5 h-[52px] text-white flex items-center justify-center cursor-pointer hover:bg-white hover:text-red-650 transition-colors"
+  >
+    @if (!selectedFile) {
+      <span class="body-2 pr-2">{{ beforeUploadCopy | translate }}</span>
+      <mat-icon>upload</mat-icon>
+    } @else {
+      <span class="body-2 pr-2">{{ selectedFile.name }}</span>
+      <mat-icon>check_circle</mat-icon>
+    }
+  </label>
+  <input type="file" class="absolute -top-[1000px]" (change)="onFileSelected($event)" id="upload-photo" accept=".pdf" />
+  @if (cv.hasError('required') && cv.touched) {
+    <mat-error class="!text-white !flex items-center body-3 my-1">
+      <span>• {{ errorCopy | translate }}</span>
+    </mat-error>
+  }
+</div>

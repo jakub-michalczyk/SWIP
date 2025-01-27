@@ -7,8 +7,18 @@ module.exports = {
         "6.5xl": ["4rem", { lineHeight: "1.2" }],
         "3.5xl": ["2rem", { lineHeight: "1.2" }],
       },
+      margin: {
+        "0.25": "1px"
+      },
       fontFamily: {
         sans: ["Afacad", "serif"],
+      },
+      height: {
+        "30": "7.5rem",
+        "17/20": "85%"
+      },
+      width: {
+        "3/10": "30%"
       },
       colors: {
         "red-650": "#DB4A2B",

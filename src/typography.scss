@@ -1,29 +1,29 @@
 @layer utilities {
   .h1 {
-    @apply text-8xl font-sans font-bold;
+    @apply text-8xl font-sans font-bold !important;
   }
   .h2 {
-    @apply text-6.5xl font-sans font-bold leading-none;
+    @apply text-6.5xl font-sans font-bold leading-none !important;
   }
   .h3 {
-    @apply text-4xl font-sans font-bold;
+    @apply text-4xl font-sans font-bold !important;
   }
   .h4 {
-    @apply text-3.5xl font-sans font-bold;
+    @apply text-3.5xl font-sans font-bold !important;
   }
   .h5 {
-    @apply text-2xl font-sans font-bold;
+    @apply text-2xl font-sans font-bold !important;
   }
   .s1 {
-    @apply text-5xl font-sans font-normal;
+    @apply text-5xl font-sans font-normal !important;
   }
   .body-1 {
-    @apply text-2xl font-sans;
+    @apply text-2xl font-sans !important;
   }
   .body-2 {
-    @apply text-xl font-sans;
+    @apply text-xl font-sans !important;
   }
   .body-3 {
-    @apply text-base font-sans;
+    @apply text-base font-sans !important;
   }
 }

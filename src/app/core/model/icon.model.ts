@@ -20,4 +20,8 @@ export const CUSTOM_ICONS: ICustomIconRegister[] = [
     name: 'swip_facebook',
     route: 'icons/facebook.svg',
   },
+  {
+    name: 'swip_document',
+    route: 'icons/document.svg',
+  },
 ];

@@ -1,8 +1,7 @@
+@use "variables";
 @use "@angular/material" as mat;
+@use "sass:color";
 
-$red-650: #db4a2b;
-$white: #ffffff;
-$border-radius: 4px;
 $padding: 20px;
 $button-height: 40px;
 $font-family: "Afacad, serif";
@@ -14,37 +13,67 @@ $mobile-icon-size: 24px;
   @include mat.button-overrides(
     (
       // Flat button
-      filled-container-color: $red-650,
-      filled-label-text-color: $white,
-      filled-container-shape: $border-radius,
+      filled-container-color: variables.$red-650,
+      filled-label-text-color: variables.$white,
+      filled-container-shape: variables.$border-radius,
       filled-horizontal-padding: $padding,
       filled-container-height: $button-height,
       filled-label-text-font: $font-family,
       filled-label-text-size: $font-size,
       filled-label-text-weight: $font-weight,
+      filled-ripple-color: rgba(variables.$red-650, 20%),
 
       // Stroked button
-      outlined-outline-color: $white,
-      outlined-label-text-color: $white,
-      outlined-container-shape: $border-radius,
+      outlined-outline-color: variables.$white,
+      outlined-label-text-color: variables.$white,
+      outlined-container-shape: variables.$border-radius,
       outlined-horizontal-padding: $padding,
       outlined-container-height: $button-height,
       outlined-label-text-font: $font-family,
       outlined-label-text-size: $font-size,
       outlined-label-text-weight: $font-weight,
+      outlined-ripple-color: rgba(variables.$red-650, 20%)
     )
   );
 
+  // Icon button
   @include mat.icon-button-overrides(
     (
       icon-size: 36px
     )
   );
+
+   // Fab button
+  @include mat.fab-overrides(
+    (
+      extended-container-shape:  variables.$border-radius,
+      extended-container-elevation-shadow: none,
+      container-color: transparent,
+      container-elevation-shadow: none,
+      extended-label-text-font: $font-family,
+      extended-label-text-size: $font-size,
+      extended-container-height: $button-height
+    )
+  );
 }
 
-.mat-mdc-outlined-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+._contrast-flat {
+  @include mat.button-overrides(
+    (
+      filled-container-color: variables.$white,
+      filled-label-text-color: variables.$red-650,
+      filled-container-shape: variables.$border-radius,
+      filled-horizontal-padding: $padding,
+      filled-container-height: $button-height,
+      filled-label-text-font: $font-family,
+      filled-label-text-size: $font-size,
+      filled-label-text-weight: $font-weight,
+      filled-ripple-color: rgba(variables.$white, 20%),
+    )
+  )
 }
+
+
 
 .mdc-icon-button {
   padding: 0 !important;
@@ -65,4 +94,20 @@ $mobile-icon-size: 24px;
 .pwa .mdc-icon-button .mat-icon svg {
     width: $mobile-icon-size !important;
     height: $mobile-icon-size !important;
+
+}
+
+.mat-mdc-extended-fab {
+  border: 1px solid variables.$white !important;
+  color: variables.$white !important;
+  padding: $padding !important;
+  &:disabled {
+    background: transparent !important;
+    opacity: 0.5 !important
+  }
+  .mat-icon {
+    order: 2;
+    margin-left: 12px !important;
+    margin-right: -8px !important;
+  }
 }

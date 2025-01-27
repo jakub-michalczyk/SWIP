@@ -1,0 +1,13 @@
+{
+    "VALID_EMAIL": "Proszę podać prawidłowy adres e-mail",
+    "REQUIRED_EMAIL": "Adres e-mail jest wymagany",
+    "REQUIRED_PASSWORD": "Hasło jest wymagane",
+    "MIN_LENGTH_PASSWORD": "Hasło musi mieć co najmniej 8 znaków",
+    "PATTERN_PASSWORD": "Hasło musi zawierać dużą literę, małą litere, łącznie przynajmniej 4 litery, przynajmniej jedną cyfry i przynajmniej jeden znak specjalny",
+    "REQUIRED_CONFIRM_PASSWORD": "Potwierdzenie hasła jest wymagane",
+    "NOT_MATCH_PASSWORD": "Hasła się różnią",
+    "REQUIRED_PHONE": "Numer telefonu jest wymagany",
+    "REQUIRED_CV": "CV jest wymagane",
+      "FIRST_NAME_REQUIRED": "Imię jest wymagane",
+    "LAST_NAME_REQUIRED": "Nazwisko jest wymagane"
+}

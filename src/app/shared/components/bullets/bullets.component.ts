@@ -17,41 +17,30 @@ export class BulletsComponent {
     this.setUpBulletsSub();
   }
 
-  setUpBulletsSub() {
+  private setUpBulletsSub() {
     this.bulletsService.bullets$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((steps) => {
       this.bullets = steps;
     });
   }
 
   chooseStep(id: number) {
-    for (let i = 0; i < id; i++) {
-      if (!this.bullets[i].valid) {
-        return;
-      }
+    if (this.canChooseStep(id)) {
+      this.bulletsService.resetBullets(this.bullets);
+      this.bullets[id].isActive = true;
+      this.bulletsService.updateStepStatus(this.bullets);
     }
-    this.bulletsService.resetBullets(this.bullets);
-    this.bullets[id].isActive = true;
-    this.bulletsService.updateStepStatus(this.bullets);
   }
 
-  updateBullets(activeId: number) {
-    this.bullets = this.bullets.map((bullet) => ({
-      ...bullet,
-      isActive: bullet.id === activeId,
-    }));
+  private canChooseStep(id: number): boolean {
+    return this.bullets.slice(0, id).every((bullet) => bullet.valid);
   }
 
-  isBulletFilled(bullet: IStep) {
-    const active = this.bullets.find((b) => b.isActive)!;
-    return bullet.isActive || bullet.id < active.id;
+  isBulletFilled(bullet: IStep): boolean {
+    const active = this.bullets.find((b) => b.isActive);
+    return bullet.isActive || (active && bullet.id < active.id) || false;
   }
 
-  isBulletNotValid(bullet: IStep) {
-    for (let i = 0; i < bullet.id; i++) {
-      if (!this.bullets[i].valid) {
-        return true;
-      }
-    }
-    return false;
+  isBulletNotValid(bullet: IStep): boolean {
+    return this.bullets.slice(0, bullet.id).some((b) => !b.valid);
   }
 }

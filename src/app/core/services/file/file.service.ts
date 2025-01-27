@@ -10,24 +10,12 @@ export class FileService {
   constructor(private firestore: Firestore) {}
 
   saveFileToFirestore(file: File, userId: string): Observable<void> {
-    return new Observable((observer) => {
-      this.convertFileToBase64(file)
-        .pipe(
-          switchMap((base64Data) => {
-            const userDocRef = doc(this.firestore, `users/${userId}`);
-            return from(updateDoc(userDocRef, { cv: base64Data }));
-          })
-        )
-        .subscribe({
-          next: () => {
-            observer.next();
-            observer.complete();
-          },
-          error: (error: Error) => {
-            observer.error(error);
-          },
-        });
-    });
+    return this.convertFileToBase64(file).pipe(
+      switchMap((base64Data) => {
+        const userDocRef = doc(this.firestore, `users/${userId}`);
+        return from(updateDoc(userDocRef, { cv: base64Data }));
+      })
+    );
   }
 
   convertFileToBase64(file: File): Observable<string> {
@@ -38,6 +26,7 @@ export class FileService {
         observer.complete();
       };
       reader.onerror = (error) => {
+        console.error('FileReader error:', error);
         observer.error(error);
       };
       reader.readAsDataURL(file);

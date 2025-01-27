@@ -14,8 +14,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserCredential } from 'firebase/auth';
 import 'firebase/compat/storage';
 import { EMPTY, switchMap, tap } from 'rxjs';
+import { IUser } from '../../../core/services/auth/auth.interface';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { FileService } from '../../../core/services/file/file.service';
+import { UserService } from '../../../core/services/user/user.service';
 import { BulletsComponent } from '../../../shared/components/bullets/bullets.component';
 import { ToggleComponent } from '../../../shared/components/toggle/toggle.component';
 import { BulletsService } from '../../../shared/services/bullets/bullets.service';
@@ -55,7 +57,8 @@ export class RegisterFormComponent {
     private fb: FormBuilder,
     private bulletsService: BulletsService,
     private authService: AuthService,
-    private fileService: FileService
+    private fileService: FileService,
+    private userService: UserService
   ) {
     this.initForm();
     this.setUpFormSub();
@@ -113,15 +116,33 @@ export class RegisterFormComponent {
 
   setUpFormSub() {
     this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe(() => {
-      const updatedSteps: IStep[] = [
-        { id: 0, isActive: this.currentStep() === 0, valid: this.isStep1Valid || false },
-        { id: 1, isActive: this.currentStep() === 1, valid: this.isStep2Valid || false },
-        { id: 2, isActive: this.currentStep() === 2, valid: this.isStep3Valid || false },
-        { id: 3, isActive: this.currentStep() === 3, valid: this.isStep4Valid || false },
-      ];
-
-      this.bulletsService.updateStepStatus(updatedSteps);
+      this.updateStepStatus();
     });
+  }
+
+  private updateStepStatus() {
+    this.bulletsService.updateStepStatus(
+      this.steps.map((step, index) => ({
+        ...step,
+        isActive: index === this.currentStep(),
+        valid: this.getStepValidity(index),
+      }))
+    );
+  }
+
+  private getStepValidity(stepIndex: number): boolean {
+    switch (stepIndex) {
+      case 0:
+        return this.isStep1Valid || false;
+      case 1:
+        return this.isStep2Valid || false;
+      case 2:
+        return this.isStep3Valid || false;
+      case 3:
+        return this.isStep4Valid || false;
+      default:
+        return false;
+    }
   }
 
   passwordMatchValidator(group: FormGroup) {
@@ -132,18 +153,20 @@ export class RegisterFormComponent {
   }
 
   prevStep() {
-    this.currentStep.set(this.currentStep() - 1);
-    this.bulletsService.resetBullets(this.steps);
-    this.steps[this.currentStep()].isActive = true;
-    this.bulletsService.updateStepStatus(this.steps);
+    const prev = this.currentStep() - 1;
+    if (prev >= 0) {
+      this.currentStep.set(prev);
+      this.updateStepStatus();
+    }
   }
 
   nextStep() {
-    this.currentStep.set(this.currentStep() + 1);
-    this.bulletsService.resetBullets(this.steps);
-    this.steps[this.currentStep()].isActive = true;
-    this.steps[this.currentStep() - 1].valid = true;
-    this.bulletsService.updateStepStatus(this.steps);
+    if (this.isNextDisabled) return;
+    const next = this.currentStep() + 1;
+    if (next < this.steps.length) {
+      this.currentStep.set(next);
+      this.updateStepStatus();
+    }
   }
 
   register(): void {
@@ -171,10 +194,10 @@ export class RegisterFormComponent {
                         lastName: this.form.get('lastName')?.value,
                         telephone: `${this.form.get('countryCode')?.value}${this.form.get('tel')?.value}`,
                         city: this.form.get('city')?.value,
-                        cvBase64,
-                      };
+                        cv: cvBase64,
+                      } as IUser;
 
-                      return this.authService.saveUserData(userCredential.user.uid, userData);
+                      return this.userService.saveUserData(userCredential.user.uid, userData);
                     })
                   );
                 })

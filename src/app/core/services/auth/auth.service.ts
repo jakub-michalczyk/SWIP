@@ -8,80 +8,77 @@ import {
   User,
   UserCredential,
 } from '@angular/fire/auth';
-import { doc, Firestore, setDoc } from '@angular/fire/firestore';
-import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
-import { from, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { from, interval, Observable, of } from 'rxjs';
+import { catchError, filter, switchMap, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(
-    private auth: Auth,
-    private firestore: Firestore,
-    private storage: Storage
-  ) {}
+  constructor(private auth: Auth) {}
 
   register(email: string, password: string): Observable<UserCredential> {
-    return from(createUserWithEmailAndPassword(this.auth, email, password));
+    return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
+      catchError((error) => {
+        console.error('Error during registration:', error);
+        throw error;
+      })
+    );
   }
 
   sendVerificationEmail(): Observable<void> {
     const user = this.auth.currentUser;
     if (user) {
-      return from(sendEmailVerification(user));
+      return from(sendEmailVerification(user)).pipe(
+        catchError((error) => {
+          console.error('Error sending verification email:', error);
+          throw error;
+        })
+      );
     }
-    return new Observable<void>((observer) => {
-      observer.error('No user is logged in');
-      observer.complete();
-    });
+    return of(undefined).pipe(
+      switchMap(() => {
+        throw new Error('No user is logged in');
+      })
+    );
   }
 
   waitForEmailVerification(user: User): Observable<User> {
-    return new Observable((observer) => {
-      const checkVerification = () => {
-        user.reload().then(() => {
-          if (user.emailVerified) {
-            observer.next(user);
-            observer.complete();
-          } else {
-            setTimeout(checkVerification, 2000);
-          }
-        });
-      };
-
-      checkVerification();
-    });
+    return interval(2000).pipe(
+      switchMap(() => from(user.reload())),
+      filter(() => user.emailVerified),
+      take(1),
+      switchMap(() => of(user)),
+      catchError((error) => {
+        console.error('Error during email verification check:', error);
+        throw error;
+      })
+    );
   }
 
   isEmailVerified(): Observable<boolean> {
     const user = this.auth.currentUser;
-    return new Observable<boolean>((observer) => {
-      if (user) {
-        observer.next(user.emailVerified);
-      } else {
-        observer.next(false);
-      }
-      observer.complete();
-    });
+    if (user) {
+      return of(user.emailVerified);
+    }
+    return of(false);
   }
 
   login(email: string, password: string): Observable<UserCredential> {
-    return from(signInWithEmailAndPassword(this.auth, email, password));
+    return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
+      catchError((error) => {
+        console.error('Error during login:', error);
+        throw error;
+      })
+    );
   }
 
   logout(): Observable<void> {
-    return from(signOut(this.auth));
-  }
-
-  uploadCV(file: File): Observable<string> {
-    const storageRef = ref(this.storage, `cv/${file.name}`);
-    return from(uploadBytes(storageRef, file)).pipe(switchMap(() => getDownloadURL(storageRef)));
-  }
-
-  saveUserData(userId: string, userData: any): Observable<void> {
-    const userDocRef = doc(this.firestore, `users/${userId}`);
-    return from(setDoc(userDocRef, userData));
+    return from(signOut(this.auth)).pipe(
+      catchError((error) => {
+        console.error('Error during logout:', error);
+        throw error;
+      })
+    );
   }
 }

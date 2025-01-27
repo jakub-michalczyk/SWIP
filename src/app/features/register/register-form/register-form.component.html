@@ -1,9 +1,10 @@
-<form class="w-full h-full bg-red-650 px-6 pb-12 text-white overflow-auto" [formGroup]="form">
+<form class="w-full h-full bg-red-650 px-6 pb-12 text-white" [formGroup]="form">
   <div class="w-full flex items-center justify-between flex-wrap">
     <swip-bullets></swip-bullets>
     <swip-toggle [values]="['EMPLOYEE' | translate, 'EMPLOYER' | translate]" class="block py-6"></swip-toggle>
   </div>
-  <div class="mt-6 density-settings--1">
+
+  <div class="mt-6 density-form--1">
     @if (!submitted()) {
       <h3 class="h3 mb-6">{{ employeeTitlesCode()[currentStep()] | translate }}</h3>
     }

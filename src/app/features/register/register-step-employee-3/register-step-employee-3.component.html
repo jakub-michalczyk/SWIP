@@ -1,8 +1,9 @@
+@let firstName = form.controls['firstName'];
+@let lastName = form.controls['lastName'];
+
 <div [formGroup]="form">
   <!-- FIRST NAME -->
   <mat-form-field class="w-full mt-6">
-    @let firstName = form.controls['firstName'];
-
     <mat-label>{{ 'FIRST_NAME' | translate }}</mat-label>
     <input type="text" matInput [placeholder]="'EXAMPLE_FIRST_NAME' | translate" formControlName="firstName" />
     @if (firstName.hasError('required')) {
@@ -14,8 +15,6 @@
 
   <!-- LAST NAME -->
   <mat-form-field class="w-full mt-6">
-    @let lastName = form.controls['lastName'];
-
     <mat-label>{{ 'LAST_NAME' | translate }}</mat-label>
     <input type="text" matInput [placeholder]="'EXAMPLE_LAST_NAME' | translate" formControlName="lastName" />
     @if (lastName.hasError('required')) {

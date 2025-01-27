@@ -1,10 +1,10 @@
+@let email = form.controls['email'];
+@let password = form.controls['password'];
+@let confirmPassword = form.controls['confirmPassword'];
+
 <div [formGroup]="form">
   <!-- EMAIL -->
   <mat-form-field class="w-full mt-6">
-    @let email = form.controls['email'];
-    @let password = form.controls['password'];
-    @let confirmPassword = form.controls['confirmPassword'];
-
     <mat-label>{{ 'EMAIL' | translate }}</mat-label>
     <input type="email" matInput [placeholder]="'EXAMPLE_EMAIL' | translate" formControlName="email" />
     @if (email.hasError('email') && !email.hasError('required')) {

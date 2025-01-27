@@ -16,5 +16,6 @@
   "LAST_NAME": "Nazwisko",
   "CITY": "Miasto",
    "UPLOAD_CV": "Prześlij CV",
-   "REGISTER": "Zarejestruj"
+   "REGISTER": "Zarejestruj",
+   "EX": "np."
 }

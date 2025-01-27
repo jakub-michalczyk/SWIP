@@ -1,8 +1,9 @@
+@let contactEmail = form.controls['contactEmail'];
+@let tel = form.controls['tel'];
+
 <div [formGroup]="form">
   <!-- EMAIL -->
   <mat-form-field class="w-full mt-6">
-    @let contactEmail = form.controls['contactEmail'];
-
     <mat-label>{{ 'EMAIL' | translate }}</mat-label>
     <input type="email" matInput [placeholder]="'EXAMPLE_EMAIL' | translate" formControlName="contactEmail" />
     @if (contactEmail.hasError('email') && !contactEmail.hasError('required')) {
@@ -18,7 +19,6 @@
   </mat-form-field>
 
   <div>
-    @let tel = form.controls['tel'];
     <div class="flex justify-between">
       <!-- Select for Country Code -->
       <mat-form-field class="w-3/10 mt-6">
@@ -36,7 +36,13 @@
       <!-- PHONE -->
       <mat-form-field class="w-2/3 mt-6">
         <mat-label>{{ 'PHONE_NUMBER' | translate }}</mat-label>
-        <input type="text" matInput [placeholder]="placeholder" formControlName="tel" [mask]="phoneMask" />
+        <input
+          type="text"
+          matInput
+          [placeholder]="('EX' | translate) + ' ' + placeholder"
+          formControlName="tel"
+          [mask]="phoneMask"
+        />
         <mat-icon matSuffix>phone_iphone</mat-icon>
       </mat-form-field>
     </div>

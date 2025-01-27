@@ -1,39 +1,60 @@
 <div class="text-white mb-1">
-  <div class="flex">
+  <div class="flex flex-wrap">
     <!-- PERSONAL DATA -->
-    <div>
-      <div class="flex items-center">
-        <swip-icon class="!w-8 !h-8 !text-3xl mr-2" [icon]="{ value: 'person_pin' }"></swip-icon>
-        <h3 class="h4">{{ 'PERSONAL_DATA' | translate }}</h3>
-      </div>
-      <ul class="pl-10">
-        <li class="body-2">{{ 'FIRST_NAME' | translate }}: {{ name }}</li>
-        <li class="body-2">{{ 'LAST_NAME' | translate }}: {{ lastName }}</li>
-        @if (city) {
-          <li class="body-2">{{ 'CITY' | translate }}: {{ city }}</li>
-        }
-      </ul>
+    <div class="w-full lg:w-1/2">
+      <ng-container
+        *ngTemplateOutlet="
+          dataSection;
+          context: {
+            title: translations['PERSONAL_DATA'],
+            icon: 'person_pin',
+            items: personalData,
+          }
+        "
+      ></ng-container>
     </div>
 
     <!-- CV -->
-    <div class="ml-16">
-      <div class="flex items-center">
-        <swip-icon class="!w-8 !h-8 !text-3xl mr-2" [icon]="{ value: 'swip_document' }"></swip-icon>
-        <h3 class="h4">CV</h3>
-      </div>
-      <ul class="pl-10">
-        <li class="body-2">{{ cv }}</li>
-      </ul>
+    <div class="w-full lg:w-1/2 mt-6 lg:mt-0">
+      <ng-container
+        *ngTemplateOutlet="
+          dataSection;
+          context: {
+            title: 'CV',
+            icon: 'swip_document',
+            items: [cv],
+          }
+        "
+      ></ng-container>
     </div>
   </div>
+
+  <!-- CONTACT DATA -->
   <div class="mt-6 pt-6 border-t border-white">
-    <div class="flex items-center">
-      <swip-icon class="!w-8 !h-8 !text-3xl mr-2" [icon]="{ value: 'phone_iphone' }"></swip-icon>
-      <h3 class="h4">{{ 'CONTACT_DATA' | translate }}</h3>
-    </div>
-    <ul class="pl-10">
-      <li class="body-2">{{ 'PHONE_NUMBER' | translate }}: {{ telephone }}</li>
-      <li class="body-2">{{ 'EMAIL' | translate }}: {{ email }}</li>
-    </ul>
+    <ng-container
+      *ngTemplateOutlet="
+        dataSection;
+        context: {
+          title: translations['CONTACT_DATA'],
+          icon: 'phone_iphone',
+          items: contactData,
+        }
+      "
+    ></ng-container>
   </div>
 </div>
+
+<!-- TEMPLATE -->
+<ng-template #dataSection let-title="title" let-icon="icon" let-items="items">
+  <div>
+    <div class="flex items-center">
+      <swip-icon class="!w-8 !h-8 !text-3xl mr-2" [icon]="{ value: icon }"></swip-icon>
+      <h3 class="h4">{{ title }}</h3>
+    </div>
+    <ul class="pl-10">
+      @for (item of items; track $index) {
+        <li class="body-2">{{ item }}</li>
+      }
+    </ul>
+  </div>
+</ng-template>

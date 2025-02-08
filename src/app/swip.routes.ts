@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomepageComponent } from './features/home/homepage/homepage.component';
+import { LoginComponent } from './features/login/login/login.component';
 import { MoreComponent } from './features/more/more/more.component';
 
 export const routes: Routes = [
@@ -36,6 +37,11 @@ export const routes: Routes = [
       titleCode: 'FIND_OUT_MORE',
       view: 'FOOTER',
     },
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    pathMatch: 'full',
   },
   {
     path: '',

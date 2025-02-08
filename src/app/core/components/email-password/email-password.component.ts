@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
-import { EmailPasswordComponent } from '../../../core/components/email-password/email-password.component';
 
 @Component({
-  selector: 'swip-register-step-1',
+  selector: 'swip-email-password',
   imports: [
     FormsModule,
     MatFormFieldModule,
@@ -17,14 +16,16 @@ import { EmailPasswordComponent } from '../../../core/components/email-password/
     CommonModule,
     MatIconModule,
     TranslateModule,
-    EmailPasswordComponent,
   ],
-  templateUrl: './register-step-1.component.html',
+  templateUrl: './email-password.component.html',
 })
-export class RegisterStep1Component {
+export class EmailPasswordComponent {
   @Input({ required: true }) form = {} as FormGroup;
+  @Input() validationOn = true;
+  hide = signal(true);
 
-  disablePaste(event: ClipboardEvent) {
-    event.preventDefault();
+  togglePasswordVisibility(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 }

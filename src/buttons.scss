@@ -22,6 +22,9 @@ $mobile-icon-size: 24px;
       filled-label-text-size: $font-size,
       filled-label-text-weight: $font-weight,
       filled-ripple-color: rgba(variables.$red-650, 20%),
+      filled-disabled-container-color:  rgba(variables.$red-650, 50%),
+      filled-disabled-label-text-color: rgba(variables.$white, 50%),
+
 
       // Stroked button
       outlined-outline-color: variables.$white,

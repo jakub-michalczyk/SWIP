@@ -80,5 +80,10 @@ function HttpLoaderFactory2(http: HttpBackend) {
       suffix: '.json',
       optional: true,
     },
+    {
+      prefix: 'translation/more/',
+      suffix: '.json',
+      optional: true,
+    },
   ]);
 }

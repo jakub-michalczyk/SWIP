@@ -28,8 +28,8 @@ module.exports = {
       backgroundImage: {
         "home-desktop": "url('/images/desktop_bg.png')",
         "home-mobile": "url('/images/mobile_bg.png')",
-        "circles": "url('/images/circles_bg.png')",
-        "wave": "url('/images/wave.svg')"
+        "wave": "url('/images/wave.svg')",
+        "topography": "url('/images/topography.png')",
       },
     },
   },

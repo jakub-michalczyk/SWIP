@@ -18,5 +18,9 @@
   "UPLOAD_CV": "Prześlij CV",
   "REGISTER": "Zarejestruj",
   "EX": "np.",
-  "SIGN_IN": "Zaloguj"
+  "SIGN_IN": "Zaloguj",
+  "FORGOT_PASSWORD": "Zapomniałeś hasła",
+  "RESET_PASSWORD": "Zresetuj hasło",
+  "RETURN_LOGIN": "Powrót do logowania",
+  "RESET_EMAIL_SEND": "E-mail z resetem hasła został wysłany."
 }

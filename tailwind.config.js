@@ -30,6 +30,7 @@ module.exports = {
         "home-mobile": "url('/images/mobile_bg.png')",
         "wave": "url('/images/wave.svg')",
         "topography": "url('/images/topography.png')",
+        "corner": "url('/images/corner.png')",
       },
     },
   },

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
-import { SwipComponent } from './swip.component';
+import { HomepageComponent } from './features/home/homepage/homepage.component';
+import { MoreComponent } from './features/more/more/more.component';
 
 export const routes: Routes = [
   {
@@ -27,9 +28,10 @@ export const routes: Routes = [
   },
   {
     path: 'more',
-    redirectTo: '/',
+    component: MoreComponent,
     pathMatch: 'full',
     data: {
+      path: 'more',
       headingCode: 'MORE',
       titleCode: 'FIND_OUT_MORE',
       view: 'FOOTER',
@@ -37,6 +39,6 @@ export const routes: Routes = [
   },
   {
     path: '',
-    component: SwipComponent,
+    component: HomepageComponent,
   },
 ];

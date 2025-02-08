@@ -1,0 +1,71 @@
+<div class="flex items-center flex-col">
+  <div
+    class="h-screen relative bg-cover flex items-center max-w-3xl md:max-w-full w-full"
+    [ngClass]="
+      !isMobile && !isPWA ? 'bg-home-desktop bg-center 2xl:bg-left-top' : 'bg-home-mobile md:!max-w-3xl w-auto'
+    "
+  >
+    <!-- TOP BAR -->
+    <swip-topbar class="absolute z-10 top-0 left-0 w-full"></swip-topbar>
+
+    <!-- OVERLAYER -->
+    @if (!isMobile && !isPWA) {
+      <div class="block xl:hidden w-full h-full bg-black opacity-50 absolute z-0 top-0 left-0"></div>
+    }
+
+    <!-- CONTENT -->
+    <div class="relative z-10 opacity-100 transition-all delay-200" [ngClass]="{ '!opacity-0': formExpanded() }">
+      <ng-container>
+        <div class="text-white pb-8 px-6 lg:px-32 w-full lg:w-3/4" [ngClass]="{ '!px-6': isPWA }">
+          <h1 class="h2 w-full sm:w-3/4 md:w-full">
+            {{ 'HOMEPAGE_TITLE' | translate }}
+          </h1>
+          <p class="body-1 mt-4 w-full sm:w-2/3 lg:w-full">
+            {{ 'HOMEPAGE_SUBTITLE' | translate }}
+          </p>
+          <div class="mt-10">
+            @if (!isPWA) {
+              <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>
+                {{ 'GET_APP' | translate }}
+              </button>
+              <button class="my-2" mat-stroked-button routerLink="/more">
+                {{ 'DISCOVER_MORE' | translate }}
+              </button>
+            } @else {
+              <button (click)="toggleForm()" class="mr-4 my-2" mat-flat-button>
+                {{ 'SWIP' | translate }}
+              </button>
+            }
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    @if (isPWA) {
+      <div
+        class="w-full flex justify-end flex-col absolute z-20 bottom-0 transition-all h-30 duration-500 overflow-hidden"
+        [ngClass]="{ '!h-17/20': formExpanded() }"
+      >
+        @if (formExpanded()) {
+          <div
+            class="flex justify-end px-6 opacity-0 -mb-12 relative z-20"
+            [ngClass]="{ 'opacity-100': formExpanded() }"
+          >
+            <swip-icon
+              (click)="toggleForm()"
+              class="!text-white text-5xl !w-12 !h-12"
+              [isButton]="true"
+              [icon]="{ value: 'close' }"
+            ></swip-icon>
+          </div>
+        }
+
+        <img class="w-full -mb-0.25" src="images/wave.svg" alt="Wave" />
+        <swip-register-form
+          class="h-0 overflow-hidden block transition-all duration-500"
+          [ngClass]="{ '!h-full': formExpanded() }"
+        ></swip-register-form>
+      </div>
+    }
+  </div>
+</div>

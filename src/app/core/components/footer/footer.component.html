@@ -1,23 +1,11 @@
-<footer
-  class="p-6 bg-neutral-950"
-  [ngClass]="{
-    'md:border-t-[10px] md:border-red-650 md:py-9 md:px-12 xl:px-32': !isPWA || isMobile,
-    'p-6': isPWA || isMobile,
-  }"
->
-  <div
-    class="flex justify-between md:border-red-650 md:border-b"
-    [ngClass]="{ 'md:border-b': !isPWA || isMobile, 'pb-12': !isPWA && !isMobile }"
-  >
-    <div>
+<footer class="p-6 bg-neutral-950 md:border-t-[10px] md:border-red-650 md:py-9 md:px-12 xl:px-32">
+  <div class="flex justify-between md:border-red-650 md:border-b pb-0 md:pb-12">
+    <a routerLink="/">
       <img src="images/logo.svg" alt="Logo Contrast" />
-    </div>
-    <div
-      class="flex-col md:flex-row flex justify-between md:w-auto md:min-w-[75%] lg:min-w-[50%]"
-      [ngClass]="{ 'flex-col': isMobile || isPWA, 'md:flex-row': !(isMobile || isPWA) }"
-    >
+    </a>
+    <div class="flex-col md:flex-row flex justify-between md:w-auto md:min-w-[75%] lg:min-w-[50%]">
       @for (footerCol of columns; track $index) {
-        <div [ngClass]="{ 'mb-6 ml-6': (isMobile || isPWA) && !$last }">
+        <div [ngClass]="{ 'mb-6 ml-6': isMobile && !$last }">
           <ng-container *ngTemplateOutlet="footerColumn; context: { footerCol: footerCol }"> </ng-container>
         </div>
       }
@@ -30,38 +18,29 @@
     </div>
   }
 
-  <div
-    class="text-gray-150 body-3 text-left pt-4 md:text-center md:py-6"
-    [ngClass]="{
-      'text-left pt-4 opacity-1': isMobile || isPWA,
-      'md:text-center md:py-6 opacity-30': !(isMobile || isPWA),
-    }"
-  >
+  <div class="text-gray-150 body-3 md:text-center md:py-6 text-left pt-4 opacity-1 md:opacity-30">
     &copy; {{ year }} swip
   </div>
 </footer>
 
 <ng-template #footerColumn let-column="footerCol">
-  @if (!isMobile && !isPWA) {
+  @if (!isMobile) {
     <div class="text-red-650 h5">{{ column.headingCode | translate }}</div>
   }
-  <ul
-    class="text-right md:text-left"
-    [ngClass]="{ 'text-right mt-0': isMobile || isPWA, 'md:text-left mt-6': !(isMobile || isPWA) }"
-  >
+  <ul class="text-right md:text-left md:mt-6">
     @for (link of column.data; track $index) {
-      <a [routerLink]="link.path" [class.inline-block]="isMobile || isPWA">
+      <a [routerLink]="link.path" [class.inline-block]="isMobile">
         <li
           [routerLink]="link.path"
           class="text-white hover:!text-gray-150 transition-all"
           [ngClass]="{
-            'mb-3': !$last && !(isMobile || isPWA),
+            'mb-3': !$last && !isMobile,
             'inline-block': link.isIcon,
             block: link.isIcon,
             'mx-3': link.isIcon && !$first && !$last,
-            'ml-3': !link.isIcon && (isMobile || isPWA) && !$first,
-            'body-2': !(isMobile || isPWA),
-            'body-3': isMobile || isPWA,
+            'ml-3': !link.isIcon && isMobile && !$first,
+            'body-2': !isMobile,
+            'body-3': isMobile,
           }"
         >
           @if (!link.isIcon) {

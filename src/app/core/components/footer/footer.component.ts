@@ -82,7 +82,7 @@ export class FooterComponent {
   }
 
   setUpMobileData() {
-    if (this.isMobile || this.isPWA) {
+    if (this.isMobile) {
       const { textLinks, icons } = this.columns.reduce(
         (acc, column) => {
           column.data.forEach((item) => {

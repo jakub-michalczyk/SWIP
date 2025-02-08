@@ -1,4 +1,7 @@
-<form class="w-full h-full bg-red-650 px-6 pb-12 overflow-auto text-white" [formGroup]="form">
+<form
+  class="w-full h-full bg-red-650 md:bg-transparent px-6 py-12 overflow-auto text-white md:py-24"
+  [formGroup]="form"
+>
   <div class="w-full flex items-center justify-between flex-wrap">
     <swip-bullets></swip-bullets>
     <swip-toggle [values]="['EMPLOYEE' | translate, 'EMPLOYER' | translate]" class="block py-6"></swip-toggle>
@@ -6,7 +9,7 @@
 
   <div class="mt-6 density-form--1">
     @if (!submitted()) {
-      <h3 class="h3 mb-6">{{ employeeTitlesCode()[currentStep()] | translate }}</h3>
+      <h3 class="h3 mb-6 md:text-red-650">{{ employeeTitlesCode()[currentStep()] | translate }}</h3>
     }
 
     @if (!submitted()) {

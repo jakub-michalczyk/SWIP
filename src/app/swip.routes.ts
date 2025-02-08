@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomepageComponent } from './features/home/homepage/homepage.component';
 import { LoginComponent } from './features/login/login/login.component';
 import { MoreComponent } from './features/more/more/more.component';
+import { RegisterWrapComponent } from './features/register/register-wrap/register-wrap.component';
 
 export const routes: Routes = [
   {
@@ -41,6 +42,11 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'register',
+    component: RegisterWrapComponent,
     pathMatch: 'full',
   },
   {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { doc, setDoc } from 'firebase/firestore';
 import { catchError, from, Observable } from 'rxjs';
-import { IUser } from '../auth/auth.interface';
+import { ICompany, IUser } from '../auth/auth.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ import { IUser } from '../auth/auth.interface';
 export class UserService {
   constructor(private firestore: Firestore) {}
 
-  saveUserData(userId: string, userData: IUser): Observable<void> {
+  saveUserData(userId: string, userData: IUser | ICompany): Observable<void> {
     const userDocRef = doc(this.firestore, `users/${userId}`);
     return from(setDoc(userDocRef, userData)).pipe(
       catchError((error) => {

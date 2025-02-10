@@ -12,7 +12,12 @@
    "EXAMPLE_FIRST_NAME": "Ex. John",
    "EXAMPLE_LAST_NAME": "Ex. Doe",
    "EXAMPLE_CITY": "Ex. Warsaw",
-   "VERIFICATION_SENT": "Almost done! The activation link has been sent to your e-mail",
-   "DO_NOT_CLOSE_TAB": "Do not close this tab before accepting the message. Your CV will be sent after acceptance.",
-   "EMAIL_VERIFIED": "Your email has been verified! You can now use SWIP."
+   "VERIFICATION_SENT": "Almost done!",
+   "DO_NOT_CLOSE_TAB": "The activation link has been sent to your e-mail. Do not close this tab before accepting the message. Your CV will be sent after acceptance.",
+   "EMAIL_VERIFIED": "Your email has been verified!",
+   "USE_SWIP": "You can now use SWIP.",
+   "COMPANY_NAME": "Company name",
+   "COMPANY_IMAGE": "Company image",
+   "COMPANY_DATA": "Company data",
+   "EXAMPLE_COMPANY_NAME": "SWIP."
 }

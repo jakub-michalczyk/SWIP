@@ -13,18 +13,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserCredential } from 'firebase/auth';
 import 'firebase/compat/storage';
-import { EMPTY, switchMap, tap } from 'rxjs';
-import { IUser } from '../../../core/services/auth/auth.interface';
+import { EMPTY, of, switchMap, tap } from 'rxjs';
+import { EUserType, ICompany, IUser } from '../../../core/services/auth/auth.interface';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { FileService } from '../../../core/services/file/file.service';
 import { UserService } from '../../../core/services/user/user.service';
 import { BulletsComponent } from '../../../shared/components/bullets/bullets.component';
 import { ToggleComponent } from '../../../shared/components/toggle/toggle.component';
 import { BulletsService } from '../../../shared/services/bullets/bullets.service';
+import { IToggleElement } from '../../../shared/services/toggle/toggle.interface';
+import { ToggleService } from '../../../shared/services/toggle/toggle.service';
 import { RegisterStep1Component } from '../register-step-1/register-step-1.component';
-import { RegisterStepEmployee2Component } from '../register-step-employee-2/register-step-employee-2.component';
+import { RegisterStep2Component } from '../register-step-2/register-step-2.component';
+import { RegisterStep4Component } from '../register-step-4/register-step-4.component';
 import { RegisterStepEmployee3Component } from '../register-step-employee-3/register-step-employee-3.component';
-import { RegisterStepEmployee4Component } from '../register-step-employee-4/register-step-employee-4.component';
+import { RegisterStepEmployer3Component } from '../register-step-employer-3/register-step-employer-3.component';
+import { RegisterService } from '../register.service';
 import { IStep } from './register-form.interface';
 
 @Component({
@@ -38,36 +42,52 @@ import { IStep } from './register-form.interface';
     ReactiveFormsModule,
     TranslateModule,
     RegisterStep1Component,
-    RegisterStepEmployee2Component,
+    RegisterStep2Component,
     RegisterStepEmployee3Component,
-    RegisterStepEmployee4Component,
+    RegisterStep4Component,
+    RegisterStepEmployer3Component,
   ],
   templateUrl: './register-form.component.html',
 })
 export class RegisterFormComponent {
   private destroyerRef = inject(DestroyRef);
-  form!: FormGroup;
+  employeeForm!: FormGroup;
+  employerForm!: FormGroup;
   employeeTitlesCode = signal(['REGISTER', 'CONTACT_DATA', 'PERSONAL_DATA']);
+  employerTitlesCode = signal(['REGISTER', 'CONTACT_DATA', 'COMPANY_DATA']);
   steps: IStep[] = [];
   currentStep = signal(0);
+  currentTabId = signal(0);
   submitted = signal(false);
   verified = signal(false);
+  toggleValues: IToggleElement[] = [
+    { isActive: true, translateCode: 'EMPLOYEE', id: 0 },
+    { isActive: false, translateCode: 'EMPLOYER', id: 1 },
+  ];
 
   constructor(
     private fb: FormBuilder,
     private bulletsService: BulletsService,
     private authService: AuthService,
     private fileService: FileService,
-    private userService: UserService
+    private userService: UserService,
+    private toggleService: ToggleService,
+    private registerService: RegisterService
   ) {
-    this.initForm();
+    this.initForms();
     this.setUpFormSub();
     this.setUpBulletSub();
+    this.setUpToggleSub();
     this.initializeBullets();
   }
 
-  private initForm() {
-    this.form = this.fb.group(
+  private initForms() {
+    this.initEmployeeForm();
+    this.initEmployerForm();
+  }
+
+  private initEmployeeForm() {
+    this.employeeForm = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
         password: [
@@ -96,6 +116,71 @@ export class RegisterFormComponent {
     );
   }
 
+  private initEmployerForm() {
+    this.employerForm = this.fb.group(
+      {
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(
+              /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])(?=(.*[A-Za-z]){4,})[A-Za-z\d@$!%*?&]{7,}$/
+            ),
+          ],
+        ],
+        confirmPassword: ['', [Validators.required]],
+        contactEmail: ['', [Validators.required, Validators.email]],
+        countryCode: ['+48', [Validators.required, Validators.pattern(/^\+(48|1|44)$/)]],
+        tel: [
+          '',
+          [Validators.required, Validators.pattern(/^\d{9}$|^\d{3}[-.\s]?\d{3}[-.\s]?\d{4}$|^\d{4}[-.\s]?\d{6}$/)],
+        ],
+        companyName: ['', [Validators.required]],
+        companyImage: [''],
+        city: [''],
+      },
+      { validators: this.passwordMatchValidator } as FormControlOptions
+    );
+  }
+
+  private setUpToggleSub() {
+    this.toggleService.toggle$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((toggle) => {
+      this.reset();
+      this.currentTabId.set(toggle.find((t) => t.isActive)?.id || 0);
+    });
+  }
+
+  reset() {
+    this.employeeForm.reset({
+      email: '',
+      password: '',
+      confirmPassword: '',
+      contactEmail: '',
+      countryCode: '+48',
+      tel: '',
+      firstName: '',
+      lastName: '',
+      city: '',
+      cv: null,
+    });
+
+    this.employerForm.reset({
+      email: '',
+      password: '',
+      confirmPassword: '',
+      contactEmail: '',
+      countryCode: '+48',
+      tel: '',
+      companyName: '',
+      city: '',
+      companyImage: null,
+    });
+    this.currentStep.set(0);
+    this.initializeBullets();
+  }
+
   private initializeBullets() {
     this.steps = [
       { id: 0, isActive: true, valid: false },
@@ -115,7 +200,7 @@ export class RegisterFormComponent {
   }
 
   setUpFormSub() {
-    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe(() => {
+    this.employeeForm.valueChanges.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe(() => {
       this.updateStepStatus();
     });
   }
@@ -170,38 +255,66 @@ export class RegisterFormComponent {
   }
 
   register(): void {
-    const email = this.form.get('email')?.value;
-    const password = this.form.get('password')?.value;
-    const cv = this.form.get('cv')?.value;
+    const email = this.determineActiveForm.get('email')?.value;
+    const password = this.determineActiveForm.get('password')?.value;
+    const cv = this.employeeForm.get('cv')?.value;
+    const companyImage = this.employerForm.get('companyImage')?.value;
 
     this.authService
       .register(email, password)
       .pipe(
         switchMap((userCredential: UserCredential) => {
-          return this.authService.sendVerificationEmail().pipe(
-            tap(() => this.submitted.set(true)),
+          let userData = {} as IUser | ICompany;
+
+          if (this.currentTabId() === 0) {
+            // Employee
+            userData = {
+              email,
+              firstName: this.employeeForm.get('firstName')?.value,
+              lastName: this.employeeForm.get('lastName')?.value,
+              telephone: `${this.employeeForm.get('countryCode')?.value}${this.employeeForm.get('tel')?.value}`,
+              city: this.employeeForm.get('city')?.value,
+              cv: null,
+              userType: EUserType.EMPLOYEE,
+            } as IUser;
+          } else {
+            // Employer
+            userData = {
+              email,
+              companyName: this.employerForm.get('companyName')?.value,
+              telephone: `${this.employerForm.get('countryCode')?.value}${this.employeeForm.get('tel')?.value}`,
+              city: this.employerForm.get('city')?.value,
+              companyImage: this.employerForm.get('companyImage')?.value,
+              userType: EUserType.EMPLOYER,
+            } as ICompany;
+          }
+
+          return this.userService.saveUserData(userCredential.user.uid, userData).pipe(
+            switchMap(() => this.authService.sendVerificationEmail()),
+            tap(() => {
+              this.submitted.set(true);
+              this.registerService.updateStatus(true);
+            }),
+            switchMap(() => this.authService.waitForEmailVerification(userCredential.user)),
+            tap(() => this.verified.set(true)),
             switchMap(() => {
-              return this.authService.waitForEmailVerification(userCredential.user).pipe(
-                switchMap(() => {
-                  const cvBase64$ = cv ? this.fileService.convertFileToBase64(cv) : EMPTY;
+              if (cv) {
+                return this.fileService.convertFileToBase64(cv);
+              } else if (companyImage) {
+                return this.fileService.convertFileToBase64(companyImage);
+              }
 
-                  this.verified.set(true);
-                  return cvBase64$.pipe(
-                    switchMap((cvBase64: string | null) => {
-                      const userData = {
-                        email,
-                        firstName: this.form.get('firstName')?.value,
-                        lastName: this.form.get('lastName')?.value,
-                        telephone: `${this.form.get('countryCode')?.value}${this.form.get('tel')?.value}`,
-                        city: this.form.get('city')?.value,
-                        cv: cvBase64,
-                      } as IUser;
+              return of(null);
+            }),
+            switchMap((base64: string | null) => {
+              const key = cv ? 'cv' : 'companyImage';
 
-                      return this.userService.saveUserData(userCredential.user.uid, userData);
-                    })
-                  );
-                })
-              );
+              return this.userService.saveUserData(userCredential.user.uid, {
+                ...userData,
+                [key]: base64,
+              } as IUser);
+
+              return EMPTY;
             })
           );
         })
@@ -213,34 +326,51 @@ export class RegisterFormComponent {
       });
   }
 
+  get determineActiveForm() {
+    return this.currentTabId() === 0 ? this.employeeForm : this.employerForm;
+  }
+
   get isStep1Valid(): boolean | undefined {
-    const password = this.form.get('password')?.value;
-    const confirmPassword = this.form.get('confirmPassword')?.value;
+    const password = this.determineActiveForm.get('password')?.value;
+    const confirmPassword = this.determineActiveForm.get('confirmPassword')?.value;
     const passwordsMatch = password === confirmPassword;
 
     return (
-      this.form.get('email')?.valid &&
-      this.form.get('password')?.valid &&
-      this.form.get('confirmPassword')?.valid &&
+      this.determineActiveForm.get('email')?.valid &&
+      this.determineActiveForm.get('password')?.valid &&
+      this.determineActiveForm.get('confirmPassword')?.valid &&
       passwordsMatch
     );
   }
 
   get isStep2Valid(): boolean | undefined {
-    return this.form.get('contactEmail')?.valid && this.form.get('tel')?.valid && this.form.get('countryCode')?.valid;
-  }
-
-  get isStep3Valid(): boolean | undefined {
     return (
-      this.form.get('firstName')?.valid &&
-      this.form.get('lastName')?.valid &&
-      this.form.get('city')?.valid &&
-      this.form.get('cv')?.valid
+      this.determineActiveForm.get('contactEmail')?.valid &&
+      this.determineActiveForm.get('tel')?.valid &&
+      this.determineActiveForm.get('countryCode')?.valid
     );
   }
 
+  get isStep3Valid(): boolean | undefined {
+    if (this.currentTabId() === 0 && this.determineActiveForm.get('cv')) {
+      // Employee form
+      return (
+        this.employeeForm.get('firstName')?.valid &&
+        this.employeeForm.get('lastName')?.valid &&
+        this.employeeForm.get('city')?.valid &&
+        this.employeeForm.get('cv')?.valid
+      );
+    } else {
+      return (
+        this.employerForm.get('companyName')?.valid &&
+        this.employerForm.get('city')?.valid &&
+        this.employerForm.get('companyImage')?.valid
+      );
+    }
+  }
+
   get isStep4Valid(): boolean | undefined {
-    return this.form.valid;
+    return this.determineActiveForm.valid;
   }
 
   get isNextDisabled(): boolean {

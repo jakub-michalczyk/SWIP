@@ -9,5 +9,6 @@
     "REQUIRED_PHONE": "Numer telefonu jest wymagany",
     "REQUIRED_CV": "CV jest wymagane",
       "FIRST_NAME_REQUIRED": "Imię jest wymagane",
-    "LAST_NAME_REQUIRED": "Nazwisko jest wymagane"
+    "LAST_NAME_REQUIRED": "Nazwisko jest wymagane",
+     "COMPANY_NAME_REQUIRED": "Nazwa firmy jest wymagana"
 }

@@ -1,34 +1,42 @@
 <form
   class="w-full h-full bg-red-650 md:bg-transparent px-6 py-12 overflow-auto text-white md:py-24"
-  [formGroup]="form"
+  [formGroup]="determineActiveForm"
 >
   <div class="w-full flex items-center justify-between flex-wrap">
     <swip-bullets></swip-bullets>
-    <swip-toggle [values]="['EMPLOYEE' | translate, 'EMPLOYER' | translate]" class="block py-6"></swip-toggle>
+    <swip-toggle [values]="toggleValues" class="block py-6"></swip-toggle>
   </div>
 
   <div class="mt-6 density-form--1">
     @if (!submitted()) {
-      <h3 class="h3 mb-6 md:text-red-650">{{ employeeTitlesCode()[currentStep()] | translate }}</h3>
+      <h3 class="h3 mb-6 md:text-red-650">
+        {{
+          (currentTabId() === 0 ? employeeTitlesCode()[currentStep()] : employerTitlesCode()[currentStep()]) | translate
+        }}
+      </h3>
     }
 
     @if (!submitted()) {
       @switch (currentStep()) {
         @case (0) {
           <!-- STEP 1 -->
-          <swip-register-step-1 [form]="form"></swip-register-step-1>
+          <swip-register-step-1 [form]="determineActiveForm"></swip-register-step-1>
         }
         @case (1) {
           <!-- STEP 2 -->
-          <swip-register-step-employee-2 [form]="form"></swip-register-step-employee-2>
+          <swip-register-step-2 [form]="determineActiveForm"></swip-register-step-2>
         }
         @case (2) {
           <!-- STEP 3 -->
-          <swip-register-step-employee-3 [form]="form"></swip-register-step-employee-3>
+          @if (currentTabId() === 0) {
+            <swip-register-step-employee-3 [form]="employeeForm"></swip-register-step-employee-3>
+          } @else {
+            <swip-register-step-employer-3 [form]="employerForm"></swip-register-step-employer-3>
+          }
         }
         @case (3) {
           <!-- STEP 4 -->
-          <swip-register-step-employee-4 [form]="form"></swip-register-step-employee-4>
+          <swip-register-step-4 [form]="determineActiveForm"></swip-register-step-4>
         }
       }
 
@@ -54,18 +62,21 @@
     } @else {
       <div class="mt-12">
         @if (!verified()) {
-          <h2 class="h3 w-3/4">
-            <mat-icon class="text-4xl !w-9 !h-9">info</mat-icon>
+          <h2 class="h3">
+            <mat-icon class="">info</mat-icon>
             {{ 'VERIFICATION_SENT' | translate }}
           </h2>
           <p class="mt-4">
             {{ 'DO_NOT_CLOSE_TAB' | translate }}
           </p>
         } @else {
-          <h2 class="h3 w-3/4">
-            <mat-icon class="text-4xl !w-9 !h-9">check_circle</mat-icon>
+          <h2 class="h3">
+            <mat-icon class="">check_circle</mat-icon>
             {{ 'EMAIL_VERIFIED' | translate }}
           </h2>
+          <p class="mt-4">
+            {{ 'USE_SWIP' | translate }}
+          </p>
         }
       </div>
     }

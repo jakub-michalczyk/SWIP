@@ -1,0 +1,96 @@
+<div class="text-white mb-1">
+  <div class="flex flex-wrap justify-between">
+    @if (!!cv) {
+      <!-- PERSONAL DATA -->
+      <div class="w-full md:w-1/2">
+        <ng-container
+          *ngTemplateOutlet="
+            dataSection;
+            context: {
+              title: translations['PERSONAL_DATA'],
+              icon: 'person_pin',
+              items: personalData,
+            }
+          "
+        ></ng-container>
+      </div>
+
+      <!-- CV -->
+      <div class="w-full md:w-1/2 mt-6 md:mt-0 md:pl-12">
+        <ng-container
+          *ngTemplateOutlet="
+            dataSection;
+            context: {
+              title: 'CV',
+              icon: 'swip_document',
+              items: [cv],
+            }
+          "
+        ></ng-container>
+      </div>
+    } @else {
+      <!-- COMPANY DATA -->
+      <div class="w-full md:w-1/2">
+        <ng-container
+          *ngTemplateOutlet="
+            dataSection;
+            context: {
+              title: translations['COMPANY_DATA'],
+              icon: 'person_pin',
+              items: companyData,
+            }
+          "
+        ></ng-container>
+      </div>
+
+      <!-- COMPANY IMAGE -->
+      <div class="w-full md:w-1/2 md:pl-12">
+        <ng-container
+          *ngTemplateOutlet="
+            dataSection;
+            context: {
+              title: translations['COMPANY_IMAGE'],
+              icon: 'image',
+              items: [],
+              image: companyImage,
+            }
+          "
+        ></ng-container>
+      </div>
+    }
+  </div>
+
+  <!-- CONTACT DATA -->
+  <div class="mt-6 pt-6 border-t border-white">
+    <ng-container
+      *ngTemplateOutlet="
+        dataSection;
+        context: {
+          title: translations['CONTACT_DATA'],
+          icon: 'phone_iphone',
+          items: contactData,
+        }
+      "
+    ></ng-container>
+  </div>
+</div>
+
+<!-- TEMPLATE -->
+<ng-template #dataSection let-title="title" let-icon="icon" let-items="items" let-image="image">
+  <div>
+    <div class="flex items-center">
+      <swip-icon class="!w-8 !h-8 !text-3xl mr-2" [icon]="{ value: icon }"></swip-icon>
+      <h3 class="h4">{{ title }}</h3>
+    </div>
+
+    @if (items.length > 0) {
+      <ul class="pl-10">
+        @for (item of items; track $index) {
+          <li class="body-2">{{ item }}</li>
+        }
+      </ul>
+    } @else {
+      <img class="pl-10 max-w-20 mt-2" [src]="image" alt="Company Image" />
+    }
+  </div>
+</ng-template>

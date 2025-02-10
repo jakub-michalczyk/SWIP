@@ -1,0 +1,26 @@
+@let companyName = form.controls['companyName'];
+
+<div [formGroup]="form">
+  <!-- COMPANY IMAGE -->
+  <div class="text-white flex items-center">
+    <swip-upload-image [form]="form"></swip-upload-image>
+    <div class="ml-4">Company Image</div>
+  </div>
+
+  <!-- COMPANY NAME -->
+  <mat-form-field class="w-full mt-6">
+    <mat-label>{{ 'COMPANY_NAME' | translate }}</mat-label>
+    <input type="text" matInput [placeholder]="'EXAMPLE_COMPANY_NAME' | translate" formControlName="companyName" />
+    @if (companyName.hasError('required')) {
+      <mat-error class="!text-white !flex items-center">
+        <span>• {{ 'COMPANY_NAME_REQUIRED' | translate }}</span>
+      </mat-error>
+    }
+  </mat-form-field>
+
+  <!-- CITY -->
+  <mat-form-field class="w-full mt-6">
+    <mat-label>{{ 'CITY' | translate }}</mat-label>
+    <input type="text" matInput [placeholder]="'EXAMPLE_CITY' | translate" formControlName="city" />
+  </mat-form-field>
+</div>

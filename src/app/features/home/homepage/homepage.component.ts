@@ -12,6 +12,7 @@ import { TopbarComponent } from '../../../core/components/topbar/topbar.componen
 import { StandaloneService } from '../../../core/services/standalone/standalone.service';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
 import { RegisterFormComponent } from '../../register/register-form/register-form.component';
+import { RegisterService } from '../../register/register.service';
 
 @Component({
   selector: 'swip-homepage',
@@ -32,16 +33,19 @@ export class HomepageComponent implements OnInit {
   isMobile: boolean = false;
   isPWA: boolean = false;
   formExpanded = signal(false);
+  emailVerificationSent = false;
 
   constructor(
     private mobileService: MobileService,
-    private standaloneService: StandaloneService
+    private standaloneService: StandaloneService,
+    private registerService: RegisterService
   ) {}
 
   ngOnInit() {
     this.registerServiceWorker();
     this.setUpPWASub();
     this.setUpMobileServiceSub();
+    this.setUpRegisterService();
   }
 
   registerServiceWorker() {
@@ -57,6 +61,10 @@ export class HomepageComponent implements OnInit {
           });
       }
     }
+  }
+
+  setUpRegisterService() {
+    this.registerService.verificationEmailSent$.subscribe((sent) => (this.emailVerificationSent = sent));
   }
 
   setUpPWASub() {

@@ -1,4 +1,10 @@
-<mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style" value="0">
-  <mat-button-toggle value="0">{{ values[0] }}</mat-button-toggle>
-  <mat-button-toggle value="1">{{ values[1] }}</mat-button-toggle>
+<mat-button-toggle-group
+  appearance="legacy"
+  name="fontStyle"
+  aria-label="Font Style"
+  [value]="0"
+  (change)="onChange($event)"
+>
+  <mat-button-toggle [value]="values[0].id">{{ values[0].translateCode | translate }}</mat-button-toggle>
+  <mat-button-toggle [value]="values[1].id">{{ values[1].translateCode | translate }}</mat-button-toggle>
 </mat-button-toggle-group>

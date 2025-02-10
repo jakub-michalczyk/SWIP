@@ -1,0 +1,13 @@
+<button
+  class="border-white border-dashed border w-16 h-16 rounded flex items-center justify-center cursor-pointer relative transition-all duration-200 hover:bg-white hover:bg-opacity-25"
+  (click)="fileInput.click()"
+  (keyup)="fileInput.click()"
+>
+  <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
+
+  @if (imagePreview) {
+    <img [src]="imagePreview" alt="Preview" class="p-2 absolute w-full h-full object-cover rounded" />
+  } @else {
+    <mat-icon class="text-4xl !w-9 !h-9">image</mat-icon>
+  }
+</button>

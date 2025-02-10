@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
-  selector: 'swip-register-step-employee-2',
+  selector: 'swip-register-step-2',
   imports: [
     FormsModule,
     MatFormFieldModule,
@@ -22,9 +22,9 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     TranslateModule,
   ],
   providers: [provideNgxMask()],
-  templateUrl: './register-step-employee-2.component.html',
+  templateUrl: './register-step-2.component.html',
 })
-export class RegisterStepEmployee2Component {
+export class RegisterStep2Component {
   @Input({ required: true }) form = {} as FormGroup;
   selectedCountryCode = '+48';
   phoneMask = '000-000-000';

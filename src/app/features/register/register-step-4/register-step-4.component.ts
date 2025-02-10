@@ -6,11 +6,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { IconComponent } from '../../../core/components/icon/icon.component';
 
 @Component({
-  selector: 'swip-register-step-employee-4',
+  selector: 'swip-register-step-4',
   imports: [IconComponent, CommonModule],
-  templateUrl: './register-step-employee-4.component.html',
+  templateUrl: './register-step-4.component.html',
 })
-export class RegisterStepEmployee4Component {
+export class RegisterStep4Component {
   @Input({ required: true }) form = {} as FormGroup;
   private destroyerRef = inject(DestroyRef);
 
@@ -35,6 +35,9 @@ export class RegisterStepEmployee4Component {
     this.translations['CITY'] = this.translate.instant('CITY');
     this.translations['PHONE_NUMBER'] = this.translate.instant('PHONE_NUMBER');
     this.translations['EMAIL'] = this.translate.instant('EMAIL');
+    this.translations['COMPANY_DATA'] = this.translate.instant('COMPANY_DATA');
+    this.translations['COMPANY_NAME'] = this.translate.instant('COMPANY_NAME');
+    this.translations['COMPANY_IMAGE'] = this.translate.instant('COMPANY_IMAGE');
   }
 
   get personalData(): string[] {
@@ -47,12 +50,29 @@ export class RegisterStepEmployee4Component {
     );
   }
 
+  get companyData(): string[] {
+    return (
+      [
+        `${this.translations['COMPANY_NAME']}: ${this.companyName}`,
+        this.city ? `${this.translations['CITY']}: ${this.city}` : '',
+      ].filter(Boolean) || []
+    );
+  }
+
   get contactData(): string[] {
     return [`${this.translations['PHONE_NUMBER']}: ${this.telephone}`, `${this.translations['EMAIL']}: ${this.email}`];
   }
 
+  get companyImage() {
+    return this.form.get('companyImage')?.value;
+  }
+
   get name(): string {
     return this.form.get('firstName')?.value || '';
+  }
+
+  get companyName(): string {
+    return this.form.get('companyName')?.value || '';
   }
 
   get lastName(): string {

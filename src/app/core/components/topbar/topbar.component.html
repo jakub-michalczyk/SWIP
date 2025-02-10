@@ -5,7 +5,11 @@
 
   <!-- BUTTONS -->
   <div>
-    @if (isPWA) {
+    @if (user$ | async) {
+      <div>
+        <mat-icon class="!w-12 !h-12 !text-5xl text-white">account_circle</mat-icon>
+      </div>
+    } @else if (isPWA) {
       <button routerLink="/login" class="ml-4" mat-flat-button>
         {{ 'SIGN_IN' | translate }}
       </button>

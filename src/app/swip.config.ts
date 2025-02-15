@@ -18,7 +18,8 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
-import { environment } from '../environments/enviroment';
+
+import { environment } from '../environments/enviroment.example';
 import { InitializeService } from './core/services/initialize/initialize.service';
 import { ELanguageCode } from './shared/enums/language.enum';
 import { routes } from './swip.routes';

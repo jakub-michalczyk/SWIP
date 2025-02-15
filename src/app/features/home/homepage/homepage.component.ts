@@ -4,9 +4,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { fromEvent } from 'rxjs';
 
-import { environment } from '../../../../environments/enviroment';
+import { environment } from '../../../../environments/enviroment.example';
 import { IconComponent } from '../../../core/components/icon/icon.component';
 import { TopbarComponent } from '../../../core/components/topbar/topbar.component';
 import { StandaloneService } from '../../../core/services/standalone/standalone.service';
@@ -28,7 +27,6 @@ import { RegisterService } from '../../register/register.service';
   templateUrl: './homepage.component.html',
 })
 export class HomepageComponent implements OnInit {
-  private installEvent?: BeforeInstallPromptEvent;
   private readonly destroyerRef = inject(DestroyRef);
   isMobile: boolean = false;
   isPWA: boolean = false;
@@ -68,12 +66,6 @@ export class HomepageComponent implements OnInit {
   }
 
   setUpPWASub() {
-    const installPrompt$ = fromEvent<BeforeInstallPromptEvent>(window, 'beforeinstallprompt');
-
-    installPrompt$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((event) => {
-      this.installEvent = event; // Catch event
-    });
-
     this.standaloneService.isStandaloneMode$
       .pipe(takeUntilDestroyed(this.destroyerRef))
       .subscribe((value: boolean) => (this.isPWA = value));
@@ -86,10 +78,7 @@ export class HomepageComponent implements OnInit {
   }
 
   installApp() {
-    if (this.installEvent) {
-      this.installEvent.prompt();
-      this.installEvent = undefined;
-    }
+    this.standaloneService.installApp();
   }
 
   toggleForm() {

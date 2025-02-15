@@ -1,40 +1,54 @@
 <swip-topbar></swip-topbar>
-<div class="min-h-screen text-white px-6 md:px-12 lg:px-32 pt-24">
-  <div class="w-full flex-col xl:flex-row flex items-center justify-between pb-24 xl:pb-40">
-    <div class="w-full xl:w-2/5">
+<div class="text-white px-6 md:px-12 xl:px-48 pt-24 pb-12 xl:pb-0">
+  <div class="w-full flex-col lg:flex-row flex items-center justify-between pb-12 xl:pb-24">
+    <div class="w-full xl:w-1/2">
       <h1 class="h2 text-red-650">
         {{ 'DREAM_JOB' | translate }}
       </h1>
       <p class="mt-6 body-1">
         {{ 'JOB_DESC' | translate }}
       </p>
-      <div class="hidden xl:block mt-12">
-        <ng-container *ngTemplateOutlet="connector; context: {}"> </ng-container>
-      </div>
+      <button (click)="scrollToSection()" class="mt-16" mat-flat-button>{{ 'SEE_MORE' | translate }}</button>
     </div>
-    <div class="mt-24 xl:mt-0 w-full xl:w-1/2 relative xl:ml-24 flex justify-center">
+    <div class="mt-24 lg:mt-0 w-full xl:w-1/2 relative flex justify-center">
       <img class="w-3/4" src="/images/bloob.png" alt="Mobile Phone" />
       <img class="w-3/4 absolute top-0 xl:left-1/2 xl:-translate-x-1/2" src="/images/phone.gif" alt="Mobile Phone" />
     </div>
   </div>
 </div>
-<div class="mt-12">
-  <ng-container *ngTemplateOutlet="connector; context: {}"> </ng-container>
+<div class="bg-red-650 py-12" #about>
+  <div class="text-white flex flex-wrap justify-center xl:justify-between px-6 md:px-12 xl:px-20">
+    @for (section of sections; track $index) {
+      <ng-container *ngTemplateOutlet="sectionRef; context: { section: section }"> </ng-container>
+    }
+  </div>
 </div>
-
-<div class="px-6 md:px-12 lg:px-32 flex justify-center mt-48 pb-32 bg-none md:bg-topography bg-no-repeat">
+<div class="px-6 md:px-12 lg:px-32 flex justify-center mt-24 pb-32 bg-none lg:bg-corner bg-no-repeat bg-(length:20rem)">
   <div class="py-12 w-full xl:w-1/2 mx-auto">
     <h2 class="h2 text-red-650 flex items-center">{{ 'TAKE_CHARGE' | translate }}</h2>
     <p class="body-1 text-white mt-6">
       {{ 'WHAT_IS_SWIP' | translate }}
     </p>
-    <button class="mt-16" mat-flat-button>{{ 'GET_APP' | translate }}</button>
+    <button (click)="installApp()" class="mt-16 _contrast-flat" mat-flat-button>{{ 'GET_APP' | translate }}</button>
   </div>
 </div>
 
-<ng-template #connector>
-  <div class="flex flex-col items-center">
-    <div class="rounded-full bg-red-650 w-12 h-12"></div>
-    <div appExpandOnView class="w-1 h-0 border-2 border-dashed border-red-650 transition-all duration-500"></div>
+<ng-template #sectionRef let-section="section">
+  <div class="w-full md:w-full lg:w-1/2 xl:w-1/4 pb-24 lg:p-8 xl:p-0 flex flex-col">
+    <div class="flex items-center">
+      <div class="text-8xl text-white font-extrabold">
+        {{ section.index }}
+      </div>
+      <h2 class="h3 md:h2 lg:h4 mt-4 ml-4 w-full xl:text-left">
+        {{ section.titleCode | translate }}
+      </h2>
+    </div>
+    <div class="text-center mt-12">
+      <img class="w-3/4 lg:w-full inline" [src]="'/images/' + section.image + '.svg'" alt="Image" />
+    </div>
+    <p class="text-center lg:text-left mt-12 body-2 md:body-1">
+      <mat-icon class="align-middle">info</mat-icon>
+      {{ section.descriptionCode | translate }}
+    </p>
   </div>
 </ng-template>

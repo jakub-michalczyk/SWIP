@@ -22,5 +22,6 @@
   "FORGOT_PASSWORD": "Forgot password",
   "RESET_PASSWORD": "Reset password",
   "RETURN_LOGIN": "Return to login",
-  "RESET_EMAIL_SEND": "The password reset email has been sent."
+  "RESET_EMAIL_SEND": "The password reset email has been sent.",
+  "SEE_MORE": "See more"
 }

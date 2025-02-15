@@ -1,5 +1,5 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, fromEvent, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,11 +7,20 @@ import { BehaviorSubject, take } from 'rxjs';
 export class StandaloneService {
   private isStandaloneSubject = new BehaviorSubject<boolean>(this.checkIfPwa());
   private renderer: Renderer2;
+  private installEventSubject = new BehaviorSubject<BeforeInstallPromptEvent | null>(null);
 
   constructor(private rendererFactory: RendererFactory2) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
     this.checkIfPwa();
     this.addBodyClass();
+    this.setUpPromptEvent();
+  }
+
+  private setUpPromptEvent() {
+    fromEvent<BeforeInstallPromptEvent>(window, 'beforeinstallprompt').subscribe((event) => {
+      event.preventDefault();
+      this.installEventSubject.next(event);
+    });
   }
 
   private checkIfPwa() {
@@ -35,6 +44,14 @@ export class StandaloneService {
       .subscribe((mode) =>
         mode ? this.renderer.addClass(document.body, 'pwa') : this.renderer.removeClass(document.body, 'pwa')
       );
+  }
+
+  installApp() {
+    const installEvent = this.installEventSubject.getValue();
+    if (installEvent) {
+      installEvent.prompt();
+      this.installEventSubject.next(null); // Wyczyszczenie eventu po użyciu
+    }
   }
 
   get isStandaloneMode$() {

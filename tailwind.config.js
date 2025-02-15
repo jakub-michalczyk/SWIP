@@ -18,7 +18,8 @@ module.exports = {
         "17/20": "85%"
       },
       width: {
-        "3/10": "30%"
+        "3/10": "30%",
+        "97": "30rem"
       },
       colors: {
         "red-650": "#DB4A2B",
@@ -29,8 +30,7 @@ module.exports = {
         "home-desktop": "url('/images/desktop_bg.png')",
         "home-mobile": "url('/images/mobile_bg.png')",
         "wave": "url('/images/wave.svg')",
-        "topography": "url('/images/topography.png')",
-        "corner": "url('/images/corner.png')",
+        "corner": "url('/images/corner.png')"
       },
     },
   },

@@ -1,0 +1,35 @@
+{
+    "PRIVACY_TITLE": "Application Privacy Policy",
+    
+    "PRIVACY_GENERAL_TITLE": "1. General Provisions",
+    "PRIVACY_GENERAL_1": "1.1. The administrator of users' personal data in the SWIP application is [company name] based in [company address].",
+    "PRIVACY_GENERAL_2": "1.2. Users' personal data will be processed in accordance with applicable data protection laws, including the General Data Protection Regulation (GDPR) (EU) 2016/679.",
+  
+    "PRIVACY_DATA_COLLECTION_TITLE": "2. Scope of Data Collection",
+    "PRIVACY_DATA_COLLECTION_1": "2.1. The application collects users' personal data to provide services on the platform.",
+    "PRIVACY_DATA_COLLECTION_2": "2.2. Collected data includes: email, password, phone number, city, CV, company name (for Employers), company logo (for Employers).",
+    "PRIVACY_DATA_COLLECTION_3": "2.3. This data is used solely to enable the functionality of the application.",
+  
+    "PRIVACY_PROCESSING_TITLE": "3. Purpose of Data Processing",
+    "PRIVACY_PROCESSING_1": "3.1. We process personal data for the following purposes:",
+    "PRIVACY_PROCESSING_2": "3.2. User registration and login.",
+    "PRIVACY_PROCESSING_3": "3.3. Providing access to job offers and allowing users to apply or reject offers.",
+    "PRIVACY_PROCESSING_4": "3.4. Storing and managing user data in the system.",
+    "PRIVACY_PROCESSING_5": "3.5. Communicating with application users.",
+  
+    "PRIVACY_SHARING_TITLE": "4. Data Sharing",
+    "PRIVACY_SHARING_1": "4.1. The application does not share users' personal data with third parties unless necessary for service provision or required by law.",
+    "PRIVACY_SHARING_2": "4.2. Employers have access to information such as the company name and logo of other employers for job posting visibility.",
+  
+    "PRIVACY_STORAGE_TITLE": "5. Data Storage",
+    "PRIVACY_STORAGE_1": "5.1. Users' personal data will be stored as long as they use the application or until they delete their account.",
+    "PRIVACY_STORAGE_2": "5.2. By default, Firebase stores data in the us-central1 region (United States). (firebase.google.com)",
+  
+    "PRIVACY_RIGHTS_TITLE": "6. User Rights",
+    "PRIVACY_RIGHTS_1": "6.1. Users have the right to access, correct, and delete their personal data.",
+    "PRIVACY_RIGHTS_2": "6.2. Users have the right to withdraw their consent to the processing of their personal data.",
+  
+    "PRIVACY_CONTACT_TITLE": "7. Contact",
+    "PRIVACY_CONTACT_1": "7.1. If you have any questions regarding the privacy policy, you can contact the application administrator at: <a href='mailto:dev.jakubmichalczyk@gmail.com' class='text-red-650'>dev.jakubmichalczyk@gmail.com</span>."
+  }
+  

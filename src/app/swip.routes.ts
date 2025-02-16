@@ -3,6 +3,8 @@ import { HomepageComponent } from './features/home/homepage/homepage.component';
 import { LoginComponent } from './features/login/login/login.component';
 import { MoreComponent } from './features/more/more/more.component';
 import { RegisterWrapComponent } from './features/register/register-wrap/register-wrap.component';
+import { PrivacyPolicyComponent } from './features/regulations/privacy-policy/privacy-policy.component';
+import { TermsComponent } from './features/regulations/terms/terms.component';
 
 export const routes: Routes = [
   {
@@ -14,14 +16,14 @@ export const routes: Routes = [
     children: [
       {
         path: 'terms',
-        redirectTo: '/',
+        component: TermsComponent,
         data: {
           titleCode: 'TERMS',
         },
       },
       {
         path: 'privacy-policy',
-        redirectTo: '/',
+        component: PrivacyPolicyComponent,
         data: {
           titleCode: 'PRIVACY_POLICY',
         },

@@ -1,0 +1,34 @@
+{
+    "TERMS_TITLE": "Appliation Terms",
+    "GENERAL_TITLE": "1. General Provisions",
+    "GENERAL_1": "1.1. These terms and conditions define the rules for using the SWIP application, a platform enabling job searching and job posting.",
+    "GENERAL_2": "1.2. The application is available for two types of users: Employees and Employers.",
+    "GENERAL_3": "1.3. Using the SWIP application is voluntary and free of charge, except for possible premium services that may be offered in the future.",
+  
+    "REGISTRATION_TITLE": "2. Registration and Login",
+    "REGISTRATION_1": "2.1. To access the application's features, users must register by providing the required information.",
+    "REGISTRATION_2": "2.2. Users can register as either an Employee or an Employer.",
+    "REGISTRATION_3": "2.3. Registration requires the following details:",
+    "REGISTRATION_4": "2.4. Logging into the application is done using an email address and password.",
+  
+    "USAGE_TITLE": "3. Using the Application",
+    "USAGE_1": "3.1. After logging in, users have access to job offers available to them based on their profile.",
+    "USAGE_2": "3.2. Employees can browse job offers and either accept, reject, or swipe to see the next available offers.",
+    "USAGE_3": "3.3. Employers can browse candidate profiles and post job offers that will be available to employees.",
+    "USAGE_4": "3.4. Job offers are available to all users of the application who have created an Employer account.",
+  
+    "RESPONSIBILITY_TITLE": "4. User Responsibilities",
+    "RESPONSIBILITY_1": "4.1. Users are required to provide true information during registration and profile updates.",
+    "RESPONSIBILITY_2": "4.2. Users agree to comply with the application regulations and not to take actions that may harm other users or the application.",
+  
+    "PRIVACY_TITLE": "5. Privacy Policy",
+    "PRIVACY_1": "5.1. The application collects users' personal data in order to provide services in accordance with data protection laws.",
+    "PRIVACY_2": "5.2. Users have the right to view, edit, and delete their personal data in the application.",
+  
+    "CHANGES_TITLE": "6. Changes to the Terms",
+    "CHANGES_1": "6.1. The application administrator has the right to introduce changes to the terms. These changes will be published on the application website.",
+  
+    "CONTACT_TITLE": "7. Contact",
+    "CONTACT_1": "7.1. In case of any questions regarding the terms, users can contact the application administrator at: <a href='mailto:dev.jakubmichalczyk@gmail.com' class='text-red-650'>dev.jakubmichalczyk@gmail.com</span>."
+  }
+  

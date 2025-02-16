@@ -1,0 +1,35 @@
+{
+    "PRIVACY_TITLE": "Polityka Prywatności Aplikacji",
+    
+    "PRIVACY_GENERAL_TITLE": "1. Postanowienia ogólne",
+    "PRIVACY_GENERAL_1": "1.1. Administratorem danych osobowych użytkowników aplikacji SWIP jest [nazwa firmy] z siedzibą w [adres firmy].",
+    "PRIVACY_GENERAL_2": "1.2. Dane osobowe użytkowników będą przetwarzane zgodnie z obowiązującymi przepisami o ochronie danych osobowych, w tym Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679.",
+  
+    "PRIVACY_DATA_COLLECTION_TITLE": "2. Zakres zbieranych danych",
+    "PRIVACY_DATA_COLLECTION_1": "2.1. Aplikacja zbiera dane osobowe użytkowników w celu świadczenia usług na platformie.",
+    "PRIVACY_DATA_COLLECTION_2": "2.2. Zbierane dane obejmują: email, hasło, telefon, miasto, CV, nazwę firmy (dla Pracodawców), logo firmy (dla Pracodawców).",
+    "PRIVACY_DATA_COLLECTION_3": "2.3. Dane te są wykorzystywane wyłącznie w celu umożliwienia korzystania z funkcji aplikacji.",
+  
+    "PRIVACY_PROCESSING_TITLE": "3. Cel przetwarzania danych",
+    "PRIVACY_PROCESSING_1": "3.1. Przetwarzamy dane osobowe w następujących celach:",
+    "PRIVACY_PROCESSING_2": "3.2. Rejestracja i logowanie użytkowników.",
+    "PRIVACY_PROCESSING_3": "3.3. Zapewnienie dostępu do ofert pracy i umożliwienie aplikowania lub odrzucania ofert.",
+    "PRIVACY_PROCESSING_4": "3.4. Przechowywanie i zarządzanie danymi użytkowników w systemie.",
+    "PRIVACY_PROCESSING_5": "3.5. Komunikacja z użytkownikami aplikacji.",
+  
+    "PRIVACY_SHARING_TITLE": "4. Udostępnianie danych",
+    "PRIVACY_SHARING_1": "4.1. Aplikacja nie udostępnia danych osobowych użytkowników osobom trzecim, chyba że jest to konieczne do realizacji usług lub wymagane przez prawo.",
+    "PRIVACY_SHARING_2": "4.2. Pracodawcy mają dostęp do informacji takich jak nazwa firmy i logo innych pracodawców w celu wyświetlania ofert pracy.",
+  
+    "PRIVACY_STORAGE_TITLE": "5. Przechowywanie danych",
+    "PRIVACY_STORAGE_1": "5.1. Dane osobowe użytkowników będą przechowywane przez czas korzystania z aplikacji lub do momentu usunięcia konta przez użytkownika.",
+    "PRIVACY_STORAGE_2": "5.2. Domyślnie, Firebase przechowuje dane w regionie us-central1 (Stany Zjednoczone). (firebase.google.com)",
+  
+    "PRIVACY_RIGHTS_TITLE": "6. Prawa użytkownika",
+    "PRIVACY_RIGHTS_1": "6.1. Użytkownik ma prawo do dostępu do swoich danych osobowych, ich poprawiania oraz usuwania.",
+    "PRIVACY_RIGHTS_2": "6.2. Użytkownik ma prawo do wycofania zgody na przetwarzanie swoich danych osobowych.",
+  
+    "PRIVACY_CONTACT_TITLE": "7. Kontakt",
+    "PRIVACY_CONTACT_1": "7.1. W przypadku jakichkolwiek pytań dotyczących polityki prywatności, użytkownicy mogą skontaktować się z administratorem aplikacji pod adresem e-mail: <a href='mailto:dev.jakubmichalczyk@gmail.com' class='text-red-650'>dev.jakubmichalczyk@gmail.com</span>."
+  }
+  

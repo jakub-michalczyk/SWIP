@@ -86,5 +86,15 @@ function HttpLoaderFactory2(http: HttpBackend) {
       suffix: '.json',
       optional: true,
     },
+    {
+      prefix: 'translation/terms/',
+      suffix: '.json',
+      optional: true,
+    },
+    {
+      prefix: 'translation/privacy-policy/',
+      suffix: '.json',
+      optional: true,
+    },
   ]);
 }

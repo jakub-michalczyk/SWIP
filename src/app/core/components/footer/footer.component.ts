@@ -53,7 +53,19 @@ export class FooterComponent {
 
   private getMenuData(navData: Route[]) {
     navData.forEach((d) => {
-      const footerLinks = d.children || [d.data];
+      const footerLinks =
+        d.children && d.children.length > 0
+          ? d.children.map((child) => ({
+              ...child.data,
+              path: `${d.path}/${child.path}`,
+            }))
+          : [
+              {
+                ...d.data,
+                path: `/${d.path}`,
+              },
+            ];
+
       this.columns.push({
         headingCode: d.data?.['headingCode'] || '',
         data: footerLinks as IFooterLink[],

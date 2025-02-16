@@ -1,0 +1,34 @@
+{
+    "TERMS_TITLE": "Regulamin aplikacji",
+    "GENERAL_TITLE": "1. Postanowienia ogólne",
+    "GENERAL_1": "1.1. Niniejszy regulamin określa zasady korzystania z aplikacji SWIP, platformy umożliwiającej poszukiwanie pracy oraz publikowanie ofert pracy.",
+    "GENERAL_2": "1.2. Aplikacja jest dostępna dla dwóch typów użytkowników: Pracowników (Employee) oraz Pracodawców (Employer).",
+    "GENERAL_3": "1.3. Korzystanie z aplikacji SWIP jest dobrowolne i bezpłatne, z wyjątkiem ewentualnych usług premium, które mogą zostać zaoferowane w przyszłości.",
+  
+    "REGISTRATION_TITLE": "2. Rejestracja i logowanie",
+    "REGISTRATION_1": "2.1. Aby uzyskać dostęp do funkcjonalności aplikacji, użytkownicy muszą zarejestrować się w systemie, podając dane wymagane podczas rejestracji.",
+    "REGISTRATION_2": "2.2. Użytkownicy mogą zarejestrować się jako Pracownik lub Pracodawca.",
+    "REGISTRATION_3": "2.3. Rejestracja wymaga podania następujących danych:",
+    "REGISTRATION_4": "2.4. Logowanie do aplikacji odbywa się za pomocą adresu e-mail i hasła.",
+  
+    "USAGE_TITLE": "3. Korzystanie z aplikacji",
+    "USAGE_1": "3.1. Po zalogowaniu, użytkownicy mają dostęp do ofert pracy dostępnych dla nich na podstawie ich profilu.",
+    "USAGE_2": "3.2. Pracownicy mogą przeglądać oferty pracy, które mogą zaakceptować, odrzucić lub przewinąć, aby zobaczyć kolejne dostępne oferty.",
+    "USAGE_3": "3.3. Pracodawcy mogą przeglądać profile kandydatów, a także publikować oferty pracy, które będą dostępne dla pracowników.",
+    "USAGE_4": "3.4. Oferty pracy są dostępne dla wszystkich użytkowników aplikacji.",
+  
+    "RESPONSIBILITY_TITLE": "4. Odpowiedzialność użytkowników",
+    "RESPONSIBILITY_1": "4.1. Użytkownicy są zobowiązani do podawania prawdziwych danych podczas rejestracji i aktualizacji swojego profilu.",
+    "RESPONSIBILITY_2": "4.2. Użytkownicy zobowiązują się do przestrzegania regulaminu aplikacji.",
+  
+    "PRIVACY_TITLE": "5. Zasady prywatności",
+    "PRIVACY_1": "5.1. Aplikacja zbiera dane osobowe użytkowników w celu świadczenia usług zgodnie z ustawami o ochronie danych osobowych.",
+    "PRIVACY_2": "5.2. Użytkownicy mają prawo do wglądu, edytowania oraz usuwania swoich danych osobowych w aplikacji.",
+  
+    "CHANGES_TITLE": "6. Zmiany regulaminu",
+    "CHANGES_1": "6.1. Administrator aplikacji ma prawo do wprowadzania zmian w regulaminie.",
+  
+    "CONTACT_TITLE": "7. Kontakt",
+    "CONTACT_1": "7.1. W przypadku pytań dotyczących regulaminu, użytkownicy mogą skontaktować się z administratorem aplikacji pod adresem e-mail: <a href='mailto:dev.jakubmichalczyk@gmail.com' class='text-red-650'>dev.jakubmichalczyk@gmail.com</span>."
+  }
+  

@@ -1,5 +1,5 @@
 <swip-topbar></swip-topbar>
-<div class="text-white px-6 md:px-12 xl:px-48 pt-24 pb-12 xl:pb-0">
+<div class="text-white px-6 md:px-12 xl:px-48 py-12 lg:pt-24 xl:pb-0">
   <div class="w-full flex-col lg:flex-row flex items-center justify-between pb-12 xl:pb-24">
     <div class="w-full xl:w-1/2">
       <h1 class="h2 text-red-650">
@@ -17,13 +17,13 @@
   </div>
 </div>
 <div class="bg-red-650 py-12" #about>
-  <div class="text-white flex flex-wrap justify-center xl:justify-between px-6 md:px-12 xl:px-20">
+  <div class="text-white flex flex-wrap justify-center px-6 md:px-12 xl:px-20">
     @for (section of sections; track $index) {
-      <ng-container *ngTemplateOutlet="sectionRef; context: { section: section }"> </ng-container>
+      <ng-container *ngTemplateOutlet="sectionRef; context: { section: section, last: $last }"> </ng-container>
     }
   </div>
 </div>
-<div class="px-6 md:px-12 lg:px-32 flex justify-center mt-24 pb-32 bg-none lg:bg-corner bg-no-repeat bg-(length:20rem)">
+<div class="px-6 md:px-12 xl:px-32 flex justify-center mt-12 pb-16 bg-none xl:bg-corner bg-no-repeat bg-(length:20rem)">
   <div class="py-12 w-full xl:w-1/2 mx-auto">
     <h2 class="h2 text-red-650 flex items-center">{{ 'TAKE_CHARGE' | translate }}</h2>
     <p class="body-1 text-white mt-6">
@@ -33,20 +33,22 @@
   </div>
 </div>
 
-<ng-template #sectionRef let-section="section">
-  <div class="w-full md:w-full lg:w-1/2 xl:w-1/4 pb-24 lg:p-8 xl:p-0 flex flex-col">
-    <div class="flex items-center">
-      <div class="text-8xl text-white font-extrabold">
-        {{ section.index }}
-      </div>
-      <h2 class="h3 md:h2 lg:h4 mt-4 ml-4 w-full xl:text-left">
+<ng-template #sectionRef let-section="section" let-isLast="last">
+  <div class="w-full md:w-full lg:w-1/3 flex flex-col" [ngClass]="{ 'mb-24 lg:mb-0 lg:mr-24 xl:mr-48': !isLast }">
+    <div class="flex justify-center lg:justify-start items-center">
+      <div class="text-6xl lg:text-8xl text-white font-extrabold">{{ section.index }}.</div>
+      <h2 class="h3 lg:h4 mt-4 ml-4 lg:w-full xl:text-left">
         {{ section.titleCode | translate }}
       </h2>
     </div>
+    <p class="block lg:hidden text-center mt-4 body-2 align-middle">
+      <mat-icon class="align-middle">info</mat-icon>
+      {{ section.descriptionCode | translate }}
+    </p>
     <div class="text-center mt-12">
-      <img class="w-3/4 lg:w-full inline" [src]="'/images/' + section.image + '.svg'" alt="Image" />
+      <img class="w-3/4 lg:w-full inline" [src]="'/images/' + section.image + '.gif'" alt="Image" />
     </div>
-    <p class="text-center lg:text-left mt-12 body-2 md:body-1">
+    <p class="hidden lg:block text-left mt-12 body-2 body-1 align-middle">
       <mat-icon class="align-middle">info</mat-icon>
       {{ section.descriptionCode | translate }}
     </p>

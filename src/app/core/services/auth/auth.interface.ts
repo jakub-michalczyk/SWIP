@@ -1,8 +1,12 @@
+import { ELanguageCode } from '../../../shared/enums/language.enum';
+
 export interface IUser extends IGeneralUser {
   firstName: string;
   lastName: string;
   city?: string;
-  cv: string | null;
+  cv: ICV | null;
+  lang?: ELanguageCode;
+  uid: string;
 }
 
 export interface ICompany extends IGeneralUser {
@@ -20,4 +24,9 @@ export interface IGeneralUser {
 export enum EUserType {
   EMPLOYER,
   EMPLOYEE,
+}
+
+export interface ICV {
+  name: string;
+  data: string;
 }

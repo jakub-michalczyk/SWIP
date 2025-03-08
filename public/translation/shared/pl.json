@@ -21,7 +21,13 @@
   "SIGN_IN": "Zaloguj",
   "FORGOT_PASSWORD": "Zapomniałeś hasła",
   "RESET_PASSWORD": "Zresetuj hasło",
+  "PASSWORD": "Hasło",
   "RETURN_LOGIN": "Powrót do logowania",
   "RESET_EMAIL_SEND": "E-mail z resetem hasła został wysłany.",
-   "SEE_MORE": "Dowiedz się więcej"
+  "SEE_MORE": "Dowiedz się więcej",
+  "CONTACT_DATA": "Dane kontaktowe",
+  "PERSONAL_DATA": "Dane personalne",
+  "EDIT": "Edytuj",
+  "CANCEL": "Anuluj",
+  "SAVE_CHANGES": "Zapisz zmiany"
 }

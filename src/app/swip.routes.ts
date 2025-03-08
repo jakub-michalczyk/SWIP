@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AccountComponent } from './features/account/account/account.component';
 import { HomepageComponent } from './features/home/homepage/homepage.component';
 import { LoginComponent } from './features/login/login/login.component';
 import { MoreComponent } from './features/more/more/more.component';
@@ -49,6 +50,11 @@ export const routes: Routes = [
   {
     path: 'register',
     component: RegisterWrapComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'account',
+    component: AccountComponent,
     pathMatch: 'full',
   },
   {

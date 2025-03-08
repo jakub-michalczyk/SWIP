@@ -14,7 +14,7 @@
     }
   </label>
   <input type="file" class="absolute -top-[1000px]" (change)="onFileSelected($event)" id="upload-photo" accept=".pdf" />
-  @if (cv.hasError('required') && cv.touched) {
+  @if (cv?.hasError('required') && cv.touched) {
     <mat-error class="!text-white !flex items-center body-3 my-1">
       <span>• {{ errorCopy | translate }}</span>
     </mat-error>

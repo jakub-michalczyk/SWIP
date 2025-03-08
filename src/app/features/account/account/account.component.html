@@ -1,0 +1,95 @@
+<div class="min-h-screen bg-[auto_40%] lg:bg-[auto_70%] bg-left-bottom bg-no-repeat md:bg-corner">
+  <swip-topbar></swip-topbar>
+  @if ((user$ | async) !== null) {
+    <div class="px-6 lg:px-48">
+      <div class="py-6 mx-auto relative transition-all w-full md:w-3/4">
+        <ng-container
+          *ngTemplateOutlet="
+            accountSection;
+            context: { title: 'PERSONAL_DATA', data: ACCOUNT_DATA.personalData, form: editForm }
+          "
+        ></ng-container>
+        <ng-container
+          *ngTemplateOutlet="
+            accountSection;
+            context: { title: 'CONTACT_DATA', data: ACCOUNT_DATA.contactData, form: editForm }
+          "
+        ></ng-container>
+
+        @if (!editMode()) {
+          <div class="mt-4">
+            <h3 class="h3 text-white">{{ 'PASSWORD' | translate }}</h3>
+            <button
+              class="mt-4 padding-0 bg-transparent border-none !text-white body-2"
+              (click)="openDialog('0ms', '0ms')"
+            >
+              <span class="border-b border-white"> {{ 'RESET_PASSWORD' | translate }} </span>
+            </button>
+          </div>
+        }
+
+        <div class="flex justify-between items-center mt-12 flex-wrap">
+          <div class="flex items-center">
+            @if (!editMode()) {
+              <button mat-fab extended (click)="toggleMode()">
+                {{ 'EDIT' | translate }}
+                <mat-icon>edit</mat-icon>
+              </button>
+            } @else {
+              <button mat-flat-button (click)="saveChanges()" [disabled]="!editForm.dirty">
+                {{ 'SAVE_CHANGES' | translate }}
+              </button>
+              <button mat-stroked-button class="ml-4" (click)="toggleMode()">{{ 'CANCEL' | translate }}</button>
+            }
+
+            @if (EUserType.EMPLOYEE) {
+              <button class="m-4" routerLink="/company-offers" mat-stroked-button>
+                {{ 'JOB_OFFERS' | translate }}
+              </button>
+            }
+          </div>
+          @if (!editMode()) {
+            <swip-language-buttons [accountMode]="true"></swip-language-buttons>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+<ng-template #accountSection let-title="title" let-data="data" let-form="form">
+  <div class="border-b border-white py-6" [formGroup]="form">
+    <h3 class="h3 text-white">{{ title | translate }}</h3>
+    <div class="flex flex-wrap gap-10" [ngClass]="{ 'justify-between ': editMode() }">
+      @for (accountData of data; track $index) {
+        <div class="mt-4" [ngClass]="{ 'flex-1': editMode() }">
+          <div class="h5 text-red-650">{{ accountData.title | translate }}</div>
+          @if (editMode()) {
+            @if (accountData.title === 'CV') {
+              <swip-upload-file
+                class="w-full block mt-4"
+                [form]="editForm"
+                beforeUploadCopy="UPLOAD_CV"
+                fieldKey="cv"
+                errorCopy="REQUIRED_CV"
+                fieldKey
+              ></swip-upload-file>
+            } @else {
+              <mat-form-field class="w-full mt-2">
+                <input type="text" [formControlName]="accountData.value" matInput />
+              </mat-form-field>
+            }
+          } @else {
+            <div class="body-2 text-white mt-2">
+              @if (accountData.title === 'CV') {
+                {{ cv }}
+              } @else {
+                {{ editForm.get(accountData.value)?.value }}
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</ng-template>

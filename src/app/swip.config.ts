@@ -96,5 +96,10 @@ function HttpLoaderFactory2(http: HttpBackend) {
       suffix: '.json',
       optional: true,
     },
+    {
+      prefix: 'translation/account/',
+      suffix: '.json',
+      optional: true,
+    },
   ]);
 }

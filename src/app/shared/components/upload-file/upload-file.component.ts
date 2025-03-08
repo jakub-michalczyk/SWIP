@@ -21,7 +21,7 @@ export class UploadFileComponent {
     const file: File = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      this.form.patchValue({ cv: file });
+      this.form.patchValue({ cv: { name: file.name, value: file } });
     }
   }
 }

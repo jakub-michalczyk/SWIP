@@ -1,15 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
-import { Observable } from 'rxjs';
+import { convertToBase64 } from '../../utils/utils';
 
 @Component({
   selector: 'swip-upload-image',
-  imports: [MatIcon],
+  imports: [MatIcon, CommonModule],
   templateUrl: './upload-image.component.html',
 })
 export class UploadImageComponent {
   @Input({ required: true }) form = {} as FormGroup;
+  @Input() fullSizeMode = false;
   imagePreview: string | ArrayBuffer | null = null;
 
   onFileSelected(event: Event) {
@@ -19,24 +21,13 @@ export class UploadImageComponent {
       reader.onload = () => (this.imagePreview = reader.result);
       reader.readAsDataURL(file);
 
-      this.convertToBase64(file).subscribe({
-        next: (base64) => this.form.patchValue({ companyImage: base64 }),
+      convertToBase64(file).subscribe({
+        next: (base64) => {
+          this.form.patchValue({ companyImage: base64 });
+          this.form.get('companyImage')?.markAsDirty();
+        },
         error: (err) => console.error('Error:', err),
       });
     }
-  }
-
-  convertToBase64(file: File): Observable<string> {
-    return new Observable((observer) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        observer.next(reader.result as string);
-        observer.complete();
-      };
-
-      reader.onerror = (error) => observer.error(error);
-    });
   }
 }

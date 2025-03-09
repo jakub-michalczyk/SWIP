@@ -5,8 +5,6 @@ export interface IUser extends IGeneralUser {
   lastName: string;
   city?: string;
   cv: ICV | null;
-  lang?: ELanguageCode;
-  uid: string;
 }
 
 export interface ICompany extends IGeneralUser {
@@ -19,6 +17,8 @@ export interface IGeneralUser {
   email: string;
   telephone: string;
   userType: EUserType;
+  uid?: string;
+  lang?: ELanguageCode;
 }
 
 export enum EUserType {

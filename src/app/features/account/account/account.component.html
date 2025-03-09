@@ -6,13 +6,13 @@
         <ng-container
           *ngTemplateOutlet="
             accountSection;
-            context: { title: 'PERSONAL_DATA', data: ACCOUNT_DATA.personalData, form: editForm }
+            context: { title: 'PERSONAL_DATA', data: ACCOUNT_DATA().personalData, form: editForm }
           "
         ></ng-container>
         <ng-container
           *ngTemplateOutlet="
             accountSection;
-            context: { title: 'CONTACT_DATA', data: ACCOUNT_DATA.contactData, form: editForm }
+            context: { title: 'CONTACT_DATA', data: ACCOUNT_DATA().contactData, form: editForm }
           "
         ></ng-container>
 
@@ -42,7 +42,7 @@
               <button mat-stroked-button class="ml-4" (click)="toggleMode()">{{ 'CANCEL' | translate }}</button>
             }
 
-            @if (EUserType.EMPLOYEE) {
+            @if (userType() === EUserType.EMPLOYER) {
               <button class="m-4" routerLink="/company-offers" mat-stroked-button>
                 {{ 'JOB_OFFERS' | translate }}
               </button>
@@ -74,6 +74,12 @@
                 errorCopy="REQUIRED_CV"
                 fieldKey
               ></swip-upload-file>
+            } @else if (accountData.title === 'Image') {
+              <swip-upload-image
+                class="w-full block mt-2 text-white"
+                [fullSizeMode]="true"
+                [form]="editForm"
+              ></swip-upload-image>
             } @else {
               <mat-form-field class="w-full mt-2">
                 <input type="text" [formControlName]="accountData.value" matInput />
@@ -83,6 +89,8 @@
             <div class="body-2 text-white mt-2">
               @if (accountData.title === 'CV') {
                 {{ cv }}
+              } @else if (accountData.title === 'Image') {
+                <img class="w-32" [src]="editForm.get(accountData.value)?.value" alt="Company Image" />
               } @else {
                 {{ editForm.get(accountData.value)?.value }}
               }

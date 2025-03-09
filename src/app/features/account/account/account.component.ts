@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth, user } from '@angular/fire/auth';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,11 +14,13 @@ import { BehaviorSubject } from 'rxjs';
 import { LanguageButtonsComponent } from '../../../core/components/language-buttons/language-buttons.component';
 import { ResetPasswordComponent } from '../../../core/components/reset-password/reset-password.component';
 import { TopbarComponent } from '../../../core/components/topbar/topbar.component';
-import { EUserType, ICV, IUser } from '../../../core/services/auth/auth.interface';
+import { UploadImageComponent } from '../../../core/components/upload-image/upload-image.component';
+import { EUserType, ICompany, ICV, IUser } from '../../../core/services/auth/auth.interface';
 import { UserService } from '../../../core/services/user/user.service';
 import { UploadFileComponent } from '../../../shared/components/upload-file/upload-file.component';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
 import { ACCOUNT_DATA } from './account.data';
+import { IAccountDataKey } from './account.interface';
 
 @Component({
   selector: 'swip-account',
@@ -35,17 +37,19 @@ import { ACCOUNT_DATA } from './account.data';
     UploadFileComponent,
     RouterLink,
     TranslateModule,
+    UploadImageComponent,
   ],
   templateUrl: './account.component.html',
 })
 export class AccountComponent {
   private destroyerRef = inject(DestroyRef);
-  private userSubject = new BehaviorSubject<IUser | null>(null);
+  private userSubject = new BehaviorSubject<IUser | ICompany | null>(null);
   readonly dialog = inject(MatDialog);
 
   editForm!: FormGroup;
   editMode = signal(false);
-  ACCOUNT_DATA = ACCOUNT_DATA;
+  ACCOUNT_DATA = signal(ACCOUNT_DATA);
+  userType = signal(EUserType.EMPLOYEE);
   user$ = this.userSubject.asObservable();
   EUserType = EUserType;
   dialogWidth = '50%';
@@ -60,18 +64,59 @@ export class AccountComponent {
     this.setUpMobileSub();
   }
 
-  private initEditForm(userData: IUser | null) {
-    if (userData === null) return;
+  private setUpUserData(userData: IUser) {
+    this.ACCOUNT_DATA.set({
+      personalData: [
+        { title: 'FIRST_NAME', value: 'firstName' } as IAccountDataKey,
+        { title: 'LAST_NAME', value: 'lastName' } as IAccountDataKey,
+        ...ACCOUNT_DATA.personalData,
+      ],
+      contactData: [...ACCOUNT_DATA.contactData, { title: 'CV', value: userData.cv?.name || '' } as IAccountDataKey],
+    });
+  }
+
+  private setUpCompanyData() {
+    this.ACCOUNT_DATA.set({
+      ...ACCOUNT_DATA,
+      personalData: [
+        { title: 'Image', value: 'companyImage' } as IAccountDataKey,
+        { title: 'Company Name', value: 'companyName' } as IAccountDataKey,
+        ...ACCOUNT_DATA.personalData,
+      ],
+    });
+  }
+
+  private initBasicForm(userData: IUser | ICompany) {
     this.editForm = this.fb.group({
       email: [userData.email, [Validators.required, Validators.email]],
       telephone: [
         userData.telephone,
         [Validators.required, Validators.pattern(/^\d{9}$|^\d{3}[-.\s]?\d{3}[-.\s]?\d{4}$|^\d{4}[-.\s]?\d{6}$/)],
       ],
-      firstName: [userData.firstName, [Validators.required]],
-      lastName: [userData.lastName, [Validators.required]],
       city: [userData.city],
-      cv: [userData.cv, [Validators.required]],
+    });
+  }
+
+  private setUpUserForm(userData: IUser) {
+    const newFields = {
+      cv: new FormControl(userData.cv, [Validators.required]),
+      firstName: new FormControl(userData.firstName, [Validators.required]),
+      lastName: new FormControl(userData.lastName, [Validators.required]),
+    };
+
+    Object.keys(newFields).forEach((key) => {
+      this.editForm.addControl(key, newFields[key as keyof typeof newFields]);
+    });
+  }
+
+  private setUpCompanyForm(userData: ICompany) {
+    const newFields = {
+      companyImage: new FormControl(userData.companyImage),
+      companyName: new FormControl(userData.companyName, [Validators.required]),
+    };
+
+    Object.keys(newFields).forEach((key) => {
+      this.editForm.addControl(key, newFields[key as keyof typeof newFields]);
     });
   }
 
@@ -82,18 +127,26 @@ export class AccountComponent {
   }
 
   private getUserData() {
-    user(this.auth)
-      .pipe(takeUntilDestroyed(this.destroyerRef))
-      .subscribe((user) => {
-        if (user !== null) {
-          this.userService.getUserData(user.uid).subscribe((userData) => {
-            this.userSubject.next(userData);
-            this.initEditForm(userData);
-          });
-        } else {
-          this.userSubject.next(null);
-        }
-      });
+    this.userService.getUserData().subscribe((userData) => {
+      if (userData !== null) {
+        this.userSubject.next(userData);
+        this.initForm(userData);
+        this.userType.set(userData.userType);
+      } else {
+        this.userSubject.next(null);
+      }
+    });
+  }
+
+  private initForm(userData: IUser | ICompany) {
+    this.initBasicForm(userData);
+    if (userData.userType === EUserType.EMPLOYEE) {
+      this.setUpUserData(userData as IUser);
+      this.setUpUserForm(userData as IUser);
+    } else {
+      this.setUpCompanyData();
+      this.setUpCompanyForm(userData as ICompany);
+    }
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
@@ -104,6 +157,11 @@ export class AccountComponent {
       width: this.dialogWidth,
       enterAnimationDuration,
       exitAnimationDuration,
+      data: {
+        titleCode: 'RESET_PASSWORD',
+        messageCode: 'RESET_PASSWORD_MESSAGE',
+        afterAcceptMessageCode: 'RESET_FINISHED',
+      },
     });
   }
 
@@ -112,14 +170,25 @@ export class AccountComponent {
       .pipe(takeUntilDestroyed(this.destroyerRef))
       .subscribe((user) => {
         if (user !== null) {
-          this.userService.saveUserData(user.uid, this.editForm.value as IUser);
-          this.toggleMode();
+          this.userService.saveUserData(user.uid, {
+            ...(this.editForm.value as IUser),
+            userType: this.userType(),
+          });
+          this.toggleMode(true);
         }
       });
   }
 
-  toggleMode() {
+  toggleMode(saved?: boolean) {
+    if (this.editMode() && !saved) {
+      this.resetForm();
+    }
     this.editMode.set(!this.editMode());
+  }
+
+  resetForm() {
+    if (this.userSubject.value === null) return;
+    this.initForm(this.userSubject.value);
   }
 
   get cv() {

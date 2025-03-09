@@ -1,34 +1,30 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth, sendPasswordResetEmail, user } from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
+import { MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 import { from, switchMap, tap } from 'rxjs';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'swip-reset-password',
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
-  templateUrl: './reset-password.component.html',
+  imports: [MatButtonModule, MatDialogActions, MatDialogTitle, MatDialogContent, TranslateModule],
+  templateUrl: '../modal/modal.component.html',
 })
-export class ResetPasswordComponent {
-  readonly dialogRef = inject(MatDialogRef<ResetPasswordComponent>);
+export class ResetPasswordComponent extends ModalComponent {
   private destroyerRef = inject(DestroyRef);
-  emailSent = signal(false);
 
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth) {
+    super();
+  }
 
-  resetPassword() {
+  override accept() {
     user(this.auth)
       .pipe(
         takeUntilDestroyed(this.destroyerRef),
         switchMap((user) => from(sendPasswordResetEmail(this.auth, user?.email || ''))),
-        tap(() => this.emailSent.set(true))
+        tap(() => this.accepted.set(true))
       )
       .subscribe({
         next: () => console.log('Password reset email sent'),

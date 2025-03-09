@@ -1,0 +1,12 @@
+{
+    "REMOTE": "Remote",
+    "HYBRID": "Hybrid",
+    "ON_SITE": "On-site",
+    "FULL_TIME": "Full-time",
+    "PART_TIME": "Part-time",
+    "EC": "EC",
+    "B2B": "B2B Agreement",
+    "MC": "MC",
+    "CW": "CW",
+    "IA": "IA"
+}

@@ -1,0 +1,12 @@
+{
+    "REMOTE": "Zdalnie",
+    "HYBRID": "Hybrydowo",
+    "ON_SITE": "Stacjonarnie",
+    "FULL_TIME": "Pełen etat",
+    "PART_TIME": "Część etatu",
+    "EC": "UoP",
+    "B2B": "B2B",
+    "MC": "UoZ",
+    "CW": "UoD",
+    "IA": "Staż"
+}

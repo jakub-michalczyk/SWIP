@@ -29,5 +29,10 @@
   "PERSONAL_DATA": "Personal Data",
   "EDIT": "Edit",
   "CANCEL": "Cancel",
-  "SAVE_CHANGES": "Save changes"
+  "SAVE_CHANGES": "Save changes",
+  "YES": "Yes",
+  "Ok": "Ok",
+  "REMOVE": "Remove",
+  "VIEW_APPLICATIONS": "View Applications",
+  "BACK": "Back"
 }

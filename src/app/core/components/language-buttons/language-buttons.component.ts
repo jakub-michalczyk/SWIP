@@ -1,11 +1,9 @@
 import { Component, DestroyRef, inject, Input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Auth, user } from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { of, switchMap } from 'rxjs';
 import { ELanguageCode } from '../../../shared/enums/language.enum';
-import { IUser } from '../../services/auth/auth.interface';
+import { ICompany, IUser } from '../../services/auth/auth.interface';
 import { UserService } from '../../services/user/user.service';
 
 @Component({
@@ -17,12 +15,11 @@ export class LanguageButtonsComponent {
   @Input() accountMode = false;
   private readonly destroyerRef = inject(DestroyRef);
   lang: ELanguageCode = ELanguageCode.EN;
-  userData: IUser | null = null;
+  userData: IUser | ICompany | null = null;
 
   constructor(
     private translate: TranslateService,
-    private userService: UserService,
-    private auth: Auth
+    private userService: UserService
   ) {
     this.getUser();
     this.checkUserLang();
@@ -30,19 +27,10 @@ export class LanguageButtonsComponent {
   }
 
   getUser() {
-    user(this.auth)
-      .pipe(
-        takeUntilDestroyed(this.destroyerRef),
-        switchMap((user) => {
-          if (!user) return of(null);
-
-          return this.userService.getUserData(user.uid);
-        })
-      )
-      .subscribe((userData) => {
-        this.userData = userData;
-        this.checkUserLang();
-      });
+    this.userService.getUserData().subscribe((userData) => {
+      this.userData = userData;
+      this.checkUserLang();
+    });
   }
 
   checkUserLang() {
@@ -59,7 +47,7 @@ export class LanguageButtonsComponent {
   }
 
   updateUserLanguage(lang: ELanguageCode) {
-    if (this.userData !== null) {
+    if (this.userData !== null && this.userData.uid) {
       this.userService.saveUserData(this.userData.uid, { ...this.userData, lang: lang });
     }
   }

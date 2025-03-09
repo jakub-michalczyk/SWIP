@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { MatError } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { convertToBase64 } from '../../../core/utils/utils';
 
 @Component({
   selector: 'swip-upload-file',
@@ -21,7 +22,16 @@ export class UploadFileComponent {
     const file: File = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      this.form.patchValue({ cv: file });
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      convertToBase64(file).subscribe({
+        next: (base64) => {
+          this.form.patchValue({ cv: { name: file.name, value: base64 } });
+          this.form.get('cv')?.markAsDirty();
+        },
+        error: (err) => console.error('Error:', err),
+      });
     }
   }
 }

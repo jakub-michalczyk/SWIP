@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Auth, user } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import { EmailPasswordComponent } from '../../../core/components/email-password/email-password.component';
@@ -30,10 +32,12 @@ export class LoginComponent {
   forgotPasswordForm!: FormGroup;
   forgotPassword = signal(false);
   resetEmailSend = signal(false);
+  private destroyerRef = inject(DestroyRef);
 
   constructor(
     private fb: FormBuilder,
-    private auth: Auth
+    private auth: Auth,
+    private router: Router
   ) {
     this.initForms();
   }
@@ -60,8 +64,14 @@ export class LoginComponent {
 
   login() {
     signInWithEmailAndPassword(this.auth, this.form.get('email')?.value, this.form.get('password')?.value)
-      .then((userCredential) => {
-        console.log('Zalogowano:', userCredential.user);
+      .then(() => {
+        user(this.auth)
+          .pipe(takeUntilDestroyed(this.destroyerRef))
+          .subscribe((user) => {
+            if (user) {
+              this.router.navigate(['/']);
+            }
+          });
       })
       .catch((error) => {
         console.error('Błąd logowania:', error);

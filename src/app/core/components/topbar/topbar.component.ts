@@ -1,28 +1,38 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Auth, user, User } from '@angular/fire/auth';
+import { Auth, user } from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { MatMenuModule } from '@angular/material/menu';
+import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { Observable, of } from 'rxjs';
+import { signOut } from 'firebase/auth';
 import { StandaloneService } from '../../services/standalone/standalone.service';
 import { LanguageButtonsComponent } from '../language-buttons/language-buttons.component';
 
 @Component({
   selector: 'swip-topbar',
-  imports: [MatButtonModule, TranslateModule, LanguageButtonsComponent, RouterLink, CommonModule, MatIconModule],
+  imports: [
+    MatButtonModule,
+    TranslateModule,
+    LanguageButtonsComponent,
+    RouterLink,
+    CommonModule,
+    MatIconModule,
+    MatMenuModule,
+  ],
   templateUrl: './topbar.component.html',
 })
 export class TopbarComponent {
   private readonly destroyerRef = inject(DestroyRef);
   isPWA = false;
-  user$: Observable<User | null> = of(null);
+  userLoggedIn = signal(false);
 
   constructor(
     private standaloneService: StandaloneService,
-    private auth: Auth
+    private auth: Auth,
+    private router: Router
   ) {
     this.setUpPWASub();
     this.setUpUser();
@@ -35,6 +45,15 @@ export class TopbarComponent {
   }
 
   setUpUser() {
-    this.user$ = user(this.auth);
+    user(this.auth)
+      .pipe(takeUntilDestroyed(this.destroyerRef))
+      .subscribe((user) => {
+        return user === null ? this.userLoggedIn.set(false) : this.userLoggedIn.set(true);
+      });
+  }
+
+  signOut() {
+    signOut(this.auth);
+    this.router.navigate(['/']);
   }
 }

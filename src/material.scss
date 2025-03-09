@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+@use "variables";
+
+:root {
+    --mat-expansion-header-collapsed-state-height: 4rem;
+}
+
+@include mat.dialog-overrides((
+    container-color: variables.$neutral-950,
+    subhead-color: variables.$red-650,
+    supporting-text-color: variables.$white,
+    actions-padding: 48px 24px 24px 24px,
+    container-shape: variables.$border-radius 
+));
+
+
+@include mat.expansion-overrides((
+    container-background-color: variables.$neutral-950,
+    container-text-color: variables.$white,
+    header-text-color: variables.$white,
+    container-shape: variables.$border-radius,
+    header-indicator-color: variables.$white
+));

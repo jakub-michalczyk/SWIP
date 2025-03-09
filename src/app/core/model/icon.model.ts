@@ -24,4 +24,8 @@ export const CUSTOM_ICONS: ICustomIconRegister[] = [
     name: 'swip_document',
     route: 'icons/document.svg',
   },
+  {
+    name: 'swip_contract',
+    route: 'icons/contract.svg',
+  },
 ];

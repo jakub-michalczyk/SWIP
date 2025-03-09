@@ -1,0 +1,16 @@
+<h2 mat-dialog-title class="h3">{{ data.titleCode | translate }}</h2>
+<mat-dialog-content class="body-2">
+  @if (!accepted()) {
+    {{ data.messageCode | translate }}
+  } @else {
+    {{ data.afterAcceptMessageCode | translate }}
+  }
+</mat-dialog-content>
+<mat-dialog-actions>
+  @if (!accepted()) {
+    <button mat-flat-button (click)="accept()">{{ 'YES' | translate }}</button>
+    <button mat-stroked-button (click)="cancel(false)" cdkFocusInitial>{{ 'CANCEL' | translate }}</button>
+  } @else {
+    <button mat-flat-button (click)="cancel(true)">{{ 'OK' | translate }}</button>
+  }
+</mat-dialog-actions>

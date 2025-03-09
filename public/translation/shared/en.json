@@ -21,7 +21,18 @@
   "SIGN_IN": "Sign in",
   "FORGOT_PASSWORD": "Forgot password",
   "RESET_PASSWORD": "Reset password",
+  "PASSWORD": "Password",
   "RETURN_LOGIN": "Return to login",
   "RESET_EMAIL_SEND": "The password reset email has been sent.",
-  "SEE_MORE": "See more"
+  "SEE_MORE": "See more",
+  "CONTACT_DATA": "Contact data",
+  "PERSONAL_DATA": "Personal Data",
+  "EDIT": "Edit",
+  "CANCEL": "Cancel",
+  "SAVE_CHANGES": "Save changes",
+  "YES": "Yes",
+  "Ok": "Ok",
+  "REMOVE": "Remove",
+  "VIEW_APPLICATIONS": "View Applications",
+  "BACK": "Back"
 }

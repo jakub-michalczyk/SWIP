@@ -5,10 +5,10 @@
 
   <!-- BUTTONS -->
   <div>
-    @if (user$ | async) {
-      <div>
+    @if (userLoggedIn()) {
+      <button [matMenuTriggerFor]="menu" aria-label="Account Icon with Circle Background">
         <mat-icon class="!w-12 !h-12 !text-5xl text-white">account_circle</mat-icon>
-      </div>
+      </button>
     } @else if (isPWA) {
       <button routerLink="/login" class="ml-4" mat-flat-button>
         {{ 'SIGN_IN' | translate }}
@@ -18,3 +18,14 @@
     }
   </div>
 </div>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink="/account" aria-label="Acount Icon">
+    <mat-icon class="!text-black">person</mat-icon>
+    <span class="body-2 !text-black">Account</span>
+  </button>
+  <button mat-menu-item (click)="signOut()" aria-label="Log out Icon">
+    <mat-icon class="!text-black">logout</mat-icon>
+    <span class="body-2 !text-black">Log out</span>
+  </button>
+</mat-menu>

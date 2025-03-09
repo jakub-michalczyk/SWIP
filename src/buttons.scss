@@ -35,7 +35,9 @@ $mobile-icon-size: 24px;
       outlined-label-text-font: $font-family,
       outlined-label-text-size: $font-size,
       outlined-label-text-weight: $font-weight,
-      outlined-ripple-color: rgba(variables.$red-650, 20%)
+      outlined-ripple-color: rgba(variables.$red-650, 20%),
+      outlined-disabled-outline-color: rgba(variables.$white, 0.5),
+      outlined-disabled-label-text-color: rgba(variables.$white, 0.5)
     )
   );
 

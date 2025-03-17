@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { EmployerGuard } from './core/guards/employer.guard';
 import { UserGuard } from './core/guards/user.guard';
 import { AccountComponent } from './features/account/account/account.component';
-import { CompanyOffersComponent } from './features/account/company-offers/company-offers.component';
+import { CompanyOffersComponent } from './features/company/company-offers/company-offers.component';
 import { HomepageComponent } from './features/home/homepage/homepage.component';
 import { LoginComponent } from './features/login/login/login.component';
 import { MoreComponent } from './features/more/more/more.component';

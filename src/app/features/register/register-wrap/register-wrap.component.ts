@@ -1,12 +1,11 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TopbarComponent } from '../../../core/components/topbar/topbar.component';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
 import { RegisterFormComponent } from '../register-form/register-form.component';
 
 @Component({
   selector: 'swip-register-wrap',
-  imports: [RegisterFormComponent, TopbarComponent],
+  imports: [RegisterFormComponent],
   templateUrl: './register-wrap.component.html',
 })
 export class RegisterWrapComponent {

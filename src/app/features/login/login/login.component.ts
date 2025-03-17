@@ -6,18 +6,16 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import { catchError, from, switchMap } from 'rxjs';
 import { EmailPasswordComponent } from '../../../core/components/email-password/email-password.component';
-import { TopbarComponent } from '../../../core/components/topbar/topbar.component';
 
 @Component({
   selector: 'swip-login',
   imports: [
     EmailPasswordComponent,
-    TopbarComponent,
     TranslateModule,
     MatButtonModule,
     FormsModule,
@@ -25,6 +23,7 @@ import { TopbarComponent } from '../../../core/components/topbar/topbar.componen
     MatInputModule,
     ReactiveFormsModule,
     CommonModule,
+    RouterLink,
   ],
   templateUrl: './login.component.html',
 })

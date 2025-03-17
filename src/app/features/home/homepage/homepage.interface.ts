@@ -1,4 +1,4 @@
-export interface IMoreSection {
+export interface IHomepageSection {
   index: number;
   titleCode: string;
   descriptionCode: string;

@@ -82,11 +82,6 @@ function HttpLoaderFactory2(http: HttpBackend) {
       optional: true,
     },
     {
-      prefix: 'translation/more/',
-      suffix: '.json',
-      optional: true,
-    },
-    {
       prefix: 'translation/terms/',
       suffix: '.json',
       optional: true,

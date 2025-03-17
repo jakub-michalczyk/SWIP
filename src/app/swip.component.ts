@@ -1,15 +1,14 @@
-import { Component, DestroyRef, inject } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
-
+import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './core/components/footer/footer.component';
+import { TopbarComponent } from './core/components/topbar/topbar.component';
 import { StandaloneService } from './core/services/standalone/standalone.service';
 
 @Component({
   selector: 'swip-root',
-  imports: [CommonModule, FooterComponent, RouterOutlet],
+  imports: [CommonModule, FooterComponent, RouterOutlet, TopbarComponent],
   templateUrl: './swip.component.html',
 })
 export class SwipComponent {

@@ -1,6 +1,6 @@
-import { IMoreSection } from './more.interface';
+import { IHomepageSection } from './homepage.interface';
 
-export const MORE_SECTIONS: IMoreSection[] = [
+export const HOMEPAGE_SECTIONS: IHomepageSection[] = [
   {
     index: 1,
     titleCode: 'SWIPE_LEFT_TITLE',

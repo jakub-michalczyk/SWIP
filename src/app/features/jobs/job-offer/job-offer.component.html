@@ -1,0 +1,79 @@
+@if (jobOffer) {
+  <div
+    class="absolute h-full flex justify-center pt-36 pb-12 md:pb-36 items-center select-none w-full transition-transform ease-in-out translate-y-full overflow-hidden"
+    #offerWrap
+    [@swipeAnimation]="swipeState"
+  >
+    <button
+      class="text-white mr-12 transition-opacity left-0 absolute md:static"
+      [ngClass]="{ 'opacity-0': isDragging }"
+      (click)="onArrowClick(EDirection.LEFT)"
+      (keyup)="onArrowClick(EDirection.LEFT)"
+    >
+      <mat-icon class="text-5xl !w-12 !h-12">arrow_circle_left</mat-icon>
+    </button>
+    <div
+      #offerContainer
+      class="rounded-3xl h-full border-white border mx-6 md:mx-0 w-full md:w-96 p-6 md:p-8 text-white relative transition-all duration-300 cursor-grab"
+      [ngClass]="gradientColor"
+      [@swipeAnimation]="swipeState"
+      (mousedown)="onDragStart($event)"
+      (mousemove)="onDragMove($event)"
+      (mouseup)="onDragEnd()"
+      (mouseleave)="onDragEnd()"
+      (touchstart)="onDragStart($event)"
+      (touchmove)="onDragMove($event)"
+      (touchend)="onDragEnd()"
+    >
+      <div class="flex flex-col justify-between h-full">
+        <div class="flex items-center">
+          <!-- LOGO -->
+          <div>
+            <img class="w-16" [src]="jobOffer.companyImage" alt="Company Image" />
+          </div>
+          <div class="body-1 ml-4">
+            {{ jobOffer.companyName }}
+          </div>
+        </div>
+        <div class="mt-6">
+          <div class="mb-4">
+            <h2 class="h4">{{ jobOffer.title }}</h2>
+          </div>
+          <div class="flex items-center mb-2">
+            <mat-icon class="mr-4 !text-4xl !w-9 !h-9">location_on</mat-icon>
+            {{ jobOffer.city }},
+            {{ jobOffer.workMode | translate }}
+          </div>
+          <div class="flex items-center mb-2">
+            <mat-icon class="mr-4 !text-4xl !w-9 !h-9">av_timer</mat-icon>
+            {{ jobOffer.employmentType | translate }}
+          </div>
+          <div class="flex items-center mb-2">
+            <swip-icon class="mr-4 !text-4xl !w-9 !h-9" [icon]="{ value: 'swip_contract' }"></swip-icon>
+            {{ jobOffer.contractType | translate }}
+          </div>
+          <div class="flex items-center">
+            <swip-icon class="mr-4 !text-4xl !w-9 !h-9" [icon]="{ value: 'attach_money' }"></swip-icon>
+            {{ jobOffer.salaryFrom }} {{ jobOffer.salaryTo ? '-' : '' }} {{ jobOffer.salaryTo }} /
+            {{ 'MONTH' | translate }}
+          </div>
+        </div>
+        <!-- TAGS -->
+        <div class="mt-6 border-t border-white pt-6">
+          @for (tag of jobOffer.tags; track $index) {
+            <span class="bg-red-650 rounded-full px-4 py-2 text-white inline-block mr-2 mb-2 text-xs">{{ tag }}</span>
+          }
+        </div>
+        <p class="mt-6 md:mt-12 h-full">{{ jobOffer.description ? jobOffer.description.slice(0, 96) : '' }}...</p>
+      </div>
+    </div>
+    <button
+      class="text-white ml-12 transition-opacity right-0 absolute md:static"
+      [ngClass]="{ 'opacity-0': isDragging }"
+      (click)="onArrowClick(EDirection.RIGHT)"
+      (keyup)="onArrowClick(EDirection.RIGHT)"
+    >
+      <mat-icon class="text-5xl !w-12 !h-12">arrow_circle_right</mat-icon>
+    </button>
+  </div>
+}

@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { environment } from '../../../../environments/enviroment.example';
+import { environment } from '../../../../environments/enviroment';
 import { IconComponent } from '../../../core/components/icon/icon.component';
 import { TopbarComponent } from '../../../core/components/topbar/topbar.component';
 import { StandaloneService } from '../../../core/services/standalone/standalone.service';

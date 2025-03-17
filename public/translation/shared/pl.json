@@ -37,5 +37,9 @@
   "BACK": "Wróć",
   "REJECT": "Odrzuć",
   "NEXT": "Następny",
-  "PREVIOUS": "Poprzedni"
+  "PREVIOUS": "Poprzedni",
+  "APPLY": "Zaaplikowałeś na ofertę",
+  "DENY": "Odrzuciłeś ofertę",
+  "MONTH": "miesięcznie",
+  "SEE_FULL": "Zobacz więcej"
 }

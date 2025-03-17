@@ -1,14 +1,18 @@
 import { Routes } from '@angular/router';
 import { EmployerGuard } from './core/guards/employer.guard';
+import { JobBoardGuard } from './core/guards/job-board.guard';
 import { UserGuard } from './core/guards/user.guard';
 import { AccountComponent } from './features/account/account/account.component';
 import { CompanyOffersComponent } from './features/company/company-offers/company-offers.component';
 import { HomepageComponent } from './features/home/homepage/homepage.component';
+import { JobsWrapComponent } from './features/jobs/jobs-wrap/jobs-wrap.component';
 import { LoginComponent } from './features/login/login/login.component';
 import { MoreComponent } from './features/more/more/more.component';
 import { RegisterWrapComponent } from './features/register/register-wrap/register-wrap.component';
 import { PrivacyPolicyComponent } from './features/regulations/privacy-policy/privacy-policy.component';
 import { TermsComponent } from './features/regulations/terms/terms.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { HomepageGuard } from './shared/guards/homepage.guard';
 
 export const routes: Routes = [
   {
@@ -61,15 +65,22 @@ export const routes: Routes = [
     path: 'account',
     component: AccountComponent,
     pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     component: CompanyOffersComponent,
     path: 'company-offers',
     pathMatch: 'full',
-    canActivate: [EmployerGuard],
+    canActivate: [EmployerGuard, AuthGuard],
+  },
+  {
+    path: 'jobs',
+    component: JobsWrapComponent,
+    canActivate: [AuthGuard, JobBoardGuard],
   },
   {
     path: '',
     component: HomepageComponent,
+    canActivate: [HomepageGuard],
   },
 ];

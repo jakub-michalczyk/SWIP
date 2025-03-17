@@ -37,5 +37,9 @@
   "BACK": "Back",
   "REJECT": "Reject",
   "NEXT": "Next",
-  "PREVIOUS": "Previous"
+  "PREVIOUS": "Previous",
+  "APPLY": "You have applied for the offer",
+  "DENY": "You declined the offer",
+  "MONTH": "month",
+  "SEE_FULL": "See Full"
 }

@@ -1,0 +1,17 @@
+<div>
+  <swip-topbar class="absolute top-0 z-10 w-full"></swip-topbar>
+  <div
+    class="w-full min-h-screen md:bg-corner bg-no-repeat bg-[auto_40%] md:bg-[auto_70%] bg-left-bottom overflow-y-auto pb-12 md:pb-36"
+  >
+    <div class="overflow-hidden min-h-screen relative">
+      @if (currentOffer$ | async; as jobData) {
+        <swip-job-offer [jobData]="jobData" class="w-full h-1 flex-1"></swip-job-offer>
+      } @else {
+        <div class="min-h-screen flex flex-col justify-center items-center">
+          <h2 class="h3 text-red-650">You check all available offers</h2>
+          <h3 class="body-1 text-white">Please come back later.</h3>
+        </div>
+      }
+    </div>
+  </div>
+</div>

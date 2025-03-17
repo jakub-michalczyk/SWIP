@@ -5,14 +5,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { from, switchMap, tap } from 'rxjs';
-import { ModalComponent } from '../modal/modal.component';
+import { AcceptModalComponent } from '../modals/accept-modal/accept-modal.component';
 
 @Component({
   selector: 'swip-reset-password',
   imports: [MatButtonModule, MatDialogActions, MatDialogTitle, MatDialogContent, TranslateModule],
-  templateUrl: '../modal/modal.component.html',
+  templateUrl: '../modals/accept-modal/accept-modal.component.html',
 })
-export class ResetPasswordComponent extends ModalComponent {
+export class ResetPasswordComponent extends AcceptModalComponent {
   private destroyerRef = inject(DestroyRef);
 
   constructor(private auth: Auth) {

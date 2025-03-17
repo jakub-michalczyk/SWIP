@@ -34,5 +34,8 @@
   "Ok": "Ok",
   "REMOVE": "Usuń",
   "VIEW_APPLICATIONS": "Sprawdź aplikacje",
-  "BACK": "Wróć"
+  "BACK": "Wróć",
+  "REJECT": "Odrzuć",
+  "NEXT": "Następny",
+  "PREVIOUS": "Poprzedni"
 }

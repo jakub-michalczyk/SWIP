@@ -4,5 +4,6 @@
     "RESET_FINISHED": "Password reset email has been sent.",
     "DELETING_JOB_OFFER": "Deleting job offer",
     "DELETE_JOB_OFFER": "Would you like to delete this job posting?",
-    "OFFER_DELETED": "Your job posting has been deleted"
+    "OFFER_DELETED": "Your job posting has been deleted",
+    "NO_CV": "No CVs available"
 }

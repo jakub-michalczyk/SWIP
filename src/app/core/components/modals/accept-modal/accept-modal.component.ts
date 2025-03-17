@@ -12,10 +12,10 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'swip-modal',
   imports: [MatButtonModule, MatDialogActions, MatDialogTitle, MatDialogContent, TranslateModule],
-  templateUrl: './modal.component.html',
+  templateUrl: './accept-modal.component.html',
 })
-export class ModalComponent {
-  protected dialogRef = inject(MatDialogRef<ModalComponent>);
+export class AcceptModalComponent {
+  protected dialogRef = inject(MatDialogRef<AcceptModalComponent>);
   readonly data = inject(MAT_DIALOG_DATA);
   accepted = signal(false);
 

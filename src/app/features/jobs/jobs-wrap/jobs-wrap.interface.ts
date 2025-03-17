@@ -3,6 +3,11 @@ export interface IJobOffer extends IJobOfferDTO, ICompanyAdditionalData {
   id: string;
 }
 
+export interface ICompanyOffers {
+  totalCount: number;
+  offers: IJobOffer[];
+}
+
 export interface IJobOfferDTO {
   title: string;
   description: string;

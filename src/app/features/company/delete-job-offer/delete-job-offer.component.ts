@@ -3,15 +3,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { ModalComponent } from '../../../core/components/modal/modal.component';
+import { AcceptModalComponent } from '../../../core/components/modals/accept-modal/accept-modal.component';
 import { CompanyService } from '../../../core/services/company/company.service';
 
 @Component({
   selector: 'swip-delete-job-offer',
   imports: [MatButtonModule, MatDialogActions, MatDialogTitle, MatDialogContent, TranslateModule],
-  templateUrl: '../../../core/components/modal/modal.component.html',
+  templateUrl: '../../../core/components/modals/accept-modal/accept-modal.component.html',
 })
-export class DeleteJobOfferComponent extends ModalComponent {
+export class DeleteJobOfferComponent extends AcceptModalComponent {
   private destroyerRef = inject(DestroyRef);
 
   constructor(private companyService: CompanyService) {

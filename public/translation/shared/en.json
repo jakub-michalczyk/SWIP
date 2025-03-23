@@ -23,7 +23,7 @@
   "RESET_PASSWORD": "Reset password",
   "PASSWORD": "Password",
   "RETURN_LOGIN": "Return to login",
-  "RESET_EMAIL_SEND": "The password reset email has been sent.",
+  "RESET_EMAIL_SEND": "If an account with the email address you provided exists, an activation link has been sent to you.",
   "SEE_MORE": "See more",
   "CONTACT_DATA": "Contact data",
   "PERSONAL_DATA": "Personal Data",

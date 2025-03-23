@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import { catchError, from, switchMap } from 'rxjs';
 import { EmailPasswordComponent } from '../../../core/components/email-password/email-password.component';
 import { TopbarComponent } from '../../../core/components/topbar/topbar.component';
 
@@ -32,6 +33,7 @@ export class LoginComponent {
   forgotPasswordForm!: FormGroup;
   forgotPassword = signal(false);
   resetEmailSend = signal(false);
+  errorCode = signal('');
   private destroyerRef = inject(DestroyRef);
 
   constructor(
@@ -45,16 +47,7 @@ export class LoginComponent {
   initForms() {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern(
-            /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])(?=(.*[A-Za-z]){4,})[A-Za-z\d@$!%*?&]{7,}$/
-          ),
-        ],
-      ],
+      password: ['', [Validators.required]],
     });
 
     this.forgotPasswordForm = this.fb.group({
@@ -63,32 +56,55 @@ export class LoginComponent {
   }
 
   login() {
-    signInWithEmailAndPassword(this.auth, this.form.get('email')?.value, this.form.get('password')?.value)
-      .then(() => {
-        user(this.auth)
-          .pipe(takeUntilDestroyed(this.destroyerRef))
-          .subscribe((user) => {
-            if (user) {
-              this.router.navigate(['/']);
-            }
-          });
-      })
-      .catch((error) => {
-        console.error('Błąd logowania:', error);
+    const { email, password } = this.form.value;
+
+    from(signInWithEmailAndPassword(this.auth, email, password))
+      .pipe(
+        switchMap(() => user(this.auth)),
+        takeUntilDestroyed(this.destroyerRef),
+        catchError((error) => {
+          this.errorCode.set(this.getErrorMessage(error.code));
+          console.log(error);
+          throw error;
+        })
+      )
+      .subscribe((user) => {
+        if (user) {
+          this.router.navigate(['/']);
+        }
       });
   }
 
-  remindPassword() {
+  remindPasswordViewToggle() {
+    this.errorCode.set('');
     this.forgotPassword.set(!this.forgotPassword());
   }
 
   resetPassword() {
-    sendPasswordResetEmail(this.auth, this.forgotPasswordForm.get('email')?.value)
-      .then(() => {
-        this.resetEmailSend.set(true);
-      })
-      .catch((error) => {
-        console.error('An error occurred while sending the email:', error);
-      });
+    const email = this.forgotPasswordForm.get('email')?.value;
+
+    from(sendPasswordResetEmail(this.auth, email))
+      .pipe(
+        takeUntilDestroyed(this.destroyerRef),
+        catchError((error) => {
+          this.errorCode.set(this.getErrorMessage(error.code));
+          console.log(error);
+          throw error;
+        })
+      )
+      .subscribe(() => this.resetEmailSend.set(true));
+  }
+
+  private getErrorMessage(errorCode: string) {
+    switch (errorCode) {
+      case 'auth/invalid-email':
+        return 'INVALID_EMAIL';
+      case 'auth/user-not-found':
+        return 'USER_NOT_FOUND';
+      case 'auth/wrong-password':
+        return 'INALID_PASSWORD';
+      default:
+        return 'DEFAULT_ERROR';
+    }
   }
 }

@@ -1,6 +1,6 @@
 @let email = form.controls['email'];
 
-<div class="min-h-screen relative bg-[auto_40%] md:bg-[auto_70%] bg-left-bottom bg-no-repeat bg-corner">
+<div class="min-h-screen relative">
   <swip-topbar></swip-topbar>
 
   <div
@@ -11,14 +11,18 @@
       <swip-email-password [form]="form" [validationOn]="false"></swip-email-password>
       <button
         class="padding-0 bg-transparent border-none my-4 !text-white body-2"
-        (click)="remindPassword()"
-        (keydown)="remindPassword()"
+        (click)="remindPasswordViewToggle()"
+        (keydown)="remindPasswordViewToggle()"
       >
         <span class="border-b border-white"> {{ 'FORGOT_PASSWORD' | translate }}? </span>
       </button>
 
+      <div class="mt-4 text-red-650 body-2">
+        {{ errorCode() | translate }}
+      </div>
+
       <div>
-        <button class="mt-12" mat-flat-button (click)="login()" [disabled]="form.invalid">
+        <button class="mt-8" mat-flat-button (click)="login()" [disabled]="form.invalid">
           {{ 'SIGN_IN' | translate }}
         </button>
       </div>
@@ -43,13 +47,16 @@
         </div>
         <button
           class="padding-0 bg-transparent border-none my-4 !text-white body-2"
-          (click)="remindPassword()"
-          (keydown)="remindPassword()"
+          (click)="remindPasswordViewToggle()"
+          (keydown)="remindPasswordViewToggle()"
         >
           <span class="border-b border-white"> {{ 'RETURN_LOGIN' | translate }} </span>
         </button>
-        <div>
-          <button class="mt-12" mat-flat-button (click)="resetPassword()" [disabled]="forgotPasswordForm.invalid">
+        <div class="mt-4 text-red-650 body-2">
+          {{ errorCode() | translate }}
+        </div>
+        <div class="mt-12">
+          <button mat-flat-button (click)="resetPassword()" [disabled]="forgotPasswordForm.invalid">
             {{ 'RESET_PASSWORD' | translate }}
           </button>
         </div>
@@ -57,8 +64,8 @@
         <div class="text-white body-2 mb-6">{{ 'RESET_EMAIL_SEND' | translate }}</div>
         <button
           class="padding-0 bg-transparent border-none my-4 !text-white body-2"
-          (click)="remindPassword()"
-          (keydown)="remindPassword()"
+          (click)="remindPasswordViewToggle()"
+          (keydown)="remindPasswordViewToggle()"
         >
           <span class="border-b border-white"> {{ 'RETURN_LOGIN' | translate }} </span>
         </button>

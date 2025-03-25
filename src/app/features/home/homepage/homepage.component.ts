@@ -29,7 +29,7 @@ import { IHomepageSection } from './homepage.interface';
   templateUrl: './homepage.component.html',
 })
 export class HomepageComponent implements OnInit {
-  @ViewChild('about') targetSection!: ElementRef;
+  @ViewChild('howItWorks') targetSection!: ElementRef;
   private readonly destroyerRef = inject(DestroyRef);
 
   sections: IHomepageSection[] = HOMEPAGE_SECTIONS;

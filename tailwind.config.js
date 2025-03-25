@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,ts,scss}"],
+  content: ["./src/**/*.{html,ts,scss}", "./public/translation/**/*.json"],
   theme: {
     extend: {
       fontSize: {
@@ -11,7 +11,7 @@ module.exports = {
         "0.25": "1px"
       },
       fontFamily: {
-        sans: ["Afacad", "serif"],
+        sans: ["Afacad", "serif"]
       },
       height: {
         "30": "7.5rem",
@@ -30,7 +30,8 @@ module.exports = {
         "home-desktop": "url('/images/desktop_bg.png')",
         "home-mobile": "url('/images/mobile_bg.png')",
         "wave": "url('/images/wave.svg')",
-        "corner": "url('/images/corner.png')"
+        "corner": "url('/images/corner.png')",
+        "monogram": "url('/images/monogram.png')"
       },
     },
   },

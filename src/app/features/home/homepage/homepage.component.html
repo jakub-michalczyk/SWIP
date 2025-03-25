@@ -1,7 +1,7 @@
 <!-- HERO -->
 <div class="flex items-center flex-col">
   <div
-    class="h-screen relative bg-cover flex items-center w-full"
+    class="h-screen relative bg-cover flex items-center md:items-end w-full"
     [ngClass]="!isMobile ? 'bg-home-desktop bg-center 2xl:bg-left-top' : 'bg-home-mobile'"
   >
     <!-- OVERLAYER -->
@@ -10,37 +10,41 @@
     }
 
     <!-- CONTENT -->
-    <div class="relative z-10 opacity-100 transition-all delay-200" [ngClass]="{ '!opacity-0': formExpanded() }">
-      <ng-container>
-        <div class="text-white pb-8 px-6 lg:px-32 w-full lg:w-3/4">
-          <h1 class="h2 w-full sm:w-3/4 md:w-full">
-            {{ 'HOMEPAGE_TITLE' | translate }}
-          </h1>
-          <p class="body-1 mt-4 w-full sm:w-2/3 lg:w-full">
-            {{ 'HOMEPAGE_SUBTITLE' | translate }}
-          </p>
-          <div class="mt-10">
-            @if (!isMobile) {
-              <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>
-                {{ 'GET_APP' | translate }}
-              </button>
-              <button class="my-2" mat-stroked-button (click)="scrollToSection()">
-                {{ 'DISCOVER_MORE' | translate }}
+    <div
+      class="relative z-10 opacity-100 transition-all delay-200 w-full lg:w-3/4 md:-translate-y-16"
+      [ngClass]="{ '!opacity-0': formExpanded() }"
+    >
+      <div class="text-white pb-8 px-6 lg:pl-32 w-full">
+        <h1 class="h2 w-full">
+          {{ 'WAIT' | translate }}
+        </h1>
+        <p class="body-1 mt-4 w-full">
+          {{ 'ARE_YOU_TIRED' | translate }}
+        </p>
+        <div class="mt-10">
+          @if (!isMobile) {
+            <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>
+              {{ 'GET_APP' | translate }}
+            </button>
+            <button class="my-2" mat-stroked-button (click)="scrollToSection()">
+              {{ 'DISCOVER_MORE' | translate }}
+            </button>
+            <div class="mt-24">
+              <img src="/images/arrow.gif" alt="Arrow" class="invert w-28" />
+            </div>
+          } @else {
+            @if (isMobile) {
+              <button (click)="toggleForm()" class="mr-4 my-2" mat-flat-button>
+                {{ 'SWIP' | translate }}
               </button>
             } @else {
-              @if (isMobile) {
-                <button (click)="toggleForm()" class="mr-4 my-2" mat-flat-button>
-                  {{ 'SWIP' | translate }}
-                </button>
-              } @else {
-                <button routerLink="register" class="mr-4 my-2" mat-flat-button>
-                  {{ 'SWIP' | translate }}
-                </button>
-              }
+              <button routerLink="register" class="mr-4 my-2" mat-flat-button>
+                {{ 'SWIP' | translate }}
+              </button>
             }
-          </div>
+          }
         </div>
-      </ng-container>
+      </div>
     </div>
 
     @if (isMobile) {
@@ -74,62 +78,119 @@
     }
   </div>
   @if (isMobile) {
-    <img src="/images/wave_2.svg" class="-mt-0.25" alt="Wave" />
+    <div class="w-full">
+      <img src="/images/wave_2.svg" class="-mt-0.25 w-full" alt="Wave" />
+    </div>
   }
 </div>
 
-<!-- MORE -->
-<div class="text-white px-6 md:px-12 xl:px-48 py-12 lg:pt-24 xl:pb-0">
-  <div class="w-full flex-col lg:flex-row flex items-center justify-between pb-12 xl:pb-24">
-    <div class="w-full xl:w-1/2">
-      <h1 class="h2 text-red-650">
-        {{ 'DREAM_JOB' | translate }}
-      </h1>
-      <p class="mt-6 body-1">
-        {{ 'JOB_DESC' | translate }}
-      </p>
-      <button (click)="scrollToSection()" class="mt-16" mat-flat-button>{{ 'SEE_MORE' | translate }}</button>
-    </div>
-    <div class="mt-24 lg:mt-0 w-full xl:w-1/2 relative flex justify-center">
-      <img class="w-3/4" src="/images/bloob.png" alt="Mobile Phone" />
-      <img class="w-3/4 absolute top-0 xl:left-1/2 xl:-translate-x-1/2" src="/images/phone.gif" alt="Mobile Phone" />
+<!-- GRADIENT -->
+@if (!isMobile) {
+  <div class="w-full h-16 bg-gradient-to-b from-transparent to-neutral-950 -translate-y-full"></div>
+}
+
+<!-- ABOUT -->
+<div class="flex items-center flex-col bg-no-repeat md:bg-repeat bg-monogram md:pb-24">
+  <div class="w-full p-16 md:pt-64 px-6 text-white bg-no-repeat">
+    <div class="w-full lg:w-1/2 md:w-3/4 mx-auto">
+      <h2 class="h2">{{ 'WELCOME' | translate }}</h2>
+      <p class="body-1 mt-12" [innerHTML]="'ABOUT' | translate"></p>
+      <div class="mt-12">
+        <button mat-flat-button (click)="scrollToSection()" class="_contrast-flat">
+          {{ 'HOW_IT_WORKS' | translate }}
+        </button>
+      </div>
     </div>
   </div>
 </div>
-<div class="bg-red-650 py-12" #about>
-  <div class="text-white flex flex-wrap justify-center px-6 md:px-12 xl:px-20">
-    @for (section of sections; track $index) {
-      <ng-container *ngTemplateOutlet="sectionRef; context: { section: section, last: $last }"> </ng-container>
-    }
+
+<!-- MOON -->
+<div class="flex justify-between items-center md:flex-nowrap flex-wrap lg:gap-48 md:gap-12 mt-0 mb-24 md:my-24">
+  <div class="w-full md:w-1/2 flex justify-end">
+    <img class="w-full lg:w-3/4" src="images/moon.gif" alt="Moon" />
+  </div>
+  <div class="px-6 md:pr-6 md:pl-0 w-full md:w-1/2">
+    <h1 class="text-red-650 h2 w-full">
+      <span class="text-white body-2 uppercase block">{{ 'TRY_IT' | translate }}</span>
+      {{ 'HOMEPAGE_TITLE' | translate }}
+    </h1>
+    <p class="text-white body-1 mt-4 w-full md:w-3/4">
+      {{ 'HOMEPAGE_SUBTITLE' | translate }}
+    </p>
+    <div class="mt-10">
+      @if (!isMobile) {
+        <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>
+          {{ 'GET_APP' | translate }}
+        </button>
+        <button class="my-2" mat-stroked-button (click)="scrollToSection()">
+          {{ 'DISCOVER_MORE' | translate }}
+        </button>
+      } @else {
+        @if (isMobile) {
+          <button (click)="toggleForm()" class="mr-4 my-2" mat-flat-button>
+            {{ 'SWIP' | translate }}
+          </button>
+        } @else {
+          <button routerLink="register" class="mr-4 my-2" mat-flat-button>
+            {{ 'SWIP' | translate }}
+          </button>
+        }
+      }
+    </div>
   </div>
 </div>
-<div class="px-6 md:px-12 xl:px-32 flex justify-center mt-12 pb-16 bg-none xl:bg-corner bg-no-repeat bg-(length:20rem)">
-  <div class="py-12 w-full xl:w-1/2 mx-auto">
+
+<!-- HOW IT WORKS -->
+<div class="py-16 bg-red-650/75 relative" #howItWorks>
+  <div class="relative z-10">
+    <div class="text-white flex flex-wrap justify-center px-6 md:px-12 xl:px-20">
+      @for (section of sections; track $index) {
+        @if ($index === 1 && isMobile) {
+          <ng-container *ngTemplateOutlet="swipeInfo; context: {}"></ng-container>
+        }
+        <ng-container *ngTemplateOutlet="sectionRef; context: { section: section, last: $last }"></ng-container>
+      }
+    </div>
+  </div>
+  @if (!isMobile) {
+    <ng-container *ngTemplateOutlet="swipeInfo; context: {}"></ng-container>
+  }
+  <div
+    class="!hidden md:!block absolute text-[15rem] lg:text-[25rem] text-white/50 font-extrabold top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+  >
+    {{ 'OR' | translate }}
+  </div>
+</div>
+
+<div class="px-6 md:px-12 xl:px-32 flex justify-center mt-32 mb-36 md:mb-0">
+  <div class="w-full xl:w-1/2 mx-auto">
     <h2 class="h2 text-red-650 flex items-center">{{ 'TAKE_CHARGE' | translate }}</h2>
     <p class="body-1 text-white mt-6">
       {{ 'WHAT_IS_SWIP' | translate }}
     </p>
-    <button (click)="installApp()" class="mt-16 _contrast-flat" mat-flat-button>{{ 'GET_APP' | translate }}</button>
+    <button (click)="installApp()" class="mt-12" mat-flat-button>{{ 'GET_APP' | translate }}</button>
   </div>
 </div>
 
+@if (!isMobile) {
+  <div>
+    <img src="images/wave.svg" class="w-full" alt="Wave" />
+  </div>
+}
+
 <ng-template #sectionRef let-section="section" let-isLast="last">
-  <div class="w-full md:w-full lg:w-1/3 flex flex-col" [ngClass]="{ 'mb-24 lg:mb-0 lg:mr-24 xl:mr-48': !isLast }">
-    <div class="flex justify-center lg:justify-start items-center">
-      <div class="text-6xl lg:text-8xl text-white font-extrabold">{{ section.index }}.</div>
-      <h2 class="h3 lg:h4 mt-4 ml-4 lg:w-full xl:text-left">
-        {{ section.titleCode | translate }}
-      </h2>
-    </div>
-    <p class="block lg:hidden text-center mt-4 body-2 align-middle">
-      {{ section.descriptionCode | translate }}
-    </p>
+  <div class="w-full md:w-1/2 lg:w-1/3 flex flex-col relative" [ngClass]="{ 'lg:mr-24 xl:mr-48': !isLast }">
     <div class="text-center mt-12">
-      <img class="w-3/4 lg:w-full inline" [src]="'/images/' + section.image + '.gif'" alt="Image" />
+      <img class="w-full inline" [src]="'/images/' + section.image + '.gif'" alt="Image" />
     </div>
-    <p class="hidden lg:block text-left mt-12 body-2 body-1 align-middle">
-      <mat-icon class="align-middle">info</mat-icon>
-      {{ section.descriptionCode | translate }}
-    </p>
+  </div>
+</ng-template>
+
+<ng-template #swipeInfo>
+  <div class="text-white h4 md:body-1 text-center mt-4 flex items-center justify-center w-full">
+    @if (!isMobile) {
+      <mat-icon class="mr-2">info</mat-icon>
+    }
+    <div class="text-center" [innerHTML]="'SWIPE_INFO' | translate"></div>
   </div>
 </ng-template>

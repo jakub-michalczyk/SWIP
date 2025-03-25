@@ -42,5 +42,8 @@
   "DENY": "You declined the offer",
   "MONTH": "month",
   "SEE_FULL": "See Full",
-  "LANGUAGE": "Language"
+  "LANGUAGE": "Language",
+  "HOW_IT_WORKS": "How it works",
+  "OR": "OR",
+  "SWIPE_INFO": "Swipe LEFT to <span class='font-extrabold text-red-400'>REJECT</span>, swipe RIGHT to <span class='font-extrabold text-green-700'>APPLY</span>"
 }

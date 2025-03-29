@@ -11,7 +11,7 @@ import { convertToBase64 } from '../../utils/utils';
 })
 export class UploadImageComponent {
   @Input({ required: true }) form = {} as FormGroup;
-  @Input() fullSizeMode = false;
+  @Input() accountMode = false;
   imagePreview: string | ArrayBuffer | null = null;
 
   onFileSelected(event: Event) {

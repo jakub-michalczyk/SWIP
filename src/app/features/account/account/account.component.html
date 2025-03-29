@@ -1,103 +1,150 @@
-<div class="min-h-screen bg-[auto_40%] lg:bg-[auto_70%] bg-left-bottom bg-no-repeat md:bg-corner">
+<div class="min-h-screen">
   <swip-topbar></swip-topbar>
-  @if ((user$ | async) !== null) {
-    <div class="px-6 lg:px-48">
-      <div class="py-6 mx-auto relative transition-all w-full md:w-3/4">
-        <ng-container
-          *ngTemplateOutlet="
-            accountSection;
-            context: { title: 'PERSONAL_DATA', data: ACCOUNT_DATA().personalData, form: editForm }
-          "
-        ></ng-container>
-        <ng-container
-          *ngTemplateOutlet="
-            accountSection;
-            context: { title: 'CONTACT_DATA', data: ACCOUNT_DATA().contactData, form: editForm }
-          "
-        ></ng-container>
+  <div class="flex flex-col items-center min-h-[calc(100vh-128px)] justify-center">
+    @if (editForm) {
+      <div class="px-6 w-full md:w-auto">
+        <mat-card class="p-6 md:p-12" [formGroup]="editForm" appearance="outlined">
+          <div class="flex flex-col md:flex-row gap-6 justify-center">
+            <div class="flex justify-center md:justify-start">
+              <div class="md:pr-6 border-r border-neutral-800">
+                <!-- ACCOUNT IMAGE -->
+                <div
+                  class="w-24 h-24 rounded-full p-4 flex items-center"
+                  [ngClass]="[
+                    isEmployer ? ' bg-red-650/50' : ' bg-red-650',
+                    !editMode() && isEmployer ? 'p-4' : 'bg-transparent p-0',
+                  ]"
+                >
+                  @if (editMode()) {
+                    @if (isEmployer) {
+                      <swip-upload-image
+                        class="w-full h-full block mt-2 text-white"
+                        [accountMode]="true"
+                        [form]="editForm"
+                      ></swip-upload-image>
+                    } @else {
+                      <ng-container *ngTemplateOutlet="employeeImage; context: {}"></ng-container>
+                    }
+                  } @else {
+                    @if (isEmployer) {
+                      <img class="w-full" [src]="editForm.get('companyImage')?.value" alt="Company Image" />
+                    } @else {
+                      <ng-container *ngTemplateOutlet="employeeImage; context: {}"></ng-container>
+                    }
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-12 w-full mt-6 md:mt-0">
+              <div class="flex flex-col gap-6 justify-between">
+                <!-- ACCOUNT DATA -->
+                @for (accountData of accountFields; track $index) {
+                  <div>
+                    <div class="h5 text-red-650">{{ accountData.title | translate }}</div>
+                    <div class="body-2 text-white mt-2">
+                      @if (editMode()) {
+                        @if (accountData.title === 'CV') {
+                          <swip-upload-file
+                            class="w-full block mt-4"
+                            [form]="editForm"
+                            beforeUploadCopy="UPLOAD_CV"
+                            fieldKey="cv"
+                            errorCopy="REQUIRED_CV"
+                            fieldKey
+                          ></swip-upload-file>
+                        } @else {
+                          <mat-form-field class="w-full mt-2">
+                            <input type="text" [formControlName]="accountData.value" matInput />
+                          </mat-form-field>
+                        }
+                      } @else {
+                        {{ editForm.get(accountData.value)?.value }}
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+              <!-- ACCOUNT OTHER FUNCTIONALITIES -->
+              <div class="flex flex-col gap-6">
+                @if (!isEmployer) {
+                  <div>
+                    @if (!editMode()) {
+                      <div class="h5 text-red-650">
+                        {{ 'CV' | translate }}
+                      </div>
+                      <div class="mt-4 text-white">
+                        {{ cv }}
+                      </div>
+                    } @else {
+                      <div class="h5 text-red-650">
+                        {{ 'CV' | translate }}
+                      </div>
 
-        @if (!editMode()) {
-          <div class="mt-4">
-            <h3 class="h3 text-white">{{ 'PASSWORD' | translate }}</h3>
-            <button
-              class="mt-4 padding-0 bg-transparent border-none !text-white body-2"
-              (click)="openDialog('0ms', '0ms')"
-            >
-              <span class="border-b border-white"> {{ 'RESET_PASSWORD' | translate }} </span>
-            </button>
+                      <swip-upload-file
+                        class="w-full block mt-4"
+                        [form]="editForm"
+                        beforeUploadCopy="UPLOAD_CV"
+                        fieldKey="cv"
+                        errorCopy="REQUIRED_CV"
+                        fieldKey
+                      ></swip-upload-file>
+                    }
+                  </div>
+                }
+                <div>
+                  <div class="h5 text-red-650" [ngClass]="{ 'opacity-50': editMode() }">
+                    {{ 'LANGUAGE' | translate }}
+                  </div>
+                  <div class="mt-4">
+                    <swip-language-buttons [accountMode]="true" [disabled]="editMode()"></swip-language-buttons>
+                  </div>
+                </div>
+                <div>
+                  <div class="mt-4">
+                    <div class="h5 text-red-650" [ngClass]="{ 'opacity-50': editMode() }">
+                      {{ 'PASSWORD' | translate }}
+                    </div>
+                    <button
+                      class="mt-2 padding-0 bg-transparent border-none !text-white body-2"
+                      (click)="openDialog('0ms', '0ms')"
+                      [disabled]="editMode()"
+                    >
+                      <span [ngClass]="{ 'opacity-50': editMode() }" class="border-b border-white">
+                        {{ 'RESET_PASSWORD' | translate }}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        }
-
-        <div class="flex justify-between items-center mt-12 flex-wrap">
-          <div class="flex items-center">
-            @if (!editMode()) {
-              <button mat-fab extended (click)="toggleMode()">
-                {{ 'EDIT' | translate }}
-                <mat-icon>edit</mat-icon>
-              </button>
-            } @else {
-              <button mat-flat-button (click)="saveChanges()" [disabled]="!editForm.dirty">
-                {{ 'SAVE_CHANGES' | translate }}
-              </button>
-              <button mat-stroked-button class="ml-4" (click)="toggleMode()">{{ 'CANCEL' | translate }}</button>
-            }
-
-            @if (userType() === EUserType.EMPLOYER) {
-              <button class="m-4" routerLink="/company-offers" mat-stroked-button>
-                {{ 'JOB_OFFERS' | translate }}
-              </button>
-            }
-          </div>
-          @if (!editMode()) {
-            <swip-language-buttons [accountMode]="true"></swip-language-buttons>
-          }
-        </div>
-      </div>
-    </div>
-  }
-</div>
-
-<ng-template #accountSection let-title="title" let-data="data" let-form="form">
-  <div class="border-b border-white py-6" [formGroup]="form">
-    <h3 class="h3 text-white">{{ title | translate }}</h3>
-    <div class="flex flex-wrap gap-10" [ngClass]="{ 'justify-between ': editMode() }">
-      @for (accountData of data; track $index) {
-        <div class="mt-4" [ngClass]="{ 'flex-1': editMode() }">
-          <div class="h5 text-red-650">{{ accountData.title | translate }}</div>
-          @if (editMode()) {
-            @if (accountData.title === 'CV') {
-              <swip-upload-file
-                class="w-full block mt-4"
-                [form]="editForm"
-                beforeUploadCopy="UPLOAD_CV"
-                fieldKey="cv"
-                errorCopy="REQUIRED_CV"
-                fieldKey
-              ></swip-upload-file>
-            } @else if (accountData.title === 'Image') {
-              <swip-upload-image
-                class="w-full block mt-2 text-white"
-                [fullSizeMode]="true"
-                [form]="editForm"
-              ></swip-upload-image>
-            } @else {
-              <mat-form-field class="w-full mt-2">
-                <input type="text" [formControlName]="accountData.value" matInput />
-              </mat-form-field>
-            }
-          } @else {
-            <div class="body-2 text-white mt-2">
-              @if (accountData.title === 'CV') {
-                {{ cv }}
-              } @else if (accountData.title === 'Image') {
-                <img class="w-32" [src]="editForm.get(accountData.value)?.value" alt="Company Image" />
+          <!-- BUTTONS -->
+          <div class="flex justify-between items-center mt-12 flex-wrap">
+            <div class="flex items-center">
+              @if (!editMode()) {
+                <button mat-fab extended (click)="toggleMode()">
+                  {{ 'EDIT' | translate }}
+                  <mat-icon>edit</mat-icon>
+                </button>
+                @if (isEmployer) {
+                  <button class="ml-4" routerLink="/company-offers" mat-stroked-button>
+                    {{ 'JOB_OFFERS' | translate }}
+                  </button>
+                }
               } @else {
-                {{ editForm.get(accountData.value)?.value }}
+                <button mat-flat-button (click)="saveChanges()" [disabled]="!editForm.dirty">
+                  {{ 'SAVE_CHANGES' | translate }}
+                </button>
+                <button mat-stroked-button class="ml-4" (click)="toggleMode()">{{ 'CANCEL' | translate }}</button>
               }
             </div>
-          }
-        </div>
-      }
-    </div>
+          </div>
+        </mat-card>
+      </div>
+    }
   </div>
+</div>
+
+<ng-template #employeeImage>
+  <img class="w-full" src="/images/default_user.svg" alt="Default User" />
 </ng-template>

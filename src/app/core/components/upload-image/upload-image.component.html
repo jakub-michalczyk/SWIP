@@ -1,6 +1,6 @@
 <button
   class="border-white border-dashed border rounded flex items-center justify-center cursor-pointer relative transition-all duration-200 hover:bg-white hover:bg-opacity-25"
-  [ngClass]="fullSizeMode ? 'w-full h-14' : 'w-16 h-16'"
+  [ngClass]="accountMode ? 'w-full h-full rounded-full' : 'w-16 h-16'"
   (click)="fileInput.click()"
   (keyup)="fileInput.click()"
 >

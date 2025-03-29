@@ -1,15 +1,15 @@
 @if (lang === 'en') {
-  <button (click)="switchLanguage('en')" class="mr-4" mat-flat-button>
+  <button (click)="switchLanguage('en')" class="mr-4" mat-flat-button [disabled]="disabled">
     {{ 'LANG_NAME_EN' | translate }}
   </button>
-  <button (click)="switchLanguage('pl')" mat-stroked-button>
+  <button (click)="switchLanguage('pl')" mat-stroked-button [disabled]="disabled">
     {{ 'LANG_NAME_PL' | translate }}
   </button>
 } @else {
-  <button (click)="switchLanguage('en')" class="mr-4" mat-stroked-button>
+  <button (click)="switchLanguage('en')" class="mr-4" mat-stroked-button [disabled]="disabled">
     {{ 'LANG_NAME_EN' | translate }}
   </button>
-  <button (click)="switchLanguage('pl')" mat-flat-button>
+  <button (click)="switchLanguage('pl')" mat-flat-button [disabled]="disabled">
     {{ 'LANG_NAME_PL' | translate }}
   </button>
 }

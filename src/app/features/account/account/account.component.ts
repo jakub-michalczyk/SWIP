@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth, user } from '@angular/fire/auth';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
@@ -38,6 +39,7 @@ import { IAccountDataKey } from './account.interface';
     RouterLink,
     TranslateModule,
     UploadImageComponent,
+    MatCardModule,
   ],
   templateUrl: './account.component.html',
 })
@@ -64,29 +66,25 @@ export class AccountComponent {
     this.setUpMobileSub();
   }
 
-  private setUpUserData(userData: IUser) {
+  private setUpUserData() {
     this.ACCOUNT_DATA.set({
       personalData: [
         { title: 'FIRST_NAME', value: 'firstName' } as IAccountDataKey,
         { title: 'LAST_NAME', value: 'lastName' } as IAccountDataKey,
         ...ACCOUNT_DATA.personalData,
       ],
-      contactData: [...ACCOUNT_DATA.contactData, { title: 'CV', value: userData.cv?.name || '' } as IAccountDataKey],
+      contactData: [...ACCOUNT_DATA.contactData],
     });
   }
 
   private setUpCompanyData() {
     this.ACCOUNT_DATA.set({
       ...ACCOUNT_DATA,
-      personalData: [
-        { title: 'Image', value: 'companyImage' } as IAccountDataKey,
-        { title: 'Company Name', value: 'companyName' } as IAccountDataKey,
-        ...ACCOUNT_DATA.personalData,
-      ],
+      personalData: [{ title: 'COMPANY_NAME', value: 'companyName' } as IAccountDataKey, ...ACCOUNT_DATA.personalData],
     });
   }
 
-  private initBasicForm(userData: IUser | ICompany) {
+  private initSharedForm(userData: IUser | ICompany) {
     this.editForm = this.fb.group({
       email: [userData.email, [Validators.required, Validators.email]],
       telephone: [
@@ -139,9 +137,9 @@ export class AccountComponent {
   }
 
   private initForm(userData: IUser | ICompany) {
-    this.initBasicForm(userData);
+    this.initSharedForm(userData);
     if (userData.userType === EUserType.EMPLOYEE) {
-      this.setUpUserData(userData as IUser);
+      this.setUpUserData();
       this.setUpUserForm(userData as IUser);
     } else {
       this.setUpCompanyData();
@@ -194,5 +192,15 @@ export class AccountComponent {
   get cv() {
     if (user === null) return;
     return (this.editForm.get('cv')?.value as ICV).name;
+  }
+
+  get accountFields() {
+    return this.userType() === EUserType.EMPLOYER
+      ? this.ACCOUNT_DATA().personalData.concat(this.ACCOUNT_DATA().contactData)
+      : this.ACCOUNT_DATA().personalData.concat(this.ACCOUNT_DATA().contactData);
+  }
+
+  get isEmployer() {
+    return this.userType() === EUserType.EMPLOYER;
   }
 }

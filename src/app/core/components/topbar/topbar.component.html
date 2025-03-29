@@ -1,4 +1,4 @@
-<div class="w-full p-6 flex justify-between items-center">
+<div class="w-full p-6 flex justify-between items-center h-32">
   <div routerLink="/" class="cursor-pointer">
     <img src="images/logo.svg" alt="Logo" />
   </div>
@@ -10,7 +10,7 @@
         <mat-icon class="!w-12 !h-12 !text-5xl text-white">account_circle</mat-icon>
       </button>
     } @else if (isPWA) {
-      <button routerLink="/login" class="ml-4" mat-flat-button>
+      <button routerLink="/login" class="ml-4 h-12" mat-flat-button>
         {{ 'SIGN_IN' | translate }}
       </button>
     } @else {

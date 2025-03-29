@@ -8,8 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of, switchMap } from 'rxjs';
+import { FrameComponent } from '../../../core/components/frame/frame.component';
 import { IconComponent } from '../../../core/components/icon/icon.component';
-import { TopbarComponent } from '../../../core/components/topbar/topbar.component';
 import { CompanyService } from '../../../core/services/company/company.service';
 import { UserService } from '../../../core/services/user/user.service';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
@@ -20,7 +20,6 @@ import { ViewApplicationComponent } from '../view-application/view-application.c
 @Component({
   selector: 'swip-company-offers',
   imports: [
-    TopbarComponent,
     MatExpansionModule,
     MatButtonModule,
     TranslateModule,
@@ -28,6 +27,7 @@ import { ViewApplicationComponent } from '../view-application/view-application.c
     IconComponent,
     MatIconModule,
     MatPaginatorModule,
+    FrameComponent,
   ],
   templateUrl: './company-offers.component.html',
 })

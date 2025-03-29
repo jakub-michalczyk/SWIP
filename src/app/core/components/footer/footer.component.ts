@@ -33,7 +33,6 @@ export class FooterComponent {
   columns: IFooterColumn[] = [];
   year = new Date().getFullYear();
   isMobile: boolean = false;
-  isPWA: boolean = false;
 
   constructor(
     private mobileService: MobileService,
@@ -42,10 +41,9 @@ export class FooterComponent {
   ) {
     this.setUpNavSub();
     this.setUpMobileServiceSub();
-    this.setUpPWASub();
   }
 
-  setUpNavSub() {
+  private setUpNavSub() {
     this.navigationService.footerRoutes$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((navData) => {
       this.getMenuData(navData);
     });
@@ -75,14 +73,7 @@ export class FooterComponent {
     this.columns.splice(1, 0, FOOTER_DATA);
   }
 
-  setUpPWASub() {
-    this.standaloneService.isStandaloneMode$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((value: boolean) => {
-      this.isPWA = value;
-      this.setUpMobileData();
-    });
-  }
-
-  setUpMobileServiceSub() {
+  private setUpMobileServiceSub() {
     this.mobileService.isMobile$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((isMobile) => {
       this.isMobile = isMobile;
       this.setUpMobileData();
@@ -93,7 +84,7 @@ export class FooterComponent {
     return { value: link.translationCode } as IIcon;
   }
 
-  setUpMobileData() {
+  private setUpMobileData() {
     if (this.isMobile) {
       const { textLinks, icons } = this.columns.reduce(
         (acc, column) => {
@@ -110,7 +101,7 @@ export class FooterComponent {
         { headingCode: '', data: icons },
       ];
     } else {
-      this.navigationService.footerRoutes$.pipe(take(1)).subscribe((navData) => {
+      this.navigationService.footerRoutes$.pipe(take(1), takeUntilDestroyed(this.destroyerRef)).subscribe((navData) => {
         this.columns = [];
         this.getMenuData(navData);
       });

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, HostListener, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth, user } from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,43 +8,33 @@ import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { signOut } from 'firebase/auth';
+import { from } from 'rxjs';
 import { StandaloneService } from '../../services/standalone/standalone.service';
-import { LanguageButtonsComponent } from '../language-buttons/language-buttons.component';
 
 @Component({
   selector: 'swip-topbar',
-  imports: [
-    MatButtonModule,
-    TranslateModule,
-    LanguageButtonsComponent,
-    RouterLink,
-    CommonModule,
-    MatIconModule,
-    MatMenuModule,
-  ],
+  imports: [MatButtonModule, TranslateModule, RouterLink, CommonModule, MatIconModule, MatMenuModule],
   templateUrl: './topbar.component.html',
 })
 export class TopbarComponent {
   private readonly destroyerRef = inject(DestroyRef);
-  isPWA = false;
   userLoggedIn = signal(false);
+  isScrolled = signal(false);
 
   constructor(
     private standaloneService: StandaloneService,
     private auth: Auth,
     private router: Router
   ) {
-    this.setUpPWASub();
     this.setUpUser();
   }
 
-  setUpPWASub() {
-    this.standaloneService.isStandaloneMode$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((value: boolean) => {
-      this.isPWA = value;
-    });
+  @HostListener('window:scroll', ['$event'])
+  private onWindowScroll() {
+    this.isScrolled.set(window.scrollY > 0 ? true : false);
   }
 
-  setUpUser() {
+  private setUpUser() {
     user(this.auth)
       .pipe(takeUntilDestroyed(this.destroyerRef))
       .subscribe((user) => {
@@ -53,7 +43,8 @@ export class TopbarComponent {
   }
 
   signOut() {
-    signOut(this.auth);
-    this.router.navigate(['/']);
+    from(signOut(this.auth))
+      .pipe(takeUntilDestroyed(this.destroyerRef))
+      .subscribe(() => this.router.navigate(['/']));
   }
 }

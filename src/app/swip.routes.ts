@@ -7,7 +7,6 @@ import { CompanyOffersComponent } from './features/company/company-offers/compan
 import { HomepageComponent } from './features/home/homepage/homepage.component';
 import { JobsWrapComponent } from './features/jobs/jobs-wrap/jobs-wrap.component';
 import { LoginComponent } from './features/login/login/login.component';
-import { MoreComponent } from './features/more/more/more.component';
 import { RegisterWrapComponent } from './features/register/register-wrap/register-wrap.component';
 import { PrivacyPolicyComponent } from './features/regulations/privacy-policy/privacy-policy.component';
 import { TermsComponent } from './features/regulations/terms/terms.component';
@@ -37,17 +36,6 @@ export const routes: Routes = [
         },
       },
     ],
-  },
-  {
-    path: 'more',
-    component: MoreComponent,
-    pathMatch: 'full',
-    data: {
-      path: 'more',
-      headingCode: 'MORE',
-      titleCode: 'FIND_OUT_MORE',
-      view: 'FOOTER',
-    },
   },
   {
     path: 'login',

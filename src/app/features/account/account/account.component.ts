@@ -12,9 +12,9 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+import { FrameComponent } from '../../../core/components/frame/frame.component';
 import { LanguageButtonsComponent } from '../../../core/components/language-buttons/language-buttons.component';
 import { ResetPasswordComponent } from '../../../core/components/reset-password/reset-password.component';
-import { TopbarComponent } from '../../../core/components/topbar/topbar.component';
 import { UploadImageComponent } from '../../../core/components/upload-image/upload-image.component';
 import { EUserType, ICompany, ICV, IUser } from '../../../core/services/auth/auth.interface';
 import { UserService } from '../../../core/services/user/user.service';
@@ -26,7 +26,6 @@ import { IAccountDataKey } from './account.interface';
 @Component({
   selector: 'swip-account',
   imports: [
-    TopbarComponent,
     CommonModule,
     MatButtonModule,
     MatIcon,
@@ -40,6 +39,7 @@ import { IAccountDataKey } from './account.interface';
     TranslateModule,
     UploadImageComponent,
     MatCardModule,
+    FrameComponent,
   ],
   templateUrl: './account.component.html',
 })

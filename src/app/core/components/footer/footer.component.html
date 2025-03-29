@@ -3,20 +3,20 @@
     <a routerLink="/">
       <img src="images/logo.svg" alt="Logo Contrast" />
     </a>
-    <div class="flex-col md:flex-row flex justify-between md:w-auto md:min-w-[75%] lg:min-w-[50%]">
+
+    <!-- FOOTER COLUMNS -->
+    <div class="flex-col md:flex-row flex justify-between">
       @for (footerCol of columns; track $index) {
-        <div [ngClass]="{ 'mb-6 ml-6': isMobile && !$last }">
+        <div [ngClass]="{ 'mb-6 ml-6': isMobile && !$last, 'mr-24': !isMobile && !$last }">
           <ng-container *ngTemplateOutlet="footerColumn; context: { footerCol: footerCol }"> </ng-container>
         </div>
       }
     </div>
   </div>
 
-  @if (isPWA) {
-    <div class="flex justify-end mt-6">
-      <swip-language-buttons></swip-language-buttons>
-    </div>
-  }
+  <div class="flex justify-end mt-6">
+    <swip-language-buttons></swip-language-buttons>
+  </div>
 
   <div class="text-gray-150 body-3 md:text-center md:py-6 text-left pt-4 opacity-1 md:opacity-30">
     &copy; {{ year }} swip
@@ -46,7 +46,7 @@
           @if (!link.isIcon) {
             {{ link.titleCode || link.data.titleCode | translate }}
           } @else {
-            @if (isMobile || isPWA) {
+            @if (isMobile) {
               <swip-icon class="w-6 h-6 !text-2xl block" [isButton]="true" [icon]="getIcon(link)"></swip-icon>
             } @else {
               <swip-icon class="w-9 h-9 !text-3xl block" [isButton]="true" [icon]="getIcon(link)"></swip-icon>

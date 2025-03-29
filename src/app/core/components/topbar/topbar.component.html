@@ -1,4 +1,7 @@
-<div class="w-full p-6 flex justify-between items-center h-32">
+<div
+  class="fixed top-0 left-0 w-full p-6 flex justify-between items-center transition-colors duration-300 z-50 h-32"
+  [ngClass]="{ 'bg-neutral-950/70': isScrolled() }"
+>
   <div routerLink="/" class="cursor-pointer">
     <img src="images/logo.svg" alt="Logo" />
   </div>
@@ -9,16 +12,18 @@
       <button [matMenuTriggerFor]="menu" aria-label="Account Icon with Circle Background">
         <mat-icon class="!w-12 !h-12 !text-5xl text-white">account_circle</mat-icon>
       </button>
-    } @else if (isPWA) {
-      <button routerLink="/login" class="ml-4 h-12" mat-flat-button>
+    } @else {
+      <button routerLink="/login" mat-flat-button>
         {{ 'SIGN_IN' | translate }}
       </button>
-    } @else {
-      <swip-language-buttons></swip-language-buttons>
+      <button routerLink="/register" class="block max-md:!hidden ml-4" mat-stroked-button>
+        {{ 'REGISTER' | translate }}
+      </button>
     }
   </div>
 </div>
 
+<!-- ACOUNT MENU -->
 <mat-menu #menu="matMenu">
   <button mat-menu-item routerLink="/account" aria-label="Acount Icon">
     <mat-icon class="!text-black">person</mat-icon>

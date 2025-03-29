@@ -13,6 +13,7 @@ import { UserService } from '../../services/user/user.service';
 })
 export class LanguageButtonsComponent {
   @Input() accountMode = false;
+  @Input() disabled = false;
   private readonly destroyerRef = inject(DestroyRef);
   lang: ELanguageCode = ELanguageCode.EN;
   userData: IUser | ICompany | null = null;

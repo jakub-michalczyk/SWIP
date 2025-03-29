@@ -20,6 +20,7 @@ export class UserService {
   saveUserData(userId: string, userData: IUser | ICompany): Observable<void> {
     const userDocRef = doc(this.firestore, `users/${userId}`);
     return from(setDoc(userDocRef, { uid: userId, ...userData })).pipe(
+      takeUntilDestroyed(this.destroyerRef),
       catchError((error) => {
         console.error('Error saving user data:', error);
         throw error;
@@ -37,6 +38,7 @@ export class UserService {
   getData(userId: string): Observable<IUser | ICompany | null> {
     const userDocRef = doc(this.firestore, `users/${userId}`);
     return from(getDoc(userDocRef)).pipe(
+      takeUntilDestroyed(this.destroyerRef),
       map((docSnap) => (docSnap.exists() ? ({ ...docSnap.data(), uid: userId } as IUser) : null)),
       catchError((error) => {
         console.error('Error fetching user data:', error);

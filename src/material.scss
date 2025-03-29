@@ -21,3 +21,8 @@
     container-shape: variables.$border-radius,
     header-indicator-color: variables.$white
 ));
+
+@include mat.card-overrides((
+    outlined-container-color: variables.$neutral-950,
+    outlined-outline-color: variables.$neutral-800
+  ));

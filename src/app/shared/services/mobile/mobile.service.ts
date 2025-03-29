@@ -6,7 +6,7 @@ import { BehaviorSubject, fromEvent } from 'rxjs';
   providedIn: 'root',
 })
 export class MobileService {
-  private mobileQuery = '(max-width: 768px)';
+  private mobileQuery = '(min-width: 768px)';
   private isMobileSubject = new BehaviorSubject<boolean>(this.checkIfMobile());
   private destroyerRef = inject(DestroyRef);
 
@@ -19,7 +19,7 @@ export class MobileService {
   }
 
   private checkIfMobile(): boolean {
-    const isSmallScreen = window.matchMedia(this.mobileQuery).matches;
+    const isSmallScreen = !window.matchMedia(this.mobileQuery).matches;
     const userAgent = navigator.userAgent;
     const isMobileUserAgent = /android|iphone|ipad|iPod/i.test(userAgent);
 

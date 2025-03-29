@@ -6,7 +6,7 @@ import { map, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class NotVerifiedGuard implements CanActivate {
   constructor(
     private auth: Auth,
     private router: Router
@@ -15,13 +15,16 @@ export class AuthGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return user(this.auth).pipe(
       map((currentUser) => {
-        if (!currentUser?.emailVerified) {
-          this.router.navigate(['/not-verified']);
+        if (!currentUser) {
+          this.router.navigate(['/']);
           return false;
-        } else if (currentUser) {
+        }
+
+        if (!currentUser?.emailVerified) {
           return true;
         }
-        this.router.navigate(['/login']);
+
+        this.router.navigate(['/']);
         return false;
       })
     );

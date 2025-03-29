@@ -17,7 +17,7 @@ export class RegisterWrapComponent {
     this.setUpMobileServiceSub();
   }
 
-  setUpMobileServiceSub() {
+  private setUpMobileServiceSub() {
     this.mobileService.isMobile$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((isMobile) => {
       this.isMobile = isMobile;
     });

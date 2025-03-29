@@ -16,7 +16,7 @@ import { FrameComponent } from '../../../core/components/frame/frame.component';
 import { LanguageButtonsComponent } from '../../../core/components/language-buttons/language-buttons.component';
 import { ResetPasswordComponent } from '../../../core/components/reset-password/reset-password.component';
 import { UploadImageComponent } from '../../../core/components/upload-image/upload-image.component';
-import { EUserType, ICompany, ICV, IUser } from '../../../core/services/auth/auth.interface';
+import { EUserType, ICompany, IFile, IUser } from '../../../core/services/auth/auth.interface';
 import { UserService } from '../../../core/services/user/user.service';
 import { UploadFileComponent } from '../../../shared/components/upload-file/upload-file.component';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
@@ -191,7 +191,7 @@ export class AccountComponent {
 
   get cv() {
     if (user === null) return;
-    return (this.editForm.get('cv')?.value as ICV).name;
+    return (this.editForm.get('cv')?.value as IFile).name;
   }
 
   get accountFields() {

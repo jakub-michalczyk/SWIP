@@ -14,5 +14,7 @@
     "INVALID_EMAIL": "Nieprawidłowy adres e-mail.",
     "USER_NOT_FOUND": "Nie znaleziono użytkownika o podanym adresie e-mail.",
     "INVALID_PASSWORD": "Nieprawidłowe hasło.",
-    "DEFAULT_ERROR": "Wystąpił nieznany błąd. Spróbuj ponownie."
+    "DEFAULT_ERROR": "Wystąpił nieznany błąd. Spróbuj ponownie.",
+    "EMAIL_ALREADY_IN_USE": "Ten adres e-mail jest już używany przez innego użytkownika. Spróbuj użyć innego adresu e-mail.",
+    "WEAK_PASSWORD": "Hasło jest zbyt słabe. Proszę wybierz hasło zawierające co najmniej 6 znaków."
 }

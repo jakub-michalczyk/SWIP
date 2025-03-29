@@ -13,10 +13,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserCredential } from 'firebase/auth';
 import 'firebase/compat/storage';
-import { EMPTY, of, switchMap, tap } from 'rxjs';
+import { of, switchMap, tap } from 'rxjs';
 import { EUserType, ICompany, IUser } from '../../../core/services/auth/auth.interface';
 import { AuthService } from '../../../core/services/auth/auth.service';
-import { FileService } from '../../../core/services/file/file.service';
 import { UserService } from '../../../core/services/user/user.service';
 import { BulletsComponent } from '../../../shared/components/bullets/bullets.component';
 import { ToggleComponent } from '../../../shared/components/toggle/toggle.component';
@@ -58,8 +57,7 @@ export class RegisterFormComponent {
   steps: IStep[] = [];
   currentStep = signal(0);
   currentTabId = signal(0);
-  submitted = signal(false);
-  verified = signal(false);
+  errorMessageCode = signal('');
   toggleValues: IToggleElement[] = [
     { isActive: true, translateCode: 'EMPLOYEE', id: 0 },
     { isActive: false, translateCode: 'EMPLOYER', id: 1 },
@@ -69,21 +67,16 @@ export class RegisterFormComponent {
     private fb: FormBuilder,
     private bulletsService: BulletsService,
     private authService: AuthService,
-    private fileService: FileService,
     private userService: UserService,
     private toggleService: ToggleService,
     private registerService: RegisterService
   ) {
-    this.initForms();
+    this.initEmployeeForm();
+    this.initEmployerForm();
     this.setUpFormSub();
     this.setUpBulletSub();
     this.setUpToggleSub();
     this.initializeBullets();
-  }
-
-  private initForms() {
-    this.initEmployeeForm();
-    this.initEmployerForm();
   }
 
   private initEmployeeForm() {
@@ -152,7 +145,7 @@ export class RegisterFormComponent {
     });
   }
 
-  reset() {
+  private reset() {
     this.employeeForm.reset({
       email: '',
       password: '',
@@ -192,14 +185,14 @@ export class RegisterFormComponent {
     this.bulletsService.updateStepStatus(this.steps);
   }
 
-  setUpBulletSub() {
-    this.bulletsService.bullets$.subscribe((bullets) => {
+  private setUpBulletSub() {
+    this.bulletsService.bullets$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((bullets) => {
       this.steps = bullets;
       this.currentStep.set(bullets.find((b) => b.isActive)?.id || 0);
     });
   }
 
-  setUpFormSub() {
+  private setUpFormSub() {
     this.employeeForm.valueChanges.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe(() => {
       this.updateStepStatus();
     });
@@ -230,7 +223,7 @@ export class RegisterFormComponent {
     }
   }
 
-  passwordMatchValidator(group: FormGroup) {
+  private passwordMatchValidator(group: FormGroup) {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
 
@@ -252,6 +245,29 @@ export class RegisterFormComponent {
       this.currentStep.set(next);
       this.updateStepStatus();
     }
+  }
+
+  private getEmployeeData(email: string) {
+    return {
+      email,
+      firstName: this.employeeForm.get('firstName')?.value,
+      lastName: this.employeeForm.get('lastName')?.value,
+      telephone: `${this.employeeForm.get('countryCode')?.value}${this.employeeForm.get('tel')?.value}`,
+      city: this.employeeForm.get('city')?.value,
+      cv: null,
+      userType: EUserType.EMPLOYEE,
+    } as IUser;
+  }
+
+  private getEmployerData(email: string) {
+    return {
+      email,
+      companyName: this.employerForm.get('companyName')?.value,
+      telephone: `${this.employerForm.get('countryCode')?.value}${this.employeeForm.get('tel')?.value}`,
+      city: this.employerForm.get('city')?.value,
+      companyImage: this.employerForm.get('companyImage')?.value,
+      userType: EUserType.EMPLOYER,
+    } as ICompany;
   }
 
   register(): void {
@@ -292,29 +308,19 @@ export class RegisterFormComponent {
           return this.userService.saveUserData(userCredential.user.uid, userData).pipe(
             switchMap(() => this.authService.sendVerificationEmail()),
             tap(() => {
-              this.submitted.set(true);
               this.registerService.updateStatus(true);
             }),
-            switchMap(() => this.authService.waitForEmailVerification(userCredential.user)),
-            tap(() => this.verified.set(true)),
             switchMap(() => {
-              if (cv) {
-                return this.fileService.convertFileToBase64(cv);
-              } else if (companyImage) {
-                return this.fileService.convertFileToBase64(companyImage);
-              }
-
+              const key = cv ? 'cv' : 'companyImage';
+              const updatedUserData = { ...userData, [key]: cv ? cv : companyImage };
+              localStorage.setItem('pendingUserData', JSON.stringify(updatedUserData));
               return of(null);
             }),
-            switchMap((base64: string | null) => {
-              const key = cv ? 'cv' : 'companyImage';
-
+            switchMap(() => this.authService.waitForEmailVerification(userCredential.user)),
+            switchMap(() => {
               return this.userService.saveUserData(userCredential.user.uid, {
-                ...userData,
-                [key]: base64,
+                ...JSON.parse(localStorage.getItem('pendingUserData')!),
               } as IUser);
-
-              return EMPTY;
             })
           );
         })
@@ -324,6 +330,19 @@ export class RegisterFormComponent {
           console.error('Error:', error);
         },
       });
+  }
+
+  private getErrorMessage(errorCode: string) {
+    switch (errorCode) {
+      case 'auth/invalid-email':
+        return 'INVALID_EMAIL';
+      case 'auth/email-already-in-use':
+        return 'EMAIL_ALREADY_IN_USE';
+      case 'auth/weak-password':
+        return 'WEAK_PASSWORD';
+      default:
+        return 'DEFAULT_ERROR';
+    }
   }
 
   get determineActiveForm() {

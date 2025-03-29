@@ -1,34 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
-import { Observable, from } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { IFile } from '../auth/auth.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileService {
-  constructor(private firestore: Firestore) {}
-
-  saveFileToFirestore(file: File, userId: string): Observable<void> {
-    return this.convertFileToBase64(file).pipe(
-      switchMap((base64Data) => {
-        const userDocRef = doc(this.firestore, `users/${userId}`);
-        return from(updateDoc(userDocRef, { cv: base64Data }));
-      })
-    );
-  }
-
-  convertFileToBase64(file: File): Observable<string> {
+  convertFileToBase64(file: File | null | undefined): Observable<IFile> {
     return new Observable((observer) => {
+      if (!file || !(file instanceof Blob)) {
+        observer.error(new TypeError('Invalid file input: Expected a File or Blob.'));
+        return;
+      }
+
       const reader = new FileReader();
+
       reader.onloadend = () => {
-        observer.next(reader.result as string);
+        observer.next({ name: file.name, value: reader.result as string });
         observer.complete();
       };
+
       reader.onerror = (error) => {
         console.error('FileReader error:', error);
         observer.error(error);
       };
+
       reader.readAsDataURL(file);
     });
   }

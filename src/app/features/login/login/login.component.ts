@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import { catchError, from, switchMap } from 'rxjs';
 import { EmailPasswordComponent } from '../../../core/components/email-password/email-password.component';
+import { FrameComponent } from '../../../core/components/frame/frame.component';
 
 @Component({
   selector: 'swip-login',
@@ -24,6 +25,7 @@ import { EmailPasswordComponent } from '../../../core/components/email-password/
     ReactiveFormsModule,
     CommonModule,
     RouterLink,
+    FrameComponent,
   ],
   templateUrl: './login.component.html',
 })
@@ -87,7 +89,6 @@ export class LoginComponent {
         takeUntilDestroyed(this.destroyerRef),
         catchError((error) => {
           this.errorCode.set(this.getErrorMessage(error.code));
-          console.log(error);
           throw error;
         })
       )

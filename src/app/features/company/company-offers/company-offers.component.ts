@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of, switchMap } from 'rxjs';
+import { FrameComponent } from '../../../core/components/frame/frame.component';
 import { IconComponent } from '../../../core/components/icon/icon.component';
 import { CompanyService } from '../../../core/services/company/company.service';
 import { UserService } from '../../../core/services/user/user.service';
@@ -26,6 +27,7 @@ import { ViewApplicationComponent } from '../view-application/view-application.c
     IconComponent,
     MatIconModule,
     MatPaginatorModule,
+    FrameComponent,
   ],
   templateUrl: './company-offers.component.html',
 })

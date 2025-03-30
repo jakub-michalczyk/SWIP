@@ -1,59 +1,88 @@
-# SWIP
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+![alt text](https://github.com/jakub-michalczyk/SWIP/blob/master/public/images/logo.svg?raw=true)
 
-## Development server
+**SWIP** is a modern job search and recruitment platform featuring a landing page with a few subpages, allowing users to register as either job seekers or employers. Job seekers can browse job offers using a swipe-based system—swiping right to apply and left to reject—while also managing their account. Employers can view their job postings, check applicants' CVs, and edit account details. The app supports PWA functionality, and its backend is powered by Firebase
 
-To start a local development server, run:
+## Features
 
+- **Job Seekers**: 
+  - Browse job offers using a swipe-based system (right to apply, left to reject).
+  - Manage user account
+
+- **Employers**:
+  - View and manage job postings.
+  - Review applicants' CVs.
+  - Edit account details.
+
+- **PWA Support**: 
+  - Offline functionality and app-like behavior on mobile devices.
+  
+- **Backend**: 
+  - Firebase integration for user authentication, data storage, and real-time features.
+
+![alt text](https://github.com/jakub-michalczyk/SWIP/blob/master/public/images/monogram.png)
+  
+## Technologies Used
+
+- **Angular 19**: For the front-end framework.
+- **Firebase**: For backend services (authentication, Firestore, and hosting).
+- **Tailwind CSS**: For styling.
+- **PWA (Progressive Web App)**: To provide app-like experience on mobile and desktop.
+- **RxJS**: For reactive programming and handling asynchronous data flows.
+
+## Prerequisites
+
+Before running the project, make sure you have the following installed:
+
+- **Node.js**: Recommended version 16 or higher.
+- **Angular CLI**: If not installed, you can install it globally using the command:
+
+```bash
+npm install -g @angular/cli
+```
+- **Firebase CLI**: For Firebase hosting and functions deployment.
+```bash
+npm install -g firebase-tools
+```
+
+## Setup
+- **Clone repository:**
+```bash
+git clone https://github.com/jakub-michalczyk/SWIP
+```
+
+- **Navigate to the project folder:**
+```bash
+cd swip
+```
+
+- **Install the dependencies:**
+```bash
+npm install
+```
+
+- **Firebase init:**
+  - Create a Firebase project in the [Firebase Console](https://firebase.google.com/)
+
+  - Add your Firebase configuration details to the environment files in:
+_src/environments/environment.ts_
+
+
+- **Run the development server:**
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The app will be available at [http://localhost:4200](http://localhost:4200).
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+## Build for Production ##
+To build the project for production, use the following command:
 ```bash
-ng generate component component-name
+ng build --prod
 ```
+The build artifacts will be stored in the dist/ directory. You can deploy the project to Firebase Hosting or any other hosting service.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## License ##
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+![alt text](https://github.com/jakub-michalczyk/SWIP/blob/master/public/images/moon.gif)

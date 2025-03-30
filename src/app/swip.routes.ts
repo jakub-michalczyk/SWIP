@@ -7,11 +7,13 @@ import { CompanyOffersComponent } from './features/company/company-offers/compan
 import { HomepageComponent } from './features/home/homepage/homepage.component';
 import { JobsWrapComponent } from './features/jobs/jobs-wrap/jobs-wrap.component';
 import { LoginComponent } from './features/login/login/login.component';
+import { NotVerifiedWrapComponent } from './features/not-verified/not-verified-wrap/not-verified-wrap.component';
 import { RegisterWrapComponent } from './features/register/register-wrap/register-wrap.component';
 import { PrivacyPolicyComponent } from './features/regulations/privacy-policy/privacy-policy.component';
 import { TermsComponent } from './features/regulations/terms/terms.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { HomepageGuard } from './shared/guards/homepage.guard';
+import { NotVerifiedGuard } from './shared/guards/not-verified.guard';
 
 export const routes: Routes = [
   {
@@ -60,6 +62,12 @@ export const routes: Routes = [
     path: 'company-offers',
     pathMatch: 'full',
     canActivate: [EmployerGuard, AuthGuard],
+  },
+  {
+    component: NotVerifiedWrapComponent,
+    path: 'not-verified',
+    pathMatch: 'full',
+    canActivate: [NotVerifiedGuard],
   },
   {
     path: 'jobs',

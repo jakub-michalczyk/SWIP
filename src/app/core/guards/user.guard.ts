@@ -14,7 +14,7 @@ export class UserGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return new Observable<boolean>((observer) => {
       onAuthStateChanged(this.auth, (user) => {
-        if (user) {
+        if (user && user.emailVerified) {
           this.router.navigate(['/']);
           observer.next(false);
         } else {

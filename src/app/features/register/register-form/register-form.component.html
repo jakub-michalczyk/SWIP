@@ -1,84 +1,64 @@
 <form
-  class="w-full h-full bg-red-650 md:bg-transparent px-6 py-12 overflow-auto text-white md:py-24"
+  class="w-full h-full bg-red-650 md:bg-transparent text-white px-6 py-12 overflow-auto md:overflow-hidden md:py-0 md:px-0"
   [formGroup]="determineActiveForm"
 >
-  <div class="w-full flex items-center justify-between flex-wrap">
+  <div class="w-full flex gap-6 items-center justify-between flex-wrap">
     <swip-bullets></swip-bullets>
     <swip-toggle [values]="toggleValues" class="block py-6"></swip-toggle>
   </div>
 
   <div class="mt-6 density-form--1">
-    @if (!submitted()) {
-      <h3 class="h3 mb-6 md:text-red-650">
-        {{
-          (currentTabId() === 0 ? employeeTitlesCode()[currentStep()] : employerTitlesCode()[currentStep()]) | translate
-        }}
-      </h3>
-    }
+    <h3 class="h3 mb-6 md:text-red-650">
+      {{
+        (currentTabId() === 0 ? employeeTitlesCode()[currentStep()] : employerTitlesCode()[currentStep()]) | translate
+      }}
+    </h3>
 
-    @if (!submitted()) {
-      @switch (currentStep()) {
-        @case (0) {
-          <!-- STEP 1 -->
-          <swip-register-step-1 [form]="determineActiveForm"></swip-register-step-1>
-        }
-        @case (1) {
-          <!-- STEP 2 -->
-          <swip-register-step-2 [form]="determineActiveForm"></swip-register-step-2>
-        }
-        @case (2) {
-          <!-- STEP 3 -->
-          @if (currentTabId() === 0) {
-            <swip-register-step-employee-3 [form]="employeeForm"></swip-register-step-employee-3>
-          } @else {
-            <swip-register-step-employer-3 [form]="employerForm"></swip-register-step-employer-3>
-          }
-        }
-        @case (3) {
-          <!-- STEP 4 -->
-          <swip-register-step-4 [form]="determineActiveForm"></swip-register-step-4>
+    @switch (currentStep()) {
+      @case (0) {
+        <!-- STEP 1 -->
+        <swip-register-step-1 [form]="determineActiveForm"></swip-register-step-1>
+      }
+      @case (1) {
+        <!-- STEP 2 -->
+        <swip-register-step-2 [form]="determineActiveForm"></swip-register-step-2>
+      }
+      @case (2) {
+        <!-- STEP 3 -->
+        @if (currentTabId() === 0) {
+          <swip-register-step-employee-3 [form]="employeeForm"></swip-register-step-employee-3>
+        } @else {
+          <swip-register-step-employer-3 [form]="employerForm"></swip-register-step-employer-3>
         }
       }
-
-      <!-- NEXT STEP -->
-      <div class="mt-12 flex">
-        @if (currentStep() >= 1) {
-          <button mat-fab extended (click)="prevStep()" class="mr-4">
-            {{ 'PREVIOUS_STEP' | translate }}<mat-icon>keyboard_arrow_left</mat-icon>
-          </button>
-        }
-        @if (currentStep() < steps.length - 1) {
-          <button mat-fab extended (click)="nextStep()" [disabled]="isNextDisabled">
-            {{ 'NEXT_STEP' | translate }}
-            <mat-icon>keyboard_arrow_right</mat-icon>
-          </button>
-        }
-        @if (currentStep() === steps.length - 1) {
-          <button (click)="register()" mat-flat-button class="_contrast-flat">
-            {{ 'REGISTER' | translate }}
-          </button>
-        }
-      </div>
-    } @else {
-      <div class="mt-12">
-        @if (!verified()) {
-          <h2 class="h3">
-            <mat-icon class="">info</mat-icon>
-            {{ 'VERIFICATION_SENT' | translate }}
-          </h2>
-          <p class="mt-4">
-            {{ 'DO_NOT_CLOSE_TAB' | translate }}
-          </p>
-        } @else {
-          <h2 class="h3">
-            <mat-icon class="">check_circle</mat-icon>
-            {{ 'EMAIL_VERIFIED' | translate }}
-          </h2>
-          <p class="mt-4">
-            {{ 'USE_SWIP' | translate }}
-          </p>
-        }
-      </div>
+      @case (3) {
+        <!-- STEP 4 -->
+        <swip-register-step-4 [form]="determineActiveForm"></swip-register-step-4>
+      }
     }
+
+    <!-- NEXT STEP -->
+    <div class="mt-12 flex">
+      @if (currentStep() >= 1) {
+        <button mat-fab extended (click)="prevStep()" class="mr-4">
+          {{ 'PREVIOUS_STEP' | translate }}<mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+      }
+      @if (currentStep() < steps.length - 1) {
+        <button mat-fab extended (click)="nextStep()" [disabled]="isNextDisabled">
+          {{ 'NEXT_STEP' | translate }}
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+      }
+      @if (currentStep() === steps.length - 1) {
+        <button (click)="register()" mat-flat-button class="_contrast-flat">
+          {{ 'REGISTER' | translate }}
+        </button>
+      }
+    </div>
   </div>
 </form>
+
+<div class="mt-4 text-red-650 body-2">
+  {{ errorMessage() | translate }}
+</div>

@@ -4,7 +4,7 @@ export interface IUser extends IGeneralUser {
   firstName: string;
   lastName: string;
   city?: string;
-  cv: ICV | null;
+  cv: IFile | null;
 }
 
 export interface ICompany extends IGeneralUser {
@@ -26,7 +26,7 @@ export enum EUserType {
   EMPLOYEE,
 }
 
-export interface ICV {
+export interface IFile {
   name: string;
-  data: string;
+  value: string;
 }

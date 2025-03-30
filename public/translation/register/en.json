@@ -11,11 +11,13 @@
    "EXAMPLE_LAST_NAME": "Ex. Doe",
    "EXAMPLE_CITY": "Ex. Warsaw",
    "VERIFICATION_SENT": "Almost done!",
-   "DO_NOT_CLOSE_TAB": "The activation link has been sent to your e-mail. Do not close this tab before accepting the message. Your CV will be sent after acceptance.",
+   "DO_NOT_CLOSE_TAB": "The activation link has been sent to your e-mail. Do not close this tab before accepting the message. Your data will be sent after acceptance.",
    "EMAIL_VERIFIED": "Your email has been verified!",
    "USE_SWIP": "You can now use SWIP.",
    "COMPANY_NAME": "Company name",
    "COMPANY_IMAGE": "Company image",
    "COMPANY_DATA": "Company data",
-   "EXAMPLE_COMPANY_NAME": "SWIP."
+   "EXAMPLE_COMPANY_NAME": "SWIP.",
+   "PROBLEM": "Unfortunately, there was a problem.",
+   "UNABLE_DOWNLOAD_DATA": "We are unable to download your data. Please fill in your data again."
 }

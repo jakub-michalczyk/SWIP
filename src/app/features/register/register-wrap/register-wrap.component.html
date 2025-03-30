@@ -1,8 +1,12 @@
 <swip-frame [disablePadding]="isMobile">
-  <div class="mt-32 w-full">
+  <div class="min-h-screen w-full flex flex-col justify-end md:justify-center items-center">
     @if (isMobile) {
       <img class="w-full -mb-0.25" src="images/wave.svg" alt="Wave" />
+      <swip-register-form class="block w-full md:w-3/5 xl:w-2/6 mx-auto md:pb-24"></swip-register-form>
+    } @else {
+      <mat-card class="p-6 md:p-12 w-full lg:w-3/4 xl:w-1/2 mx-auto" appearance="outlined">
+        <swip-register-form class="block w-full"></swip-register-form>
+      </mat-card>
     }
-    <swip-register-form class="block w-full md:w-3/4 xl:w-2/5 mx-auto md:pb-24"></swip-register-form>
   </div>
 </swip-frame>

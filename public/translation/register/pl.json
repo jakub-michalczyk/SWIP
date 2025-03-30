@@ -11,11 +11,13 @@
    "EXAMPLE_LAST_NAME": "np. Nowak",
    "EXAMPLE_CITY": "np. Warszawa",
    "VERIFICATION_SENT": "Prawie gotowe! Link aktywacyjny został wysłany na Twój e-mail",
-   "DO_NOT_CLOSE_TAB": "Nie zamykaj tej karty przed zaakceptowaniem wiadomości. Twoje CV zostanie przesłane po akceptacji.",
+   "DO_NOT_CLOSE_TAB": "Nie zamykaj tej karty przed zaakceptowaniem wiadomości. Twoje dane zostaną przesłane po akceptacji.",
    "EMAIL_VERIFIED": "Twój e-mail został zweryfikowany!",
    "USE_SWIP": " Możesz już teraz korzystać z SWIP.",
    "COMPANY_NAME": "Nazwa firmy",
    "COMPANY_IMAGE": "Zdjęcie firmy",
    "COMPANY_DATA": "Dane firmy",
-   "EXAMPLE_COMPANY_NAME": "SWIP."
+   "EXAMPLE_COMPANY_NAME": "SWIP.",
+   "PROBLEM": "Niestety wystąpił problem.",
+   "UNABLE_DOWNLOAD_DATA": "Nie możemy pobrać Twoich danych. Proszę uzupełnij formularz raz jeszcze."
 }

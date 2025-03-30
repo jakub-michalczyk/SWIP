@@ -1,23 +1,25 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth } from '@angular/fire/auth';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { BehaviorSubject, combineLatest, map, scan, startWith } from 'rxjs';
 import { FrameComponent } from '../../../core/components/frame/frame.component';
+import { LoaderComponent } from '../../../core/components/loader/loader.component';
 import { JobOfferComponent } from '../job-offer/job-offer.component';
 import { JobService, OFFERS_PER_REQUEST } from '../job/job.service';
 import { IJobOfferDTO } from './jobs-wrap.interface';
 
 @Component({
   selector: 'swip-jobs-wrap',
-  imports: [JobOfferComponent, CommonModule, FrameComponent],
+  imports: [JobOfferComponent, CommonModule, FrameComponent, LoaderComponent],
   templateUrl: './jobs-wrap.component.html',
 })
 export class JobsWrapComponent {
   private destroyerRef = inject(DestroyRef);
   private jobs$ = new BehaviorSubject<IJobOfferDTO[]>([]);
   private currentOfferId$ = new BehaviorSubject<number>(0);
+  loading = signal(true);
   blocked = false;
 
   currentOffer$ = combineLatest([this.jobs$, this.currentOfferId$]).pipe(
@@ -50,9 +52,13 @@ export class JobsWrapComponent {
   }
 
   initOffers() {
+    this.loading.set(true);
     this.jobService
       .loadJobOffers()
       .pipe(takeUntilDestroyed(this.destroyerRef))
-      .subscribe((offers) => this.jobs$.next(offers));
+      .subscribe((offers) => {
+        this.jobs$.next(offers);
+        this.loading.set(false);
+      });
   }
 }

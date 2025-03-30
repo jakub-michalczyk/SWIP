@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { FrameComponent } from '../../../core/components/frame/frame.component';
 import { LanguageButtonsComponent } from '../../../core/components/language-buttons/language-buttons.component';
+import { LoaderComponent } from '../../../core/components/loader/loader.component';
 import { ResetPasswordComponent } from '../../../core/components/reset-password/reset-password.component';
 import { UploadImageComponent } from '../../../core/components/upload-image/upload-image.component';
 import { EUserType, ICompany, IFile, IUser } from '../../../core/services/auth/auth.interface';
@@ -40,6 +41,7 @@ import { IAccountDataKey } from './account.interface';
     UploadImageComponent,
     MatCardModule,
     FrameComponent,
+    LoaderComponent,
   ],
   templateUrl: './account.component.html',
 })
@@ -52,6 +54,7 @@ export class AccountComponent {
   editMode = signal(false);
   ACCOUNT_DATA = signal(ACCOUNT_DATA);
   userType = signal(EUserType.EMPLOYEE);
+  loading = signal(true);
   user$ = this.userSubject.asObservable();
   EUserType = EUserType;
   dialogWidth = '50%';
@@ -125,6 +128,7 @@ export class AccountComponent {
   }
 
   private getUserData() {
+    this.loading.set(true);
     this.userService.getUserData().subscribe((userData) => {
       if (userData !== null) {
         this.userSubject.next(userData);
@@ -133,6 +137,7 @@ export class AccountComponent {
       } else {
         this.userSubject.next(null);
       }
+      this.loading.set(false);
     });
   }
 

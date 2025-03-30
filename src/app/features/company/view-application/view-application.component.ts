@@ -8,13 +8,14 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { collection, deleteDoc, doc } from 'firebase/firestore';
 import { map } from 'rxjs';
+import { LoaderComponent } from '../../../core/components/loader/loader.component';
 import { ContentModalComponent } from '../../../core/components/modals/content-modal/content-modal.component';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
 import { IApplicationCV } from './view-application.interface';
 
 @Component({
   selector: 'swip-view-application',
-  imports: [CommonModule, MatButtonModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, TranslateModule, LoaderComponent],
   templateUrl: './view-application.component.html',
 })
 export class ViewApplicationComponent extends ContentModalComponent {
@@ -22,6 +23,7 @@ export class ViewApplicationComponent extends ContentModalComponent {
   cvUrls: IApplicationCV[] = [];
   currentCVIndex = signal(0);
   isMobile = signal(false);
+  loading = signal(false);
 
   constructor(
     private firestore: Firestore,
@@ -40,6 +42,7 @@ export class ViewApplicationComponent extends ContentModalComponent {
   }
 
   private loadApplication(jobId: string) {
+    this.loading.set(true);
     const applicationsCollection = collection(this.firestore, `jobs/${jobId}/applications`);
     collectionData(applicationsCollection, { idField: 'id' })
       .pipe(
@@ -52,6 +55,7 @@ export class ViewApplicationComponent extends ContentModalComponent {
       )
       .subscribe((urls) => {
         this.cvUrls = urls;
+        this.loading.set(false);
       });
   }
 

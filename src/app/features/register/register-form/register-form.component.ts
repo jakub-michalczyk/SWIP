@@ -1,5 +1,6 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Auth, user } from '@angular/fire/auth';
 import {
   FormBuilder,
   FormControlOptions,
@@ -10,10 +11,11 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { UserCredential } from 'firebase/auth';
+import { User, UserCredential } from 'firebase/auth';
 import 'firebase/compat/storage';
-import { of, switchMap, tap } from 'rxjs';
+import { catchError, of, switchMap, take, tap } from 'rxjs';
 import { EUserType, ICompany, IUser } from '../../../core/services/auth/auth.interface';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { UserService } from '../../../core/services/user/user.service';
@@ -57,7 +59,7 @@ export class RegisterFormComponent {
   steps: IStep[] = [];
   currentStep = signal(0);
   currentTabId = signal(0);
-  errorMessageCode = signal('');
+  errorMessage = signal('');
   toggleValues: IToggleElement[] = [
     { isActive: true, translateCode: 'EMPLOYEE', id: 0 },
     { isActive: false, translateCode: 'EMPLOYER', id: 1 },
@@ -69,14 +71,29 @@ export class RegisterFormComponent {
     private authService: AuthService,
     private userService: UserService,
     private toggleService: ToggleService,
-    private registerService: RegisterService
+    private registerService: RegisterService,
+    private auth: Auth,
+    private router: Router
   ) {
+    this.checkEmailVerificationOnInit();
     this.initEmployeeForm();
     this.initEmployerForm();
     this.setUpFormSub();
     this.setUpBulletSub();
     this.setUpToggleSub();
     this.initializeBullets();
+  }
+
+  private checkEmailVerificationOnInit() {
+    user(this.auth)
+      .pipe(takeUntilDestroyed(this.destroyerRef), take(1))
+      .subscribe((user) => this.redirectToNotVerified(user));
+  }
+
+  private redirectToNotVerified(user: User | null) {
+    if (user && !user?.emailVerified) {
+      this.router.navigate(['/not-verified']);
+    }
   }
 
   private initEmployeeForm() {
@@ -263,7 +280,7 @@ export class RegisterFormComponent {
     return {
       email,
       companyName: this.employerForm.get('companyName')?.value,
-      telephone: `${this.employerForm.get('countryCode')?.value}${this.employeeForm.get('tel')?.value}`,
+      telephone: `${this.employerForm.get('countryCode')?.value}${this.employerForm.get('tel')?.value}`,
       city: this.employerForm.get('city')?.value,
       companyImage: this.employerForm.get('companyImage')?.value,
       userType: EUserType.EMPLOYER,
@@ -284,25 +301,10 @@ export class RegisterFormComponent {
 
           if (this.currentTabId() === 0) {
             // Employee
-            userData = {
-              email,
-              firstName: this.employeeForm.get('firstName')?.value,
-              lastName: this.employeeForm.get('lastName')?.value,
-              telephone: `${this.employeeForm.get('countryCode')?.value}${this.employeeForm.get('tel')?.value}`,
-              city: this.employeeForm.get('city')?.value,
-              cv: null,
-              userType: EUserType.EMPLOYEE,
-            } as IUser;
+            userData = this.getEmployeeData(email);
           } else {
             // Employer
-            userData = {
-              email,
-              companyName: this.employerForm.get('companyName')?.value,
-              telephone: `${this.employerForm.get('countryCode')?.value}${this.employeeForm.get('tel')?.value}`,
-              city: this.employerForm.get('city')?.value,
-              companyImage: this.employerForm.get('companyImage')?.value,
-              userType: EUserType.EMPLOYER,
-            } as ICompany;
+            userData = this.getEmployerData(email);
           }
 
           return this.userService.saveUserData(userCredential.user.uid, userData).pipe(
@@ -316,20 +318,18 @@ export class RegisterFormComponent {
               localStorage.setItem('pendingUserData', JSON.stringify(updatedUserData));
               return of(null);
             }),
-            switchMap(() => this.authService.waitForEmailVerification(userCredential.user)),
             switchMap(() => {
-              return this.userService.saveUserData(userCredential.user.uid, {
-                ...JSON.parse(localStorage.getItem('pendingUserData')!),
-              } as IUser);
+              this.redirectToNotVerified(this.auth.currentUser);
+              return of(null);
+            }),
+            catchError((error) => {
+              this.errorMessage.set(this.getErrorMessage(error.code));
+              throw error;
             })
           );
         })
       )
-      .subscribe({
-        error: (error: Error) => {
-          console.error('Error:', error);
-        },
-      });
+      .subscribe();
   }
 
   private getErrorMessage(errorCode: string) {

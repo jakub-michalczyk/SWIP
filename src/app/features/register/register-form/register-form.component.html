@@ -1,8 +1,8 @@
 <form
-  class="w-full h-full bg-red-650 md:bg-transparent px-6 py-12 overflow-auto text-white md:py-24"
+  class="w-full h-full bg-red-650 md:bg-transparent text-white px-6 py-12 overflow-auto md:overflow-hidden md:py-0 md:px-0"
   [formGroup]="determineActiveForm"
 >
-  <div class="w-full flex items-center justify-between flex-wrap">
+  <div class="w-full flex gap-6 items-center justify-between flex-wrap">
     <swip-bullets></swip-bullets>
     <swip-toggle [values]="toggleValues" class="block py-6"></swip-toggle>
   </div>
@@ -60,5 +60,5 @@
 </form>
 
 <div class="mt-4 text-red-650 body-2">
-  {{ errorMessageCode() | translate }}
+  {{ errorMessage() | translate }}
 </div>

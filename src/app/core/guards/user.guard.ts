@@ -17,9 +17,6 @@ export class UserGuard implements CanActivate {
         if (user && user.emailVerified) {
           this.router.navigate(['/']);
           observer.next(false);
-        } else if (user && !user.emailVerified) {
-          this.router.navigate(['/not-verified']);
-          observer.next(false);
         } else {
           observer.next(true);
         }

@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { map, Observable, of, switchMap } from 'rxjs';
 import { FrameComponent } from '../../../core/components/frame/frame.component';
 import { IconComponent } from '../../../core/components/icon/icon.component';
+import { LoaderComponent } from '../../../core/components/loader/loader.component';
 import { CompanyService } from '../../../core/services/company/company.service';
 import { UserService } from '../../../core/services/user/user.service';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
@@ -30,6 +31,7 @@ import { ViewApplicationComponent } from '../view-application/view-application.c
     MatPaginatorModule,
     FrameComponent,
     MatCardModule,
+    LoaderComponent,
   ],
   templateUrl: './company-offers.component.html',
 })

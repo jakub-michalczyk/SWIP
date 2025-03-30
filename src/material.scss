@@ -26,3 +26,7 @@
     outlined-container-color: variables.$neutral-950,
     outlined-outline-color: variables.$neutral-800
 ));
+
+@include mat.progress-spinner-overrides((
+    active-indicator-color: variables.$red-650
+));

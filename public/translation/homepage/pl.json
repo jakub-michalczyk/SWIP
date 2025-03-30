@@ -12,9 +12,10 @@
   "SWIPE_LEFT_DESC": "To nie to? Przesuń w lewo i przejdź do następnej oferty.",
   "SWIPE_RIGHT_DESC": "Ta oferta brzmi nieźle? Przesuń w prawo, aby natychmiast wysłać aplikację.",
   "WAIT": "CHWILA.",
-  "ARE_YOU_TIRED": "Czy jesteś już zmęczony szukaniem pracy?",
+  "ARE_YOU_TIRED": "Czy jesteś już zmęczony szukaniem pracy? <br /> Widzimy światełko w tunelu.",
   "LETS_FIX": "Naprawmy to",
   "WELCOME": "Witaj w SWIP.",
   "TRY_IT": "Wypróbuj teraz!",
-  "ABOUT": "Aplikacja, która przekształca poszukiwanie pracy w szybkie i przyjemne doświadczenie. Pożegnaj się z niekończącymi się tablicami ogłoszeń i skomplikowanymi filtrami. Dzięki Swip możesz bez wysiłku odkrywać nowe możliwości i podejmować decyzje jednym przesunięciem."
+  "ABOUT": "Aplikacja, która przekształca poszukiwanie pracy w szybkie i przyjemne doświadczenie. Pożegnaj się z niekończącymi się tablicami ogłoszeń i skomplikowanymi filtrami. Dzięki Swip możesz bez wysiłku odkrywać nowe możliwości i podejmować decyzje jednym przesunięciem.",
+  "CHECK_YOURSELF": "Sprawdź sam"
 }

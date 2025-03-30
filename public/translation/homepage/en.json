@@ -10,9 +10,10 @@
   "SWIPE_LEFT_DESC": "Not the right fit? Swipe left and move on to the next opportunity",
   "SWIPE_RIGHT_DESC": "See a job that interests you? Swipe right to send your application instantly.",
   "WAIT": "Wait a moment.",
-  "ARE_YOU_TIRED": "We have a question. Are you tired with job searching?",
+  "ARE_YOU_TIRED": "Are you tired with job searching? <br /> We see light at the end of the tunnel.",
   "LETS_FIX": "Let's fix it",
   "WELCOME": "Welcome to SWIP.",
   "TRY_IT": "Try it now!",
-  "ABOUT": "The app that transforms job searching into a fast and enjoyable experience. Say goodbye to endless job boards and complicated filters. With Swip, you can discover new opportunities effortlessly and make decisions with just a swipe."
+  "ABOUT": "The app that transforms job searching into a fast and enjoyable experience. Say goodbye to endless job boards and complicated filters. With Swip, you can discover new opportunities effortlessly and make decisions with just a swipe.",
+  "CHECK_YOURSELF": "Check it out"
 }

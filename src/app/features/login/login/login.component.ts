@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth, user } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
@@ -26,6 +27,7 @@ import { FrameComponent } from '../../../core/components/frame/frame.component';
     CommonModule,
     RouterLink,
     FrameComponent,
+    MatCardModule,
   ],
   templateUrl: './login.component.html',
 })

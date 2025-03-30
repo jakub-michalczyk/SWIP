@@ -4,13 +4,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth } from '@angular/fire/auth';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { BehaviorSubject, combineLatest, map, scan, startWith } from 'rxjs';
+import { FrameComponent } from '../../../core/components/frame/frame.component';
 import { JobOfferComponent } from '../job-offer/job-offer.component';
 import { JobService, OFFERS_PER_REQUEST } from '../job/job.service';
 import { IJobOfferDTO } from './jobs-wrap.interface';
 
 @Component({
   selector: 'swip-jobs-wrap',
-  imports: [JobOfferComponent, CommonModule],
+  imports: [JobOfferComponent, CommonModule, FrameComponent],
   templateUrl: './jobs-wrap.component.html',
 })
 export class JobsWrapComponent {

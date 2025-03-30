@@ -1,72 +1,87 @@
 <swip-frame>
-  <div class="min-h-screen flex items-center w-full">
-    <div class="px-6 w-full lg:w-3/4 xl:w-1/2 mx-auto mt-12 pb-12">
-      <h2 class="text-red-650 h3">{{ 'JOB_OFFERS' | translate }}</h2>
-      <mat-accordion class="mt-12 block">
-        @if (jobOffers$ | async; as jobOffers) {
-          @for (jobOffer of jobOffers.offers; track $index) {
-            <mat-expansion-panel
-              (opened)="panelOpenState.set(true)"
-              (closed)="panelOpenState.set(false)"
-              class="!my-2 block !border-white !border"
-            >
-              <mat-expansion-panel-header>
-                <mat-panel-title class="h5">
-                  {{ jobOffer.title }}, {{ jobOffer.workMode | translate }}
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <div class="flex items-center mt-4 mb-2">
-                <mat-icon class="mr-4">location_on</mat-icon>
-                {{ jobOffer.city }},
-                {{ jobOffer.workMode | translate }}
-              </div>
-              <div class="flex items-center mb-2">
-                <mat-icon class="mr-4">av_timer</mat-icon>
-                {{ jobOffer.employmentType | translate }}
-              </div>
-              <div class="flex items-center mb-2">
-                <swip-icon class="mr-4 !text-2xl !w-6 !h-6" [icon]="{ value: 'swip_contract' }"></swip-icon>
-                {{ jobOffer.contractType | translate }}
-              </div>
-              <div class="flex items-center">
-                <swip-icon class="mr-4 !text-2xl !w-6 !h-6" [icon]="{ value: 'attach_money' }"></swip-icon>
-                {{ jobOffer.salaryFrom }} {{ jobOffer.salaryTo ? '-' : '' }} {{ jobOffer.salaryTo }} /
-                {{ 'MONTH' | translate }}
-              </div>
+  <div class="min-h-screen py-32 w-full">
+    <mat-card class="p-6 md:p-12 w-full xl:w-1/2 mx-auto" appearance="outlined">
+      <div class="w-full">
+        <h2 class="text-red-650 h3 flex items-center">
+          <mat-icon class="!hidden md:!block !w-9 !h-9 text-4xl mr-4">format_list_bulleted</mat-icon>
+          <span class="text-red-650" [innerHTML]="'JOB_OFFERS' | translate"></span>
+        </h2>
+        <mat-accordion class="mt-12 block">
+          @if (jobOffers$ | async; as jobOffers) {
+            @for (jobOffer of jobOffers.offers; track $index) {
+              <mat-expansion-panel
+                (opened)="panelOpenState.set(true)"
+                (closed)="panelOpenState.set(false)"
+                class="block !border-white !border"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="body-2">
+                    {{ jobOffer.title }}
+                    @if (!isMobile) {
+                      , {{ jobOffer.workMode | translate }}
+                    }
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="flex items-center mt-4 mb-2">
+                  <mat-icon class="mr-4">location_on</mat-icon>
+                  {{ jobOffer.city }},
+                  {{ jobOffer.workMode | translate }}
+                </div>
+                <div class="flex items-center mb-2">
+                  <mat-icon class="mr-4">av_timer</mat-icon>
+                  {{ jobOffer.employmentType | translate }}
+                </div>
+                <div class="flex items-center mb-2">
+                  <swip-icon class="mr-4 !text-2xl !w-6 !h-6" [icon]="{ value: 'swip_contract' }"></swip-icon>
+                  {{ jobOffer.contractType | translate }}
+                </div>
+                <div class="flex items-center">
+                  <swip-icon class="mr-4 !text-2xl !w-6 !h-6" [icon]="{ value: 'attach_money' }"></swip-icon>
+                  {{ jobOffer.salaryFrom }} {{ jobOffer.salaryTo ? '-' : '' }} {{ jobOffer.salaryTo }} /
+                  {{ 'MONTH' | translate }}
+                </div>
 
-              <!-- TAGS -->
-              <div class="mt-6 border-t border-white pt-6">
-                @for (tag of jobOffer.tags; track $index) {
-                  <span class="bg-red-650 rounded-full px-4 py-2 text-white inline-block mr-2 mb-2 text-xs">{{
-                    tag
-                  }}</span>
-                }
-              </div>
-              <p class="mt-6 mb-12">
-                {{ jobOffer.description }}
-              </p>
-              <div class="mt-4 flex flex-col sm:block gap-2">
-                <button mat-flat-button (click)="viewApplications('0ms', '0ms', jobOffer.id)">
-                  {{ 'VIEW_APPLICATIONS' | translate }}
-                </button>
-                <button mat-stroked-button class="sm:ml-4" disabled>{{ 'EDIT' | translate }}</button>
-                <button mat-stroked-button class="sm:ml-4" (click)="remove('0ms', '0ms', jobOffer.id)">
-                  {{ 'REMOVE' | translate }}
-                </button>
-              </div>
-            </mat-expansion-panel>
+                <!-- TAGS -->
+                <div class="mt-6 border-t border-white pt-6">
+                  @for (tag of jobOffer.tags; track $index) {
+                    <span class="bg-red-650 rounded-full px-4 py-2 text-white inline-block mr-2 mb-2 text-xs">{{
+                      tag
+                    }}</span>
+                  }
+                </div>
+                <p class="mt-6 mb-12">
+                  {{ jobOffer.description }}
+                </p>
+                <div class="mt-4 flex flex-col sm:block gap-2">
+                  <button mat-flat-button (click)="viewApplications('0ms', '0ms', jobOffer.id)">
+                    {{ 'VIEW_APPLICATIONS' | translate }}
+                  </button>
+                  <button mat-stroked-button class="sm:ml-4" disabled>{{ 'EDIT' | translate }}</button>
+                  <button mat-stroked-button class="sm:ml-4" (click)="remove('0ms', '0ms', jobOffer.id)">
+                    {{ 'REMOVE' | translate }}
+                  </button>
+                </div>
+              </mat-expansion-panel>
+            }
           }
-        }
-      </mat-accordion>
+        </mat-accordion>
 
-      <mat-paginator
-        class="rounded !body-2 flex pt-2 md:pt-0"
-        [length]="totalJobOffersCount"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="[5, 10]"
-        (page)="onPageChange($event)"
-      >
-      </mat-paginator>
-    </div>
+        <mat-paginator
+          class="rounded !body-2 flex pt-2 lg:pt-0"
+          hidePageSize="true"
+          [length]="totalJobOffersCount"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[5, 10]"
+          (page)="onPageChange($event)"
+        >
+        </mat-paginator>
+      </div>
+      <div class="mt-12">
+        <button mat-flat-button disabled>
+          <!-- TODO -->
+          New job offer
+        </button>
+      </div>
+    </mat-card>
   </div>
 </swip-frame>

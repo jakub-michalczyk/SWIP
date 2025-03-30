@@ -2,7 +2,7 @@
 @use "variables";
 
 :root {
-    --mat-expansion-header-collapsed-state-height: 4rem;
+    --mat-expansion-header-collapsed-state-height: 3rem;
 }
 
 @include mat.dialog-overrides((
@@ -25,4 +25,4 @@
 @include mat.card-overrides((
     outlined-container-color: variables.$neutral-950,
     outlined-outline-color: variables.$neutral-800
-  ));
+));

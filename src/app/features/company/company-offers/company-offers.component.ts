@@ -2,19 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TranslateModule } from '@ngx-translate/core';
-import { Observable, of, switchMap } from 'rxjs';
+import { map, Observable, of, switchMap } from 'rxjs';
 import { FrameComponent } from '../../../core/components/frame/frame.component';
 import { IconComponent } from '../../../core/components/icon/icon.component';
 import { CompanyService } from '../../../core/services/company/company.service';
 import { UserService } from '../../../core/services/user/user.service';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
 import { DeleteJobOfferComponent } from '../../company/delete-job-offer/delete-job-offer.component';
-import { ICompanyOffers } from '../../jobs/jobs-wrap/jobs-wrap.interface';
+import { EDirection, ICompanyOffers } from '../../jobs/jobs-wrap/jobs-wrap.interface';
 import { ViewApplicationComponent } from '../view-application/view-application.component';
 
 @Component({
@@ -28,6 +29,7 @@ import { ViewApplicationComponent } from '../view-application/view-application.c
     MatIconModule,
     MatPaginatorModule,
     FrameComponent,
+    MatCardModule,
   ],
   templateUrl: './company-offers.component.html',
 })
@@ -41,6 +43,8 @@ export class CompanyOffersComponent {
   totalJobOffersCount: number = 0;
   pageSize: number = 5;
   currentPage: number = 0;
+  EDirection = EDirection;
+  isMobile = false;
 
   constructor(
     private companyService: CompanyService,
@@ -51,21 +55,28 @@ export class CompanyOffersComponent {
     this.setUpMobileSub();
   }
 
-  private getCompanyJobOffers() {
+  private getCompanyJobOffers(direction?: EDirection) {
     this.jobOffers$ = this.userService.getUserData().pipe(
       takeUntilDestroyed(this.destroyerRef),
-      switchMap((userData) =>
-        userData && userData.uid
-          ? this.companyService.getCompanyData(userData.uid, this.currentPage, this.pageSize)
-          : of(null)
-      )
+      switchMap((userData) => {
+        if (userData?.uid) {
+          return this.companyService.getCompanyData(userData.uid, this.currentPage, this.pageSize, direction).pipe(
+            map(({ offers, totalCount }) => {
+              this.totalJobOffersCount = totalCount;
+              return { offers, totalCount };
+            })
+          );
+        }
+        return of({ offers: [], totalCount: 0 });
+      })
     );
   }
 
   private setUpMobileSub() {
-    this.mobileService.isMobile$
-      .pipe(takeUntilDestroyed(this.destroyerRef))
-      .subscribe((isMobile) => (isMobile ? (this.dialogWidth = '90%') : (this.dialogWidth = '50%')));
+    this.mobileService.isMobile$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((isMobile) => {
+      this.isMobile = isMobile;
+      isMobile ? (this.dialogWidth = '90%') : (this.dialogWidth = '50%');
+    });
   }
 
   remove(enterAnimationDuration: string, exitAnimationDuration: string, id: string) {
@@ -108,9 +119,10 @@ export class CompanyOffersComponent {
     });
   }
 
-  onPageChange(event: any) {
+  onPageChange(event: PageEvent) {
+    const previousPage = this.currentPage;
     this.currentPage = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.getCompanyJobOffers();
+    this.getCompanyJobOffers(this.currentPage > previousPage ? EDirection.RIGHT : EDirection.LEFT);
   }
 }

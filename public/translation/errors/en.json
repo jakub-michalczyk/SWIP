@@ -12,6 +12,7 @@
     "LAST_NAME_REQUIRED": "Last name is required",
     "COMPANY_NAME_REQUIRED": "Company name is required",
     "INVALID_EMAIL": "Invalid email address.",
+    "INVALID_CREDENTIALS": "Invalid credentials.",
     "USER_NOT_FOUND": "No user with the specified email address was found.",
     "INVALID_PASSWORD": "Invalid password.",
     "DEFAULT_ERROR": "An unknown error occurred. Please try again.",

@@ -12,6 +12,7 @@
     "LAST_NAME_REQUIRED": "Nazwisko jest wymagane",
     "COMPANY_NAME_REQUIRED": "Nazwa firmy jest wymagana",
     "INVALID_EMAIL": "Nieprawidłowy adres e-mail.",
+    "INVALID_CREDENTIALS": "Nieprawiłowe dane logowania.",
     "USER_NOT_FOUND": "Nie znaleziono użytkownika o podanym adresie e-mail.",
     "INVALID_PASSWORD": "Nieprawidłowe hasło.",
     "DEFAULT_ERROR": "Wystąpił nieznany błąd. Spróbuj ponownie.",

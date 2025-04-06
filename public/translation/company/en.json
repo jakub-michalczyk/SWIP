@@ -1,0 +1,16 @@
+{
+    "JOB_OFFERS": "Job Offers",
+    "DELETING_JOB_OFFER": "Deleting job offer",
+    "DELETE_JOB_OFFER": "Would you like to delete this job posting?",
+    "OFFER_DELETED": "Your job posting has been deleted",
+    "NO_CV": "No CVs available",
+    "NEW_OFFER": "New job offer",
+    "TITLE": "Title",
+    "SALARY_MIN": "Salary min.",
+    "SALARY_MAX": "Salary max.",
+    "TAGS": "Tags",
+    "DESCRIPTION": "Description",
+    "NO_TAGS": "No tags added.",
+    "NEW_OFFER_DESC": "Are you sure you want to add a new job offer? Any user will be able to apply for it.",
+    "NO_OFFERS": "You currently have no job offers added."
+}

@@ -101,5 +101,10 @@ function HttpLoaderFactory2(http: HttpBackend) {
       suffix: '.json',
       optional: true,
     },
+    {
+      prefix: 'translation/company/',
+      suffix: '.json',
+      optional: true,
+    },
   ]);
 }

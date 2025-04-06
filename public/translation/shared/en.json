@@ -45,5 +45,6 @@
   "LANGUAGE": "Language",
   "HOW_IT_WORKS": "How it works",
   "OR": "OR",
-  "SWIPE_INFO": "Swipe LEFT to <span class='font-extrabold text-red-400'>REJECT</span>, swipe RIGHT to <span class='font-extrabold text-green-700'>APPLY</span>"
+  "SWIPE_INFO": "Swipe LEFT to <span class='font-extrabold text-red-400'>REJECT</span>, swipe RIGHT to <span class='font-extrabold text-green-700'>APPLY</span>",
+  "ADD": "Add"
 }

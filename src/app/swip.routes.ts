@@ -4,6 +4,7 @@ import { JobBoardGuard } from './core/guards/job-board.guard';
 import { UserGuard } from './core/guards/user.guard';
 import { AccountComponent } from './features/account/account/account.component';
 import { CompanyOffersComponent } from './features/company/company-offers/company-offers.component';
+import { NewOfferComponent } from './features/company/new-offer/new-offer.component';
 import { HomepageComponent } from './features/home/homepage/homepage.component';
 import { JobsWrapComponent } from './features/jobs/jobs-wrap/jobs-wrap.component';
 import { LoginComponent } from './features/login/login/login.component';
@@ -73,6 +74,11 @@ export const routes: Routes = [
     path: 'jobs',
     component: JobsWrapComponent,
     canActivate: [AuthGuard, JobBoardGuard],
+  },
+  {
+    path: 'new-offer',
+    component: NewOfferComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: '',

@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
   DocumentData,
+  DocumentReference,
   getDocs,
   limit,
   orderBy,
   query,
   QueryDocumentSnapshot,
+  serverTimestamp,
   startAfter,
   where,
 } from 'firebase/firestore';
 import { catchError, from, map, Observable, of, switchMap, throwError } from 'rxjs';
-import { EDirection, ICompanyOffers, IJobOffer } from '../../../features/jobs/jobs-wrap/jobs-wrap.interface';
+import {
+  EDirection,
+  ICompanyOffers,
+  IJobOffer,
+  IJobOfferDTO,
+} from '../../../features/jobs/jobs-wrap/jobs-wrap.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +49,7 @@ export class CompanyService {
     let jobOfferQuery = query(
       jobOffersCollection,
       where('companyId', '==', companyId),
-      orderBy('companyId'),
+      orderBy('createdAt', 'desc'),
       limit(pageSize)
     );
 
@@ -49,7 +57,7 @@ export class CompanyService {
       jobOfferQuery = query(
         jobOffersCollection,
         where('companyId', '==', companyId),
-        orderBy('companyId'),
+        orderBy('createdAt', 'desc'),
         startAfter(this.lastVisibleDoc),
         limit(pageSize)
       );
@@ -60,7 +68,7 @@ export class CompanyService {
         jobOfferQuery = query(
           jobOffersCollection,
           where('companyId', '==', companyId),
-          orderBy('companyId'),
+          orderBy('createdAt', 'desc'),
           startAfter(prevDoc),
           limit(pageSize)
         );
@@ -102,6 +110,16 @@ export class CompanyService {
       catchError((error) => {
         console.error('Error fetching total job offers count:', error);
         return of(0);
+      })
+    );
+  }
+
+  addJobOffer(data: IJobOffer): Observable<DocumentReference<DocumentData>> {
+    const jobOffersCollection = collection(this.firestore, 'jobs');
+    return from(addDoc(jobOffersCollection, { ...data, createdAt: serverTimestamp() } as IJobOfferDTO)).pipe(
+      catchError((error) => {
+        console.error('Error adding job offer:', error);
+        return throwError(() => new Error('Failed to add job offer'));
       })
     );
   }

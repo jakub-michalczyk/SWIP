@@ -1,5 +1,6 @@
+import { FieldValue } from 'firebase/firestore';
+
 export interface IJobOffer extends IJobOfferDTO, ICompanyAdditionalData {
-  statusChanged?: boolean;
   id: string;
 }
 
@@ -20,6 +21,7 @@ export interface IJobOfferDTO {
   workMode: EWorkMode;
   employmentType: EEmploymentType;
   id: string;
+  createdAt: FieldValue;
 }
 
 export interface ICompanyAdditionalData {

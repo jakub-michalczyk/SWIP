@@ -68,21 +68,25 @@
             </div>
           }
         </mat-accordion>
-
-        <mat-paginator
-          class="rounded !body-2 flex pt-2 lg:pt-0"
-          hidePageSize="true"
-          [length]="totalJobOffersCount"
-          [pageSize]="pageSize"
-          [pageSizeOptions]="[5, 10]"
-          (page)="onPageChange($event)"
-        >
-        </mat-paginator>
+        @if (jobOffers$ | async; as jobOffers) {
+          @if (jobOffers.offers.length > 0) {
+            <mat-paginator
+              class="rounded !body-2 flex pt-2 lg:pt-0 mt-2"
+              hidePageSize="true"
+              [length]="totalJobOffersCount"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="[5, 10]"
+              (page)="onPageChange($event)"
+            >
+            </mat-paginator>
+          } @else {
+            <div class="body-1 text-white">{{ 'NO_OFFERS' | translate }}</div>
+          }
+        }
       </div>
       <div class="mt-12">
-        <button mat-flat-button disabled>
-          <!-- TODO -->
-          New job offer
+        <button mat-flat-button routerLink="/new-offer">
+          {{ 'NEW_OFFER' | translate }}
         </button>
       </div>
     </mat-card>

@@ -1,9 +1,4 @@
 {
-    "JOB_OFFERS": "Twoje Oferty pracy",
     "RESET_PASSWORD_MESSAGE": "Czy chcesz otrzymać wiadomość e-mail umożliwiającą zresetowanie hasła?",
-    "RESET_FINISHED": "E-mail z prośbą o zresetowanie hasła został wysłany.",
-    "DELETING_JOB_OFFER": "Usuwanie ogłoszenia o pracę",
-    "DELETE_JOB_OFFER": "Czy chcesz usunąć to ogłoszenie o pracę?",
-    "OFFER_DELETED": "Twoje ogłoszenie o pracę zostało usunięte",
-    "NO_CV": "Brak dostępnych CV"
+    "RESET_FINISHED": "E-mail z prośbą o zresetowanie hasła został wysłany."
 }

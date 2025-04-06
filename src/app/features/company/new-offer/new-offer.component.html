@@ -1,0 +1,165 @@
+<swip-frame>
+  <div class="min-h-screen flex justify-center items-center w-full">
+    <mat-card class="p-6 md:p-12 w-full xl:w-3/4 xl:mt-0 mt-32 transition-all" appearance="outlined">
+      <h2 class="text-red-650 h3 flex items-center border-b border-red-650 pb-6">
+        <mat-icon class="!hidden md:!block !w-9 !h-9 text-4xl mr-4">add_circle_outline</mat-icon>
+        <span class="text-red-650" [innerHTML]="'NEW_OFFER' | translate"></span>
+      </h2>
+      @if (loading()) {
+        <div class="flex min-h-[500px] items-center justify-center">
+          <swip-loader></swip-loader>
+        </div>
+      } @else {
+        @if (userData) {
+          <div class="mt-12">
+            <div class="md:px-6">
+              <div class="flex items-center">
+                <div class="w-16 h-16 rounded-full p-2 flex justify-center items-center bg-red-650/50">
+                  <img [src]="userData.companyImage" class="max-h-full max-w-full" alt="Company Image" />
+                </div>
+                <div class="body-2 ml-4 text-red-650">
+                  {{ userData.companyName }}
+                </div>
+              </div>
+              <div>
+                @let title = newOffer.controls['title'];
+                @let city = newOffer.controls['city'];
+                @let tags = newOffer.controls['tags'];
+                @let salaryFrom = newOffer.controls['salaryFrom'];
+                @let description = newOffer.controls['description'];
+
+                <form [formGroup]="newOffer" class="flex flex-col gap-x-2 gap-y-4 mt-4">
+                  <div class="flex gap-x-2 gap-y-4 flex-col xl:flex-row">
+                    <div class="w-full xl:w-1/2">
+                      <mat-form-field class="w-full">
+                        <mat-label>{{ 'TITLE' | translate }}</mat-label>
+                        <input matInput type="text" formControlName="title" />
+                        @if (title?.hasError('required')) {
+                          <mat-error class="!text-red-650 !flex items-center">
+                            • {{ 'REQUIRED_TITLE' | translate }}
+                          </mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+
+                    <div class="w-full flex flex-col sm:flex-row gap-x-2 gap-y-4">
+                      <div class="w-full sm:w-1/2">
+                        <mat-form-field class="w-full">
+                          <mat-label>{{ 'CITY' | translate }}</mat-label>
+                          <input matInput type="text" formControlName="city" />
+                          @if (city?.hasError('required')) {
+                            <mat-error class="!text-red-650 !flex items-center">
+                              • {{ 'CITY_REQUIRED' | translate }}
+                            </mat-error>
+                          }
+                        </mat-form-field>
+                      </div>
+                      <div class="w-full sm:w-1/2">
+                        <mat-form-field class="w-full">
+                          <mat-select formControlName="workMode">
+                            <mat-option [value]="EWorkMode.ONSITE">{{ 'ON_SITE' | translate }}</mat-option>
+                            <mat-option [value]="EWorkMode.REMOTE">{{ 'REMOTE' | translate }}</mat-option>
+                            <mat-option [value]="EWorkMode.HYBRID">{{ 'HYBRID' | translate }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-x-2 gap-y-4">
+                    <div class="w-full flex flex-col sm:flex-row gap-x-2 gap-y-4">
+                      <div class="w-full sm:w-1/2">
+                        <mat-form-field class="w-full">
+                          <mat-select formControlName="employmentType">
+                            <mat-option [value]="EEmploymentType.FULL_TIME">{{ 'FULL_TIME' | translate }}</mat-option>
+                            <mat-option [value]="EEmploymentType.PART_TIME">{{ 'PART_TIME' | translate }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="w-full sm:w-1/2">
+                        <mat-form-field class="w-full">
+                          <mat-select formControlName="contractType">
+                            <mat-option [value]="EContractType.UOP">{{ 'EC' | translate }}</mat-option>
+                            <mat-option [value]="EContractType.UOZ">{{ 'MC' | translate }}</mat-option>
+                            <mat-option [value]="EContractType.INTERN">{{ 'IA' | translate }}</mat-option>
+                            <mat-option [value]="EContractType.UOD">{{ 'CW' | translate }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="w-full xl:w-full flex flex-col sm:flex-row gap-x-2 gap-y-4">
+                      <div class="w-full sm:w-1/2">
+                        <mat-form-field class="w-full">
+                          <mat-label>{{ 'SALARY_MIN' | translate }}</mat-label>
+                          <input matInput type="number" formControlName="salaryFrom" />
+                          @if (salaryFrom?.hasError('required')) {
+                            <mat-error class="!text-red-650 !flex items-center">
+                              • {{ 'MIN_SALARY_REQUIRED' | translate }}
+                            </mat-error>
+                          }
+                        </mat-form-field>
+                      </div>
+                      <div class="w-full sm:w-1/2">
+                        <mat-form-field class="w-full">
+                          <mat-label>{{ 'SALARY_MAX' | translate }}</mat-label>
+                          <input matInput type="number" formControlName="salaryTo" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex flex-col-reverse xl:flex-row gap-x-2 gap-y-4">
+                    <div class="w-full xl:w-1/3 flex flex-col justify-between">
+                      <mat-form-field class="w-full">
+                        <mat-label>{{ 'TAGS' | translate }}</mat-label>
+                        <input
+                          [attr.disabled]="maxTagsAdded"
+                          matInput
+                          type="text"
+                          formControlName="tagInput"
+                          (keydown.enter)="addTag($event)"
+                        />
+                      </mat-form-field>
+                      <div class="mt-4">
+                        @if (tags.value.length === 0) {
+                          <div class="text-red-650 body-2">{{ 'NO_TAGS' | translate }}</div>
+                        }
+                        @for (tag of tags.value; track $index) {
+                          <button
+                            class="bg-red-650 rounded-full px-4 py-2 text-white inline-block mr-2 mb-2 text-xs"
+                            (click)="removeTag(tag)"
+                          >
+                            {{ tag }}
+                          </button>
+                        }
+                      </div>
+                    </div>
+                    <mat-form-field class="w-full xl:w-2/3 block">
+                      <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
+                      <textarea
+                        formControlName="description"
+                        class="w-full block !resize-none min-h-24"
+                        matInput
+                      ></textarea>
+                      @if (description?.hasError('required')) {
+                        <mat-error class="!text-red-650 !flex items-center">
+                          • {{ 'DESC_REQUIRED' | translate }}
+                        </mat-error>
+                      }
+                    </mat-form-field>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="h-full flex items-end mt-24">
+              <button mat-flat-button [disabled]="newOffer.invalid" (click)="addNewOffer('0ms', '0ms')">
+                {{ 'ADD' | translate }}
+              </button>
+              <button mat-stroked-button class="ml-4" (click)="cancel()">
+                {{ 'CANCEL' | translate }}
+              </button>
+            </div>
+          </div>
+        }
+      }
+    </mat-card>
+  </div>
+</swip-frame>

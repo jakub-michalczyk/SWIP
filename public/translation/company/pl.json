@@ -1,0 +1,16 @@
+{
+    "JOB_OFFERS": "Twoje Oferty pracy",
+    "DELETING_JOB_OFFER": "Usuwanie ogłoszenia o pracę",
+    "DELETE_JOB_OFFER": "Czy chcesz usunąć to ogłoszenie o pracę?",
+    "OFFER_DELETED": "Twoje ogłoszenie o pracę zostało usunięte",
+    "NO_CV": "Brak dostępnych CV",
+    "NEW_OFFER": "Nowa oferta pracy",
+    "TITLE": "Tytuł",
+    "SALARY_MIN": "Wypłata od",
+    "SALARY_MAX": "Wypłata do",
+    "TAGS": "Tagi",
+    "DESCRIPTION": "Opis",
+    "NO_TAGS": "Nie dodano żadnych tagów.",
+    "NEW_OFFER_DESC": "Czy na pewno chcesz dodać nową ofertę pracy? Aplikować na nią będzie mógł dowolny użytkownik.",
+    "NO_OFFERS": "Obecnie nie masz dodanych żadnych ofert pracy."
+}

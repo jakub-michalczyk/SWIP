@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { map, Observable, of, switchMap } from 'rxjs';
 import { FrameComponent } from '../../../core/components/frame/frame.component';
@@ -32,6 +33,7 @@ import { ViewApplicationComponent } from '../view-application/view-application.c
     FrameComponent,
     MatCardModule,
     LoaderComponent,
+    RouterLink,
   ],
   templateUrl: './company-offers.component.html',
 })

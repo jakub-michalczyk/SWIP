@@ -11,10 +11,14 @@
     "FIRST_NAME_REQUIRED": "First name is required",
     "LAST_NAME_REQUIRED": "Last name is required",
     "COMPANY_NAME_REQUIRED": "Company name is required",
+    "CITY_REQUIRED": "City is required.",
     "INVALID_EMAIL": "Invalid email address.",
     "USER_NOT_FOUND": "No user with the specified email address was found.",
     "INVALID_PASSWORD": "Invalid password.",
     "DEFAULT_ERROR": "An unknown error occurred. Please try again.",
     "EMAIL_ALREADY_IN_USE": "This email address is already in use by another user. Please try a different email address.",
-    "WEAK_PASSWORD": "Password is too weak. Please choose a password with at least 6 characters."
+    "WEAK_PASSWORD": "Password is too weak. Please choose a password with at least 6 characters.",
+    "REQUIRED_TITLE": "Title is required.",
+    "MIN_SALARY_REQUIRED": "Minimum wage is required",
+    "DESC_REQUIRED": "Description is required"
 }

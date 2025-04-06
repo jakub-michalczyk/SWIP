@@ -101,6 +101,8 @@ export class LoginComponent {
     switch (errorCode) {
       case 'auth/invalid-email':
         return 'INVALID_EMAIL';
+      case 'auth/invalid-credential':
+        return 'INVALID_CREDENTIALS';
       case 'auth/user-not-found':
         return 'USER_NOT_FOUND';
       case 'auth/wrong-password':

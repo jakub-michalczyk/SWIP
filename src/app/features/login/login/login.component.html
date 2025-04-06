@@ -15,6 +15,9 @@
             <span class="border-b border-white"> {{ 'FORGOT_PASSWORD' | translate }}? </span>
           </button>
         </div>
+        <div class="mt-4 text-red-650 body-2">
+          {{ errorCode() | translate }}
+        </div>
         <div class="mt-12">
           <button mat-flat-button (click)="login()" [disabled]="form.invalid">
             {{ 'SIGN_IN' | translate }}

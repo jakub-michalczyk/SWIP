@@ -51,7 +51,7 @@
                 <p class="mt-6 mb-12">
                   {{ jobOffer.description }}
                 </p>
-                <div class="mt-4 flex flex-col sm:block gap-2">
+                <div class="mt-4 flex flex-wrap flex-col sm:block gap-2">
                   <button mat-flat-button (click)="viewApplications('0ms', '0ms', jobOffer.id)">
                     {{ 'VIEW_APPLICATIONS' | translate }}
                   </button>

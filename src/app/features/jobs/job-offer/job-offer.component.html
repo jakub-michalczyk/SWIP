@@ -5,7 +5,7 @@
     [@swipeAnimation]="swipeState"
   >
     <button
-      class="text-white mr-12 transition-opacity left-0 absolute md:static"
+      class="hidden md:block text-white mr-12 transition-opacity left-2 absolute md:static z-10"
       [ngClass]="{ 'opacity-0': isDragging }"
       (click)="onArrowClick(EDirection.LEFT)"
       (keyup)="onArrowClick(EDirection.LEFT)"
@@ -14,7 +14,7 @@
     </button>
     <div
       #offerContainer
-      class="rounded-3xl h-full border-white border mx-6 md:mx-0 w-5/6 md:w-96 p-6 md:p-8 text-white relative transition-all duration-300 cursor-grab"
+      class="rounded-3xl h-full border-white border w-full md:w-96 p-6 md:p-8 text-white relative transition-all duration-300 cursor-grab"
       [ngClass]="gradientColor"
       [@swipeAnimation]="swipeState"
       (mousedown)="onDragStart($event)"
@@ -68,7 +68,7 @@
       </div>
     </div>
     <button
-      class="text-white ml-12 transition-opacity right-0 absolute md:static"
+      class="hidden md:block text-white ml-12 transition-opacity right-0 absolute md:static"
       [ngClass]="{ 'opacity-0': isDragging }"
       (click)="onArrowClick(EDirection.RIGHT)"
       (keyup)="onArrowClick(EDirection.RIGHT)"

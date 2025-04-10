@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { EmailPasswordComponent } from '../../../core/components/email-password/email-password.component';
+import { ConfirmPasswordErrorStateMatcher } from '../../../core/utils/confirm-password-error-state-matcher';
 
 @Component({
   selector: 'swip-register-step-1',
@@ -23,6 +24,7 @@ import { EmailPasswordComponent } from '../../../core/components/email-password/
 })
 export class RegisterStep1Component {
   @Input({ required: true }) form = {} as FormGroup;
+  matcher = new ConfirmPasswordErrorStateMatcher();
 
   disablePaste(event: ClipboardEvent) {
     event.preventDefault();

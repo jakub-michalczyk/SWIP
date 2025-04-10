@@ -21,6 +21,11 @@ export class UploadFileComponent {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
+      if (file.type !== 'application/pdf') {
+        console.error('The file needs to be in PDF format');
+        return;
+      }
+
       this.selectedFile = file;
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -33,5 +38,19 @@ export class UploadFileComponent {
         error: (err) => console.error('Error:', err),
       });
     }
+  }
+
+  get selectedFileName() {
+    const name = this.selectedFile?.name || '';
+    const strLen = 16;
+    const lastDotIndex = name.lastIndexOf('.');
+    const baseName = lastDotIndex !== -1 ? name.slice(0, lastDotIndex) : name;
+    const extension = lastDotIndex !== -1 ? name.slice(lastDotIndex + 1) : '';
+
+    if (baseName.length > strLen) {
+      return `${baseName.slice(0, strLen)}[...].${extension}`;
+    }
+
+    return name;
   }
 }

@@ -6,7 +6,13 @@
   <!-- CONFIRM PASSWORD -->
   <mat-form-field class="w-full mt-6 transition-all">
     <mat-label>{{ 'CONFIRM_PASSWORD' | translate }}</mat-label>
-    <input matInput type="password" (paste)="disablePaste($event)" formControlName="confirmPassword" />
+    <input
+      matInput
+      type="password"
+      (paste)="disablePaste($event)"
+      [errorStateMatcher]="matcher"
+      formControlName="confirmPassword"
+    />
     @if (confirmPassword?.hasError('required')) {
       <mat-error class="!text-white !flex items-center"> • {{ 'REQUIRED_CONFIRM_PASSWORD' | translate }} </mat-error>
     }

@@ -30,3 +30,7 @@
 @include mat.progress-spinner-overrides((
     active-indicator-color: variables.$red-650
 ));
+
+.mat-mdc-input-element, .mat-mdc-floating-label {
+    @apply font-sans !important;
+}

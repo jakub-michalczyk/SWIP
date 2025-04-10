@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, NgZone, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth, user } from '@angular/fire/auth';
 import {
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { User, UserCredential } from 'firebase/auth';
 import 'firebase/compat/storage';
-import { catchError, of, switchMap, take, tap } from 'rxjs';
+import { catchError, from, of, switchMap, take, tap, throwError } from 'rxjs';
 import { EUserType, ICompany, IUser } from '../../../core/services/auth/auth.interface';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { UserService } from '../../../core/services/user/user.service';
@@ -73,7 +73,8 @@ export class RegisterFormComponent {
     private toggleService: ToggleService,
     private registerService: RegisterService,
     private auth: Auth,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) {
     this.checkEmailVerificationOnInit();
     this.initEmployeeForm();
@@ -90,9 +91,21 @@ export class RegisterFormComponent {
       .subscribe((user) => this.redirectToNotVerified(user));
   }
 
-  private redirectToNotVerified(user: User | null) {
-    if (user && !user?.emailVerified) {
-      this.router.navigate(['/not-verified']);
+  private redirectToNotVerified(user: User | null): void {
+    if (user) {
+      from(user.reload())
+        .pipe(
+          switchMap(() => {
+            if (!user.emailVerified) {
+              return this.ngZone.run(() => {
+                this.router.navigate(['/not-verified']);
+                return of(null);
+              });
+            }
+            return of(null);
+          })
+        )
+        .subscribe();
     }
   }
 
@@ -149,7 +162,7 @@ export class RegisterFormComponent {
         ],
         companyName: ['', [Validators.required]],
         companyImage: [''],
-        city: [''],
+        city: ['', [Validators.required]],
       },
       { validators: this.passwordMatchValidator } as FormControlOptions
     );
@@ -296,6 +309,10 @@ export class RegisterFormComponent {
     this.authService
       .register(email, password)
       .pipe(
+        catchError((error) => {
+          this.errorMessage.set(this.getErrorMessage(error.code));
+          return throwError(() => error);
+        }),
         switchMap((userCredential: UserCredential) => {
           let userData = {} as IUser | ICompany;
 

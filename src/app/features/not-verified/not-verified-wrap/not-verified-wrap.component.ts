@@ -4,7 +4,7 @@ import { Auth, user } from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { deleteUser } from 'firebase/auth';
 import { ICompany, IUser } from '../../../core/services/auth/auth.interface';
@@ -13,7 +13,7 @@ import { NotVerifiedComponent } from '../not-verified/not-verified.component';
 
 @Component({
   selector: 'swip-not-verified-wrap',
-  imports: [NotVerifiedComponent, MatIconModule, MatButtonModule, TranslateModule, MatCardModule],
+  imports: [NotVerifiedComponent, MatIconModule, MatButtonModule, TranslateModule, MatCardModule, RouterLink],
   templateUrl: './not-verified-wrap.component.html',
   styleUrl: './not-verified-wrap.component.scss',
 })

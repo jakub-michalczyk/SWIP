@@ -27,10 +27,10 @@
 <mat-menu #menu="matMenu">
   <button mat-menu-item routerLink="/account" aria-label="Acount Icon">
     <mat-icon class="!text-black">person</mat-icon>
-    <span class="body-2 !text-black">Account</span>
+    <span class="body-2 !text-black">{{ 'ACCOUNT' | translate }}</span>
   </button>
   <button mat-menu-item (click)="signOut()" aria-label="Log out Icon">
     <mat-icon class="!text-black">logout</mat-icon>
-    <span class="body-2 !text-black">Log out</span>
+    <span class="body-2 !text-black">{{ 'LOG_OUT' | translate }}</span>
   </button>
 </mat-menu>

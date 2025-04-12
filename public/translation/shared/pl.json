@@ -19,6 +19,7 @@
   "REGISTER": "Zarejestruj",
   "EX": "np.",
   "SIGN_IN": "Zaloguj",
+  "LOG_OUT": "Wyloguj się",
   "FORGOT_PASSWORD": "Zapomniałeś hasła",
   "RESET_PASSWORD": "Zresetuj hasło",
   "PASSWORD": "Hasło",
@@ -46,5 +47,6 @@
   "HOW_IT_WORKS": "Jak to działa?",
   "OR": "LUB",
   "SWIPE_INFO": "Przesuń w lewo żeby <span class='font-extrabold text-red-400'>ODRZUCIĆ</span>, przesuń w prawo żeby <span class='font-extrabold text-green-700'>ZAAPLIKOWAĆ</span>",
-  "ADD": "Dodaj"
+  "ADD": "Dodaj",
+  "ACCOUNT": "Twoje konto"
 }

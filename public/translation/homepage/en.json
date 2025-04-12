@@ -5,15 +5,15 @@
   "JOB_DESC": "Welcome to Swip, the app that transforms job searching into a fast and enjoyable experience. Say goodbye to endless job boards and complicated filters. With Swip, you can discover new opportunities effortlessly and make decisions with just a swipe.",
   "TAKE_CHARGE": "Take Charge of Career",
   "WHAT_IS_SWIP": "Swip is built for modern job seekers who want simplicity and efficiency. Whether you're taking the first step in your career, seeking a change, or exploring new opportunities, Swip makes the process easy and engaging. Ready to start your journey? Download Swip now and swipe your way to success!",
-  "SWIPE_LEFT_TITLE": "Swipe Left to Reject",
-  "SWIPE_RIGHT_TITLE": "Swipe Right to Apply",
-  "SWIPE_LEFT_DESC": "Not the right fit? Swipe left and move on to the next opportunity",
-  "SWIPE_RIGHT_DESC": "See a job that interests you? Swipe right to send your application instantly.",
-  "WAIT": "Wait a moment.",
-  "ARE_YOU_TIRED": "Are you tired with job searching? <br /> We see light at the end of the tunnel.",
-  "LETS_FIX": "Let's fix it",
+  "WAIT": "WAIT",
+  "ARE_YOU_TIRED": "Do you struggle with job searching?",
+  "HELP": "We can help.",
   "WELCOME": "Welcome to SWIP.",
   "TRY_IT": "Try it now!",
   "ABOUT": "The app that transforms job searching into a fast and enjoyable experience. Say goodbye to endless job boards and complicated filters. With Swip, you can discover new opportunities effortlessly and make decisions with just a swipe.",
-  "CHECK_YOURSELF": "Check it out"
+  "CHECK_YOURSELF": "Check it out",
+  "MATCH": "It's a match!",
+  "SWIPE_RIGHT": "Swipe right to apply to this one",
+  "NOT_THIS_ONE": "Not this one?",
+  "DONT_WORRY": "Don't worry, swipe left to reject"
 }

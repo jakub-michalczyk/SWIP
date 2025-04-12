@@ -27,8 +27,7 @@ module.exports = {
         "gray-150": "#F5ECEC",
       },
       backgroundImage: {
-        "home-desktop": "url('/images/desktop_bg.png')",
-        "home-mobile": "url('/images/mobile_bg.png')",
+        "dots": "url('/images/dots.png')",
         "wave": "url('/images/wave.svg')",
         "corner": "url('/images/corner.png')",
         "monogram": "url('/images/monogram.png')"

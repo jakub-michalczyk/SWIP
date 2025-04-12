@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MatIconModule } from '@angular/material/icon';
 import { environment } from '../../../../environments/enviroment';
 import { IconComponent } from '../../../core/components/icon/icon.component';
+import { LoaderComponent } from '../../../core/components/loader/loader.component';
 import { StandaloneService } from '../../../core/services/standalone/standalone.service';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
 import { RegisterFormComponent } from '../../register/register-form/register-form.component';
@@ -25,28 +26,45 @@ import { IHomepageSection } from './homepage.interface';
     IconComponent,
     RouterLink,
     MatIconModule,
+    LoaderComponent,
   ],
   templateUrl: './homepage.component.html',
 })
 export class HomepageComponent implements OnInit {
-  @ViewChild('howItWorks') targetSection!: ElementRef;
   private readonly destroyerRef = inject(DestroyRef);
-
   sections: IHomepageSection[] = HOMEPAGE_SECTIONS;
   isMobile: boolean = false;
   formExpanded = signal(false);
   emailVerificationSent = false;
+  isPWA = signal(false);
+  loading = signal(true);
 
   constructor(
     private mobileService: MobileService,
     private standaloneService: StandaloneService,
-    private registerService: RegisterService
+    private registerService: RegisterService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.registerServiceWorker();
     this.setUpMobileServiceSub();
+    this.setUpPWASub();
     this.setUpRegisterService();
+    this.setUpLoader();
+  }
+
+  private setUpLoader() {
+    if (document.readyState === 'complete') {
+      this.loading.set(false);
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          this.loading.set(false);
+        }, 100);
+      });
+    }
   }
 
   registerServiceWorker() {
@@ -64,14 +82,20 @@ export class HomepageComponent implements OnInit {
     }
   }
 
-  setUpRegisterService() {
+  private setUpRegisterService() {
     this.registerService.verificationEmailSent$.subscribe((sent) => (this.emailVerificationSent = sent));
   }
 
-  setUpMobileServiceSub() {
+  private setUpMobileServiceSub() {
     this.mobileService.isMobile$.pipe(takeUntilDestroyed(this.destroyerRef)).subscribe((isMobile) => {
       this.isMobile = isMobile;
     });
+  }
+
+  private setUpPWASub() {
+    this.standaloneService.isStandaloneMode$
+      .pipe(takeUntilDestroyed(this.destroyerRef))
+      .subscribe((value: boolean) => this.isPWA.set(value));
   }
 
   installApp() {
@@ -82,7 +106,7 @@ export class HomepageComponent implements OnInit {
     this.formExpanded.set(!this.formExpanded());
   }
 
-  scrollToSection() {
-    this.targetSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  scrollToSection(targetSection: HTMLDivElement) {
+    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }

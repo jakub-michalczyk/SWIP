@@ -1,206 +1,206 @@
-<!-- HERO -->
-<div class="flex items-center flex-col">
-  <div
-    class="h-screen relative bg-cover flex items-center md:items-end w-full"
-    [ngClass]="!isMobile ? 'bg-home-desktop bg-center 2xl:bg-left-top' : 'bg-home-mobile'"
-  >
-    <!-- OVERLAYER -->
-    @if (!isMobile) {
-      <div class="block xl:hidden w-full h-full bg-black opacity-50 absolute z-0 top-0 left-0"></div>
-    }
-
-    <!-- CONTENT -->
-    <div
-      class="relative z-10 opacity-100 transition-all delay-200 w-full lg:w-3/4 md:-translate-y-16"
-      [ngClass]="{ '!opacity-0': formExpanded() }"
-    >
-      <div class="text-white pb-8 px-6 lg:pl-32 w-full">
-        <h1 class="h2 w-full">
-          {{ 'WAIT' | translate }}
-        </h1>
-        <p class="body-1 mt-4 w-full" [innerHTML]="'ARE_YOU_TIRED' | translate"></p>
-        <div class="mt-10">
-          @if (!isMobile) {
-            <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>
-              {{ 'CHECK_YOURSELF' | translate }}
-            </button>
-            <button class="my-2" mat-stroked-button (click)="scrollToSection()">
-              {{ 'DISCOVER_MORE' | translate }}
-            </button>
-            <div class="mt-24">
-              <img src="/images/arrow.gif" alt="Arrow" class="invert w-16" />
-            </div>
-          } @else {
-            @if (isMobile) {
+@if (loading()) {
+  <div class="w-full h-screen flex justify-center items-center">
+    <swip-loader></swip-loader>
+  </div>
+} @else {
+  <!-- HERO -->
+  <div class="flex items-center flex-col">
+    <div class="absolute top-0 left-0 w-full h-full max-h-screen overflow-hidden">
+      <video
+        #video
+        src="videos/bg.mp4"
+        (canplay)="video.play()"
+        (loadedmetadata)="video.muted = true"
+        class="object-cover h-full opacity-50 w-full"
+        autoplay
+        muted
+        playsinline
+        loop
+      ></video>
+    </div>
+    <div class="h-screen relative flex items-center justify-center w-full">
+      <!-- CONTENT -->
+      <div
+        class="relative z-10 opacity-100 transition-all delay-200 w-full md:max-w-lg"
+        [ngClass]="{ '!opacity-0': formExpanded() }"
+      >
+        <div class="text-white px-6 mx-auto text-center">
+          <h1 class="font-sans font-bold w-full text-9xl md:!text-[12.75rem] leading-none">
+            {{ 'WAIT' | translate }}
+          </h1>
+          <p class="body-1 w-full">{{ 'ARE_YOU_TIRED' | translate }}</p>
+          <div class="mt-10">
+            @if (!isMobile) {
+              <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>We can help</button>
+              <button class="my-2" mat-stroked-button (click)="scrollToSection(about)">
+                {{ 'DISCOVER_MORE' | translate }}
+              </button>
+            } @else {
               <button (click)="toggleForm()" class="mr-4 my-2" mat-flat-button>
                 {{ 'SWIP' | translate }}
               </button>
-            } @else {
-              <button routerLink="register" class="mr-4 my-2" mat-flat-button>
-                {{ 'SWIP' | translate }}
+              <button class="my-2" mat-stroked-button (click)="installApp()">
+                {{ 'GET_APP' | translate }}
               </button>
             }
+          </div>
+        </div>
+      </div>
+
+      @if (isMobile) {
+        <div
+          class="w-full flex justify-end flex-col absolute z-20 bottom-0 transition-all h-30 duration-500 overflow-hidden"
+          [ngClass]="{ '!h-1/2': formExpanded() && emailVerificationSent, '!h-17/20': formExpanded() }"
+        >
+          @if (formExpanded()) {
+            <div
+              class="flex justify-end px-6 opacity-0 -mb-12 relative z-20"
+              [ngClass]="{ 'opacity-100': formExpanded() }"
+            >
+              <swip-icon
+                (click)="toggleForm()"
+                class="!text-white text-5xl !w-12 !h-12"
+                [isButton]="true"
+                [icon]="{ value: 'close' }"
+              ></swip-icon>
+            </div>
           }
+
+          @if (isMobile) {
+            <img class="w-full -mb-0.25" src="images/wave.svg" alt="Wave" />
+          }
+
+          <swip-register-form
+            class="h-0 overflow-hidden block transition-all duration-500"
+            [ngClass]="{ '!h-full': formExpanded() }"
+          ></swip-register-form>
+        </div>
+      }
+    </div>
+    @if (isMobile) {
+      <div class="w-full">
+        <img src="/images/wave_2.svg" class="-mt-0.25 w-full" alt="Wave" />
+      </div>
+    }
+  </div>
+
+  <!-- GRADIENT -->
+  @if (!isMobile) {
+    <div class="w-full h-16 bg-gradient-to-b from-transparent to-neutral-950 -translate-y-full"></div>
+  }
+
+  <!-- ABOUT -->
+  <div class="flex items-center flex-col bg-no-repeat md:bg-repeat bg-monogram md:py-24" #about>
+    <div class="w-full p-16 px-6 text-white bg-no-repeat">
+      <div class="w-full lg:w-1/2 md:w-3/4 mx-auto">
+        <h2 class="h2">{{ 'WELCOME' | translate }}</h2>
+        <p class="body-1 mt-12" [innerHTML]="'ABOUT' | translate"></p>
+        <div class="mt-12">
+          <button mat-flat-button (click)="scrollToSection(howItWorks)" class="_contrast-flat">
+            {{ 'HOW_IT_WORKS' | translate }}
+          </button>
         </div>
       </div>
     </div>
-
-    @if (isMobile) {
-      <div
-        class="w-full flex justify-end flex-col absolute z-20 bottom-0 transition-all h-30 duration-500 overflow-hidden"
-        [ngClass]="{ '!h-1/2': formExpanded() && emailVerificationSent, '!h-17/20': formExpanded() }"
-      >
-        @if (formExpanded()) {
-          <div
-            class="flex justify-end px-6 opacity-0 -mb-12 relative z-20"
-            [ngClass]="{ 'opacity-100': formExpanded() }"
-          >
-            <swip-icon
-              (click)="toggleForm()"
-              class="!text-white text-5xl !w-12 !h-12"
-              [isButton]="true"
-              [icon]="{ value: 'close' }"
-            ></swip-icon>
-          </div>
-        }
-
-        @if (isMobile) {
-          <img class="w-full -mb-0.25" src="images/wave.svg" alt="Wave" />
-        }
-
-        <swip-register-form
-          class="h-0 overflow-hidden block transition-all duration-500"
-          [ngClass]="{ '!h-full': formExpanded() }"
-        ></swip-register-form>
-      </div>
-    }
   </div>
-  @if (isMobile) {
-    <div class="w-full">
-      <img src="/images/wave_2.svg" class="-mt-0.25 w-full" alt="Wave" />
-    </div>
-  }
-</div>
-
-<!-- GRADIENT -->
-@if (!isMobile) {
   <div class="w-full h-16 bg-gradient-to-b from-transparent to-neutral-950 -translate-y-full"></div>
-}
 
-<!-- ABOUT -->
-<div class="flex items-center flex-col bg-no-repeat md:bg-repeat bg-monogram md:pb-24">
-  <div class="w-full p-16 md:pt-64 px-6 text-white bg-no-repeat">
-    <div class="w-full lg:w-1/2 md:w-3/4 mx-auto">
-      <h2 class="h2">{{ 'WELCOME' | translate }}</h2>
-      <p class="body-1 mt-12" [innerHTML]="'ABOUT' | translate"></p>
-      <div class="mt-12">
-        <button mat-flat-button (click)="scrollToSection()" class="_contrast-flat">
-          {{ 'HOW_IT_WORKS' | translate }}
-        </button>
-      </div>
+  <!-- MOON -->
+  <div
+    class="flex justify-between items-center md:flex-nowrap flex-wrap lg:gap-48 md:gap-12 mt-0 mb-24 md:my-24 bg-dots bg-no-repeat bg-contain"
+  >
+    <div class="w-full md:w-1/2 flex justify-end">
+      <img class="w-full lg:w-3/4" src="images/moon.gif" alt="Moon" />
     </div>
-  </div>
-</div>
-
-<!-- MOON -->
-<div class="flex justify-between items-center md:flex-nowrap flex-wrap lg:gap-48 md:gap-12 mt-0 mb-24 md:my-24">
-  <div class="w-full md:w-1/2 flex justify-end">
-    <img class="w-full lg:w-3/4" src="images/moon.gif" alt="Moon" />
-  </div>
-  <div class="px-6 md:pr-6 md:pl-0 w-full md:w-1/2">
-    <h1 class="text-red-650 h2 w-full">
-      <span class="text-white body-2 uppercase block">{{ 'TRY_IT' | translate }}</span>
-      {{ 'HOMEPAGE_TITLE' | translate }}
-    </h1>
-    <p class="text-white body-1 mt-4 w-full md:w-3/4">
-      {{ 'HOMEPAGE_SUBTITLE' | translate }}
-    </p>
-    <div class="mt-10">
-      @if (!isMobile) {
-        <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>
-          {{ 'GET_APP' | translate }}
-        </button>
-        <button class="my-2" mat-stroked-button (click)="scrollToSection()">
-          {{ 'DISCOVER_MORE' | translate }}
-        </button>
-      } @else {
-        @if (isMobile) {
-          <button (click)="toggleForm()" class="mr-4 my-2" mat-flat-button>
-            {{ 'SWIP' | translate }}
+    <div class="px-6 md:pr-6 md:pl-0 w-full md:w-1/2">
+      <h1 class="text-red-650 h2 w-full">
+        <span class="text-white body-2 uppercase block">{{ 'TRY_IT' | translate }}</span>
+        {{ 'HOMEPAGE_TITLE' | translate }}
+      </h1>
+      <p class="text-white body-1 mt-4 w-full md:w-3/4">
+        {{ 'HOMEPAGE_SUBTITLE' | translate }}
+      </p>
+      <div class="mt-10">
+        @if (!isMobile) {
+          <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>
+            {{ 'GET_APP' | translate }}
+          </button>
+          <button class="my-2" mat-stroked-button (click)="scrollToSection(howItWorks)">
+            {{ 'DISCOVER_MORE' | translate }}
           </button>
         } @else {
-          <button routerLink="register" class="mr-4 my-2" mat-flat-button>
-            {{ 'SWIP' | translate }}
-          </button>
+          @if (isMobile) {
+            <button (click)="toggleForm()" class="mr-4 my-2" mat-flat-button>
+              {{ 'SWIP' | translate }}
+            </button>
+          } @else {
+            <button routerLink="register" class="mr-4 my-2" mat-flat-button>
+              {{ 'SWIP' | translate }}
+            </button>
+          }
         }
-      }
-    </div>
-  </div>
-</div>
-
-<!-- HOW IT WORKS -->
-<div class="py-12 bg-red-650 relative" #howItWorks>
-  <div class="relative z-10">
-    <div class="text-white flex flex-wrap justify-center px-6 md:px-12 xl:px-20">
-      @for (section of sections; track $index) {
-        <ng-container *ngTemplateOutlet="sectionRef; context: { section: section, last: $last }"></ng-container>
-      }
-    </div>
-  </div>
-  <div
-    class="!hidden md:!block absolute text-[15rem] lg:text-[25rem] text-white/50 font-extrabold top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
-  >
-    {{ 'OR' | translate }}
-  </div>
-</div>
-
-<div class="px-6 md:px-12 xl:px-32 flex justify-center mt-32 mb-36 md:mb-0">
-  <div class="w-full xl:w-1/2 mx-auto">
-    <h2 class="h2 text-red-650 flex items-center">{{ 'TAKE_CHARGE' | translate }}</h2>
-    <p class="body-1 text-white mt-6">
-      {{ 'WHAT_IS_SWIP' | translate }}
-    </p>
-    <button (click)="installApp()" class="mt-12" mat-flat-button>{{ 'GET_APP' | translate }}</button>
-  </div>
-</div>
-
-@if (!isMobile) {
-  <div>
-    <img src="images/wave.svg" class="w-full" alt="Wave" />
-  </div>
-}
-
-<ng-template #sectionRef let-section="section" let-isLast="last">
-  <div class="w-full md:w-1/2 xl:w-1/3 flex flex-col relative lg:gap-x-24 xl:gap-x-48">
-    <div class="text-white text-center mt-12 md:my-0">
-      @if (isLast) {
-        <div class="h2">It's a match!</div>
-        <div class="body-1">Swipe right to apply to this one</div>
-      } @else {
-        <div class="h2">Not this one?</div>
-        <div class="body-1">Don't worry, swipe left to reject</div>
-      }
-
-      <div class="text-center">
-        <img
-          class="w-12 inline invert"
-          [ngClass]="isLast ? '-rotate-90' : 'rotate-90'"
-          src="/images/arrow.gif"
-          alt="Image"
-        />
       </div>
     </div>
-    <div class="text-center" [ngClass]="{ '-translate-y-1/4 md:translate-y-0': !isLast }">
-      <img class="w-1/2 inline" [src]="'/images/' + section.image + '.gif'" alt="Image" />
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="py-12 bg-red-650 relative" #howItWorks>
+    <div class="relative z-10">
+      <div class="text-white flex flex-wrap justify-center px-6 md:px-12 xl:px-20">
+        @for (section of sections; track $index) {
+          <ng-container *ngTemplateOutlet="sectionRef; context: { section: section, last: $last }"></ng-container>
+        }
+      </div>
+    </div>
+    <div
+      class="!hidden md:!block absolute text-[15rem] lg:text-[25rem] text-white/50 font-extrabold top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+    >
+      {{ 'OR' | translate }}
     </div>
   </div>
-</ng-template>
 
-<ng-template #swipeInfo>
-  <div class="text-white h4 md:body-1 text-center mt-4 flex items-center justify-center w-full">
-    @if (!isMobile) {
-      <mat-icon class="mr-2">info</mat-icon>
-    }
-    <div class="text-center" [innerHTML]="'SWIPE_INFO' | translate"></div>
+  <div class="px-6 md:px-12 xl:px-32 flex justify-center mt-32 mb-36">
+    <div class="w-full xl:w-1/2 mx-auto">
+      <h2 class="h2 text-red-650 flex items-center">{{ 'TAKE_CHARGE' | translate }}</h2>
+      <p class="body-1 text-white mt-6">
+        {{ 'WHAT_IS_SWIP' | translate }}
+      </p>
+      <button (click)="installApp()" class="mt-12" mat-flat-button>{{ 'GET_APP' | translate }}</button>
+    </div>
   </div>
-</ng-template>
+
+  <ng-template #sectionRef let-section="section" let-isLast="last">
+    <div class="w-full md:w-1/2 xl:w-1/3 flex flex-col relative lg:gap-x-24 xl:gap-x-48">
+      <div class="text-white text-center mt-12 md:my-0">
+        @if (isLast) {
+          <div class="h2">{{ 'MATCH' | translate }}</div>
+          <div class="body-1">{{ 'SWIPE_RIGHT' | translate }}</div>
+        } @else {
+          <div class="h2">{{ 'NOT_THIS_ONE' | translate }}</div>
+          <div class="body-1">{{ 'DONT_WORRY' | translate }}</div>
+        }
+
+        <div class="text-center">
+          <img
+            class="w-12 inline invert"
+            [ngClass]="isLast ? '-rotate-90' : 'rotate-90'"
+            src="/images/arrow.gif"
+            alt="Image"
+          />
+        </div>
+      </div>
+      <div class="text-center mt-4 md:mt-0" [ngClass]="{ '-translate-y-1/4 md:translate-y-0': !isLast }">
+        <img class="w-1/2 inline" [src]="'/images/' + section.image + '.gif'" alt="Image" />
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #swipeInfo>
+    <div class="text-white h4 md:body-1 text-center mt-4 flex items-center justify-center w-full">
+      @if (!isMobile) {
+        <mat-icon class="mr-2">info</mat-icon>
+      }
+      <div class="text-center" [innerHTML]="'SWIPE_INFO' | translate"></div>
+    </div>
+  </ng-template>
+}

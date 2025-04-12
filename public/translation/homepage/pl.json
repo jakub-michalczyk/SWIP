@@ -3,7 +3,7 @@
   "HOMEPAGE_SUBTITLE": "Odkryj nieskończone możliwości z każdym przesunięciem - Twoja wymarzona kariera jest na wyciągnięcie ręki!",
   "DREAM_JOB": "Twoja droga do marzeń",
   "JOB_DESC": "Witamy w Swip – aplikacji, która zmienia poszukiwanie pracy w szybkie i przyjemne doświadczenie. Pożegnaj się z niekończącymi się listami ofert i skomplikowanymi filtrami. Dzięki Swip możesz odkrywać nowe możliwości bez wysiłku i podejmować decyzje za pomocą jednego ruchu palca.",
-  "TAKE_CHARGE": "Przejmij kontrolę nad karierą",
+  "TAKE_CHARGE": "Kontroluj swoją kariere",
   "WHAT_IS_SWIP": "Swip został stworzony dla nowoczesnych poszukiwaczy pracy, którzy cenią sobie prostotę i efektywność. Niezależnie od tego, czy stawiasz pierwsze kroki w karierze, szukasz zmiany czy eksplorujesz nowe możliwości, Swip sprawia, że cały proces jest łatwy i angażujący. Gotowy, by rozpocząć swoją podróż? Pobierz Swip już teraz i przesuwaj się w stronę sukcesu!",
   "SCROLL_TITLE": "Scrolluj aby odkrywać",
   "SWIPE_LEFT_TITLE": "Przesuń w lewo aby odrzucić,",
@@ -13,9 +13,13 @@
   "SWIPE_RIGHT_DESC": "Ta oferta brzmi nieźle? Przesuń w prawo, aby natychmiast wysłać aplikację.",
   "WAIT": "CHWILA.",
   "ARE_YOU_TIRED": "Czy jesteś już zmęczony szukaniem pracy? <br /> Widzimy światełko w tunelu.",
-  "LETS_FIX": "Naprawmy to",
+  "HELP": "Naprawmy to",
   "WELCOME": "Witaj w SWIP.",
   "TRY_IT": "Wypróbuj teraz!",
   "ABOUT": "Aplikacja, która przekształca poszukiwanie pracy w szybkie i przyjemne doświadczenie. Pożegnaj się z niekończącymi się tablicami ogłoszeń i skomplikowanymi filtrami. Dzięki Swip możesz bez wysiłku odkrywać nowe możliwości i podejmować decyzje jednym przesunięciem.",
-  "CHECK_YOURSELF": "Sprawdź sam"
+  "CHECK_YOURSELF": "Sprawdź sam",
+  "MATCH": "Mamy to!",
+  "SWIPE_RIGHT": "Przesuń w prawo aby aplikować",
+  "NOT_THIS_ONE": "To nie to?",
+  "DONT_WORRY": "Nie przejmuj się, przesuń w prawo aby odrzucić"
 }

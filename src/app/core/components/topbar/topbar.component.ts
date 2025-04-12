@@ -9,7 +9,6 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { signOut } from 'firebase/auth';
 import { from } from 'rxjs';
-import { StandaloneService } from '../../services/standalone/standalone.service';
 
 @Component({
   selector: 'swip-topbar',
@@ -22,7 +21,6 @@ export class TopbarComponent {
   isScrolled = signal(false);
 
   constructor(
-    private standaloneService: StandaloneService,
     private auth: Auth,
     private router: Router
   ) {

@@ -13,7 +13,6 @@
     container-shape: variables.$border-radius 
 ));
 
-
 @include mat.expansion-overrides((
     container-background-color: variables.$neutral-950,
     container-text-color: variables.$white,

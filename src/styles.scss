@@ -2,23 +2,26 @@
 @use "buttons";
 @use "forms";
 @use "material";
+@use "variables";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 html,
 body {
-  background-color: #1B1919; // neutral-950;
+  background-color: variables.$neutral-950;
   overflow-x: hidden
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+// Custom scroll
 *{
   &::-webkit-scrollbar-thumb {
-    background-color: #F5ECEC; // gray-150;
+    background-color: variables.$gray-150;
     border: 4px solid transparent;
     border-radius: 8px;
     background-clip: padding-box;  

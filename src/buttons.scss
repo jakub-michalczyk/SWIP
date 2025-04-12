@@ -78,8 +78,6 @@ $mobile-icon-size: 24px;
   )
 }
 
-
-
 .mdc-icon-button {
   padding: 0 !important;
   .mat-icon svg {
@@ -99,7 +97,6 @@ $mobile-icon-size: 24px;
 .pwa .mdc-icon-button .mat-icon svg {
     width: $mobile-icon-size !important;
     height: $mobile-icon-size !important;
-
 }
 
 .mat-mdc-extended-fab {

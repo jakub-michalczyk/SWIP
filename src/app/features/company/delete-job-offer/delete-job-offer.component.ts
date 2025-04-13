@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { AcceptModalComponent } from '../../../core/components/modals/accept-modal/accept-modal.component';
-import { CompanyService } from '../../../core/services/company/company.service';
+import { CompanyService } from '../../../shared/services/company/company.service';
 
 @Component({
   selector: 'swip-delete-job-offer',

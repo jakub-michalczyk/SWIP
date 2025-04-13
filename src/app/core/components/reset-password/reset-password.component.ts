@@ -27,7 +27,6 @@ export class ResetPasswordComponent extends AcceptModalComponent {
         tap(() => this.accepted.set(true))
       )
       .subscribe({
-        next: () => console.log('Password reset email sent'),
         error: (error) => console.error('Reset password error:', error),
       });
   }

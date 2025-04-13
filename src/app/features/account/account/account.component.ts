@@ -18,9 +18,9 @@ import { LoaderComponent } from '../../../core/components/loader/loader.componen
 import { ResetPasswordComponent } from '../../../core/components/reset-password/reset-password.component';
 import { UploadImageComponent } from '../../../core/components/upload-image/upload-image.component';
 import { EUserType, ICompany, IFile, IUser } from '../../../core/services/auth/auth.interface';
-import { UserService } from '../../../core/services/user/user.service';
 import { UploadFileComponent } from '../../../shared/components/upload-file/upload-file.component';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
+import { UserService } from '../../../shared/services/user/user.service';
 import { ACCOUNT_DATA } from './account.data';
 import { IAccountDataKey } from './account.interface';
 

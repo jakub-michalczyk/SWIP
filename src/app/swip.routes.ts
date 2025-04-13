@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 import { EmployerGuard } from './core/guards/employer.guard';
+import { HomepageGuard } from './core/guards/homepage.guard';
 import { JobBoardGuard } from './core/guards/job-board.guard';
+import { NotVerifiedGuard } from './core/guards/not-verified.guard';
 import { UserGuard } from './core/guards/user.guard';
 import { AccountComponent } from './features/account/account/account.component';
 import { CompanyOffersComponent } from './features/company/company-offers/company-offers.component';
@@ -12,9 +15,6 @@ import { NotVerifiedWrapComponent } from './features/not-verified/not-verified-w
 import { RegisterWrapComponent } from './features/register/register-wrap/register-wrap.component';
 import { PrivacyPolicyComponent } from './features/regulations/privacy-policy/privacy-policy.component';
 import { TermsComponent } from './features/regulations/terms/terms.component';
-import { AuthGuard } from './shared/guards/auth.guard';
-import { HomepageGuard } from './shared/guards/homepage.guard';
-import { NotVerifiedGuard } from './shared/guards/not-verified.guard';
 
 export const routes: Routes = [
   {

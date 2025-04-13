@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FrameComponent } from '../../../core/components/frame/frame.component';
 import { LoaderComponent } from '../../../core/components/loader/loader.component';
 import { ICompany } from '../../../core/services/auth/auth.interface';
-import { UserService } from '../../../core/services/user/user.service';
+import { UserService } from '../../../shared/services/user/user.service';
 import { EContractType, EEmploymentType, EWorkMode, IJobOffer } from '../../jobs/jobs-wrap/jobs-wrap.interface';
 import { NewOfferModalComponent } from '../new-offer-modal/new-offer-modal.component';
 

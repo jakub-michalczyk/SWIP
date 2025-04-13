@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { catchError, throwError } from 'rxjs';
 import { AcceptModalComponent } from '../../../core/components/modals/accept-modal/accept-modal.component';
-import { CompanyService } from '../../../core/services/company/company.service';
+import { CompanyService } from '../../../shared/services/company/company.service';
 
 @Component({
   selector: 'swip-new-offer-modal',

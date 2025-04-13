@@ -3,8 +3,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ELanguageCode } from '../../../shared/enums/language.enum';
+import { UserService } from '../../../shared/services/user/user.service';
 import { ICompany, IUser } from '../../services/auth/auth.interface';
-import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'swip-language-buttons',
@@ -14,6 +14,7 @@ import { UserService } from '../../services/user/user.service';
 export class LanguageButtonsComponent {
   @Input() accountMode = false;
   @Input() disabled = false;
+
   private readonly destroyerRef = inject(DestroyRef);
   lang: ELanguageCode = ELanguageCode.EN;
   userData: IUser | ICompany | null = null;
@@ -27,11 +28,14 @@ export class LanguageButtonsComponent {
     this.setUpLang();
   }
 
-  getUser() {
-    this.userService.getUserData().subscribe((userData) => {
-      this.userData = userData;
-      this.checkUserLang();
-    });
+  private getUser() {
+    this.userService
+      .getUserData()
+      .pipe(takeUntilDestroyed(this.destroyerRef))
+      .subscribe((userData) => {
+        this.userData = userData;
+        this.checkUserLang();
+      });
   }
 
   checkUserLang() {

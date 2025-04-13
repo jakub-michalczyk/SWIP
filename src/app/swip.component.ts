@@ -19,7 +19,7 @@ export class SwipComponent {
     this.setUpPWASub();
   }
 
-  setUpPWASub() {
+  private setUpPWASub() {
     this.standaloneService.isStandaloneMode$
       .pipe(takeUntilDestroyed(this.destroyerRef))
       .subscribe((value: boolean) => (this.isPWA = value));

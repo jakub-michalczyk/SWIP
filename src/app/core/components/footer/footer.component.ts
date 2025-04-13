@@ -9,7 +9,6 @@ import { take } from 'rxjs';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
 import { IIcon } from '../../model/icon.model';
 import { NavigationService } from '../../services/navigation/navigation.service';
-import { StandaloneService } from '../../services/standalone/standalone.service';
 import { IconComponent } from '../icon/icon.component';
 import { LanguageButtonsComponent } from '../language-buttons/language-buttons.component';
 import { FOOTER_DATA } from './footer.data';
@@ -36,7 +35,6 @@ export class FooterComponent {
 
   constructor(
     private mobileService: MobileService,
-    private standaloneService: StandaloneService,
     private navigationService: NavigationService
   ) {
     this.setUpNavSub();
@@ -80,10 +78,6 @@ export class FooterComponent {
     });
   }
 
-  getIcon(link: IFooterLink) {
-    return { value: link.translationCode } as IIcon;
-  }
-
   private setUpMobileData() {
     if (this.isMobile) {
       const { textLinks, icons } = this.columns.reduce(
@@ -106,5 +100,9 @@ export class FooterComponent {
         this.getMenuData(navData);
       });
     }
+  }
+
+  getIcon(link: IFooterLink) {
+    return { value: link.translationCode } as IIcon;
   }
 }

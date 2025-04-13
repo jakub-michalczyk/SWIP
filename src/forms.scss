@@ -2,8 +2,6 @@
 @use "variables";
 @use "typography";
 
-// TOGGLE 
-
 @include mat.button-toggle-overrides((
     legacy-height: 38px,
     legacy-text-color: variables.$white,
@@ -14,16 +12,19 @@
     divider-color: variables.$white
   ));
 
-  .mat-button-toggle {
+
+$toggle_margin: 2px; 
+
+.mat-button-toggle {
     @extend .body-2;
     width: 50%;
     padding: 0 !important;
 
     &:first-of-type {
-      margin-right: 2px;
+      margin-right: $toggle_margin;
     }
     &:last-of-type {
-      margin-left: 2px;
+      margin-left: $toggle_margin;
     }
 
     &-group {
@@ -47,11 +48,7 @@
     &-checked &-button:has(&-checkbox-wrapper) {
       padding-left: 0 !important;
     }
-  }
-
-//----------------
-
-//INPUT
+}
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: variables.$white !important;
@@ -63,7 +60,7 @@
 }
 
 .mat-mdc-text-field-wrapper {
-  border-radius: 4px !important;
+  border-radius: variables.$border-radius !important;
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple {
@@ -83,4 +80,3 @@
 .density-form--1 {
   @include mat.form-field-density(-1);
 }
-//----------------

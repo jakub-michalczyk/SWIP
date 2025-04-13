@@ -25,7 +25,6 @@ import { NotVerifiedComponent } from '../not-verified/not-verified.component';
     LoaderComponent,
   ],
   templateUrl: './not-verified-wrap.component.html',
-  styleUrl: './not-verified-wrap.component.scss',
 })
 export class NotVerifiedWrapComponent {
   private readonly destroyerRef = inject(DestroyRef);

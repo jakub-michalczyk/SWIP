@@ -23,7 +23,6 @@ import { EApplicationStatus, EDirection, IJobOffer, IJobOfferDTO } from '../jobs
   selector: 'swip-job-offer',
   imports: [MatIconModule, IconComponent, MatButtonModule, IconComponent, CommonModule, TranslateModule],
   templateUrl: './job-offer.component.html',
-  styleUrl: './job-offer.component.scss',
   animations: [
     trigger('swipeAnimation', [
       state('left', style({ transform: 'translateX(-100%) rotate(-20deg)', opacity: 0 })),

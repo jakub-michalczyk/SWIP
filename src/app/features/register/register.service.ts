@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, switchMap } from 'rxjs';
 import { ICompany, IUser } from '../../core/services/auth/auth.interface';
 import { AuthService } from '../../core/services/auth/auth.service';
-import { UserService } from '../../core/services/user/user.service';
+import { UserService } from '../../shared/services/user/user.service';
 
 @Injectable({
   providedIn: 'root',

@@ -56,14 +56,6 @@ export class AuthService {
     );
   }
 
-  isEmailVerified(): Observable<boolean> {
-    const user = this.auth.currentUser;
-    if (user) {
-      return of(user.emailVerified);
-    }
-    return of(false);
-  }
-
   login(email: string, password: string): Observable<UserCredential> {
     return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
       catchError((error) => {

@@ -13,9 +13,9 @@ import { map, Observable, of, switchMap } from 'rxjs';
 import { FrameComponent } from '../../../core/components/frame/frame.component';
 import { IconComponent } from '../../../core/components/icon/icon.component';
 import { LoaderComponent } from '../../../core/components/loader/loader.component';
-import { CompanyService } from '../../../core/services/company/company.service';
-import { UserService } from '../../../core/services/user/user.service';
+import { CompanyService } from '../../../shared/services/company/company.service';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
+import { UserService } from '../../../shared/services/user/user.service';
 import { DeleteJobOfferComponent } from '../../company/delete-job-offer/delete-job-offer.component';
 import { EDirection, ICompanyOffers } from '../../jobs/jobs-wrap/jobs-wrap.interface';
 import { ViewApplicationComponent } from '../view-application/view-application.component';
@@ -64,7 +64,7 @@ export class CompanyOffersComponent {
       takeUntilDestroyed(this.destroyerRef),
       switchMap((userData) => {
         if (userData?.uid) {
-          return this.companyService.getCompanyData(userData.uid, this.currentPage, this.pageSize, direction).pipe(
+          return this.companyService.getCompanyOffers(userData.uid, this.currentPage, this.pageSize, direction).pipe(
             map(({ offers, totalCount }) => {
               this.totalJobOffersCount = totalCount;
               return { offers, totalCount };

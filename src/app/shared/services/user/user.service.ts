@@ -4,7 +4,7 @@ import { Auth, user } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { catchError, forkJoin, from, map, Observable, of, switchMap } from 'rxjs';
-import { ICompany, IUser } from '../auth/auth.interface';
+import { ICompany, IUser } from '../../../core/services/auth/auth.interface';
 
 @Injectable({
   providedIn: 'root',

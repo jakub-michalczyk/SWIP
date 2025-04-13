@@ -5,7 +5,7 @@ import { HomepageGuard } from './core/guards/homepage.guard';
 import { JobBoardGuard } from './core/guards/job-board.guard';
 import { NotVerifiedGuard } from './core/guards/not-verified.guard';
 import { UserGuard } from './core/guards/user.guard';
-import { AccountComponent } from './features/account/account/account.component';
+import { AccountComponent } from './features/account/account.component';
 import { CompanyOffersComponent } from './features/company/company-offers/company-offers.component';
 import { NewOfferComponent } from './features/company/new-offer/new-offer.component';
 import { HomepageComponent } from './features/home/homepage/homepage.component';

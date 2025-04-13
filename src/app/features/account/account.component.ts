@@ -12,15 +12,15 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
-import { FrameComponent } from '../../../core/components/frame/frame.component';
-import { LanguageButtonsComponent } from '../../../core/components/language-buttons/language-buttons.component';
-import { LoaderComponent } from '../../../core/components/loader/loader.component';
-import { ResetPasswordComponent } from '../../../core/components/reset-password/reset-password.component';
-import { UploadImageComponent } from '../../../core/components/upload-image/upload-image.component';
-import { EUserType, ICompany, IFile, IUser } from '../../../core/services/auth/auth.interface';
-import { UploadFileComponent } from '../../../shared/components/upload-file/upload-file.component';
-import { MobileService } from '../../../shared/services/mobile/mobile.service';
-import { UserService } from '../../../shared/services/user/user.service';
+import { FrameComponent } from '../../core/components/frame/frame.component';
+import { LanguageButtonsComponent } from '../../core/components/language-buttons/language-buttons.component';
+import { LoaderComponent } from '../../core/components/loader/loader.component';
+import { ResetPasswordComponent } from '../../core/components/reset-password/reset-password.component';
+import { UploadImageComponent } from '../../core/components/upload-image/upload-image.component';
+import { EUserType, ICompany, IFile, IUser } from '../../core/services/auth/auth.interface';
+import { UploadFileComponent } from '../../shared/components/upload-file/upload-file.component';
+import { MobileService } from '../../shared/services/mobile/mobile.service';
+import { UserService } from '../../shared/services/user/user.service';
 import { ACCOUNT_DATA } from './account.data';
 import { IAccountDataKey } from './account.interface';
 
@@ -129,16 +129,19 @@ export class AccountComponent {
 
   private getUserData() {
     this.loading.set(true);
-    this.userService.getUserData().subscribe((userData) => {
-      if (userData !== null) {
-        this.userSubject.next(userData);
-        this.initForm(userData);
-        this.userType.set(userData.userType);
-      } else {
-        this.userSubject.next(null);
-      }
-      this.loading.set(false);
-    });
+    this.userService
+      .getUserData()
+      .pipe(takeUntilDestroyed(this.destroyerRef))
+      .subscribe((userData) => {
+        if (userData !== null) {
+          this.userSubject.next(userData);
+          this.initForm(userData);
+          this.userType.set(userData.userType);
+        } else {
+          this.userSubject.next(null);
+        }
+        this.loading.set(false);
+      });
   }
 
   private initForm(userData: IUser | ICompany) {

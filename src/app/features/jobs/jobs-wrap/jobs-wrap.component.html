@@ -10,8 +10,10 @@
           <swip-job-offer [jobData]="jobData" class="w-full h-1 flex-1"></swip-job-offer>
         } @else {
           <div class="min-h-screen flex flex-col justify-center items-center text-center">
-            <h2 class="h4 md:h3 text-red-650">You check all available offers</h2>
-            <h3 class="body-1 text-white">Please come back later.</h3>
+            <h2 class="h4 md:h3 text-red-650">
+              {{ 'ALL_OFFERS' | translate }}
+            </h2>
+            <h3 class="body-1 text-white">{{ 'COME_BACK' | translate }}</h3>
           </div>
         }
       }

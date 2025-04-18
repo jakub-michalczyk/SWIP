@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,7 +13,6 @@ import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FrameComponent } from '../../../core/components/frame/frame.component';
 import { LoaderComponent } from '../../../core/components/loader/loader.component';
-import { ICompany } from '../../../core/services/auth/auth.interface';
 import { UserService } from '../../../shared/services/user/user.service';
 import { EContractType, EEmploymentType, EWorkMode, IJobOffer } from '../../jobs/jobs-wrap/jobs-wrap.interface';
 import { NewOfferModalComponent } from '../new-offer-modal/new-offer-modal.component';
@@ -41,11 +39,11 @@ export class NewOfferComponent {
   private destroyerRef = inject(DestroyRef);
   readonly dialog = inject(MatDialog);
   loading = signal(false);
-  userData: ICompany | null = null;
   newOffer!: FormGroup;
   EWorkMode = EWorkMode;
   EEmploymentType = EEmploymentType;
   EContractType = EContractType;
+  maxTagsAdded = signal(false);
 
   constructor(
     private userService: UserService,
@@ -53,27 +51,7 @@ export class NewOfferComponent {
     private router: Router,
     private auth: Auth
   ) {
-    this.getUserData();
     this.setUpNewOfferForm();
-  }
-
-  private getUserData() {
-    this.loading.set(true);
-    this.userService
-      .getUserData()
-      .pipe(takeUntilDestroyed(this.destroyerRef))
-      .subscribe({
-        next: (user) => {
-          user && 'companyName' in user && 'companyImage' in user
-            ? (this.userData = user as ICompany)
-            : (this.userData = null);
-          this.loading.set(false);
-        },
-        error: (err) => {
-          console.error('Error:', err);
-          this.userData = null;
-        },
-      });
   }
 
   private setUpNewOfferForm() {
@@ -100,16 +78,23 @@ export class NewOfferComponent {
       const tagsControl = this.newOffer.controls['tags'];
       tagsControl.setValue([...tagsControl.value, tagValue]);
       inputElement.value = '';
+
+      this.checkTags();
     }
   }
 
   removeTag(tag: string) {
     const tagsControl = this.newOffer.controls['tags'];
     tagsControl.setValue(tagsControl.value.filter((t: string) => t !== tag));
+    this.checkTags();
   }
 
   cancel() {
     this.router.navigate(['/company-offers']);
+  }
+
+  private checkTags() {
+    this.newOffer.controls['tags'].value.length >= 3 ? this.maxTagsAdded.set(true) : this.maxTagsAdded.set(false);
   }
 
   addNewOffer(enterAnimationDuration: string, exitAnimationDuration: string): void {
@@ -130,9 +115,5 @@ export class NewOfferComponent {
         } as IJobOffer,
       },
     });
-  }
-
-  get maxTagsAdded() {
-    return this.newOffer.controls['tags'].value.length >= 3;
   }
 }

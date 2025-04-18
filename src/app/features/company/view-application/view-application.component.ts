@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { collectionData, Firestore } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-import { collection, deleteDoc, doc } from 'firebase/firestore';
-import { map } from 'rxjs';
+import { collection, deleteDoc, doc, FirestoreDataConverter, getDocs, query, where } from 'firebase/firestore';
+import { from, map } from 'rxjs';
 import { LoaderComponent } from '../../../core/components/loader/loader.component';
 import { ContentModalComponent } from '../../../core/components/modals/content-modal/content-modal.component';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
+import { IJobApplication } from '../../jobs/jobs-wrap/jobs-wrap.interface';
 import { IApplicationCV } from './view-application.interface';
 
 @Component({
@@ -43,25 +44,53 @@ export class ViewApplicationComponent extends ContentModalComponent {
 
   private loadApplication(jobId: string) {
     this.loading.set(true);
-    const applicationsCollection = collection(this.firestore, `jobs/${jobId}/applications`);
-    collectionData(applicationsCollection, { idField: 'id' })
+
+    const jobApplicationConverter: FirestoreDataConverter<IJobApplication> = {
+      toFirestore(app: IJobApplication) {
+        return app;
+      },
+      fromFirestore(snapshot, options) {
+        const data = snapshot.data(options);
+        return data as IJobApplication;
+      },
+    };
+
+    const applicationsRef = collection(this.firestore, 'applications').withConverter(jobApplicationConverter);
+    const filteredQuery = query(applicationsRef, where('jobId', '==', jobId), where('status', '==', 'applied'));
+
+    from(getDocs(filteredQuery))
       .pipe(
         takeUntilDestroyed(this.destroyerRef),
-        map((applications: any[]) =>
-          applications.map((app) => {
-            return { id: app.id, jobId: jobId, data: this.convertToBlobUrl(app.cv.value), name: app.cv.name };
-          })
+        map((snapshot) =>
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            jobId: doc.data().jobId,
+            name: doc.data().cv.name,
+            data: this.convertToBlobUrl(doc.data().cv.value),
+          }))
         )
       )
-      .subscribe((urls) => {
-        this.cvUrls = urls;
-        this.loading.set(false);
+      .subscribe({
+        next: (converted) => {
+          this.cvUrls = converted;
+          this.loading.set(false);
+        },
+        error: (err) => {
+          console.error('Error loading applications:', err);
+          this.loading.set(false);
+        },
       });
   }
 
-  deleteApplication(applicationId: string, jobId: string) {
-    const applicationDoc = doc(this.firestore, `jobs/${jobId}/applications/${applicationId}`);
-    deleteDoc(applicationDoc);
+  deleteApplication(applicationId: string) {
+    this.loading.set(true);
+    const applicationDoc = doc(this.firestore, `applications/${applicationId}`);
+    from(deleteDoc(applicationDoc))
+      .pipe(takeUntilDestroyed(this.destroyerRef))
+      .subscribe(() => {
+        this.loading.set(false);
+        this.dialogRef.close();
+      });
   }
 
   private convertToBlobUrl(base64: string): SafeResourceUrl {

@@ -8,5 +8,7 @@
     "B2B": "B2B Agreement",
     "MC": "MC",
     "CW": "CW",
-    "IA": "IA"
+    "IA": "IA",
+    "ALL_OFFERS": "You have checked all available offers.",
+    "COME_BACK": "Please come back later."
 }

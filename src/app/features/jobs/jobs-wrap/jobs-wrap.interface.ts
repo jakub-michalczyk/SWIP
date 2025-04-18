@@ -1,4 +1,5 @@
 import { FieldValue } from 'firebase/firestore';
+import { IFile } from '../../../core/services/auth/auth.interface';
 
 export interface IJobOffer extends IJobOfferDTO, ICompanyAdditionalData {
   id: string;
@@ -39,6 +40,10 @@ export interface IJobApplication {
   appliedAt: string;
   jobTitle: string;
   companyName: string;
+  companyId: string;
+  jobId: string;
+  userId: string;
+  cv: IFile;
 }
 
 export enum EDirection {

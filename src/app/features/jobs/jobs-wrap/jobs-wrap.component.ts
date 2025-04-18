@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth } from '@angular/fire/auth';
+import { TranslateModule } from '@ngx-translate/core';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { BehaviorSubject, combineLatest, map, scan, startWith } from 'rxjs';
 import { FrameComponent } from '../../../core/components/frame/frame.component';
@@ -12,7 +13,7 @@ import { IJobOfferDTO } from './jobs-wrap.interface';
 
 @Component({
   selector: 'swip-jobs-wrap',
-  imports: [JobOfferComponent, CommonModule, FrameComponent, LoaderComponent],
+  imports: [JobOfferComponent, CommonModule, FrameComponent, LoaderComponent, TranslateModule],
   templateUrl: './jobs-wrap.component.html',
 })
 export class JobsWrapComponent {

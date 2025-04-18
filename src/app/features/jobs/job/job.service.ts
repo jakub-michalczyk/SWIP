@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Auth, user, User } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
-import { collection, doc, getDoc, getDocs, limit, orderBy, query, setDoc, startAfter } from 'firebase/firestore';
-import { catchError, from, map, Observable, of, Subject, switchMap } from 'rxjs';
+import { addDoc, collection, doc, getDoc, getDocs, limit, orderBy, query, startAfter } from 'firebase/firestore';
+import { catchError, EMPTY, from, map, Observable, of, Subject, switchMap } from 'rxjs';
+import { IUser } from '../../../core/services/auth/auth.interface';
 import {
   EApplicationStatus,
   ICompanyAdditionalData,
@@ -105,15 +106,39 @@ export class JobService {
       return of();
     }
 
-    const applicationRef = doc(this.firestore, `users/${user.uid}/applications/${jobData.id}`);
+    const userRef = doc(this.firestore, `users/${user.uid}`);
+    const applicationsRef = collection(this.firestore, 'applications');
 
-    const applicationData: IJobApplication = {
-      status: status,
-      appliedAt: new Date().toISOString(),
-      jobTitle: jobData.title,
-      companyName: jobData.companyName,
-    };
+    return from(getDoc(userRef)).pipe(
+      switchMap((snapshot) => {
+        if (!snapshot.exists()) {
+          throw new Error('User data not found');
+        }
 
-    return from(setDoc(applicationRef, applicationData));
+        const userData = snapshot.data() as IUser;
+
+        if (userData.cv === null) {
+          console.error('User CV not found');
+          return EMPTY;
+        }
+
+        const applicationData: IJobApplication = {
+          jobId: jobData.id,
+          userId: user.uid,
+          companyId: jobData.companyId,
+          status: status,
+          appliedAt: new Date().toISOString(),
+          jobTitle: jobData.title,
+          companyName: jobData.companyName,
+          cv: userData.cv,
+        };
+
+        return from(addDoc(applicationsRef, applicationData));
+      }),
+      catchError((err) => {
+        console.error('Error applying to job:', err);
+        return of();
+      })
+    );
   }
 }

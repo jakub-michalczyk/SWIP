@@ -48,5 +48,6 @@
   "OR": "OR",
   "SWIPE_INFO": "Swipe LEFT to <span class='font-extrabold text-red-400'>REJECT</span>, swipe RIGHT to <span class='font-extrabold text-green-700'>APPLY</span>",
   "ADD": "Add",
-  "ACCOUNT": "Account"
+  "ACCOUNT": "Account",
+  "CLOSE": "Close"
 }

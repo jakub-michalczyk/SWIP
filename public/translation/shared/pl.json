@@ -48,5 +48,6 @@
   "OR": "LUB",
   "SWIPE_INFO": "Przesuń w lewo żeby <span class='font-extrabold text-red-400'>ODRZUCIĆ</span>, przesuń w prawo żeby <span class='font-extrabold text-green-700'>ZAAPLIKOWAĆ</span>",
   "ADD": "Dodaj",
-  "ACCOUNT": "Twoje konto"
+  "ACCOUNT": "Twoje konto",
+  "CLOSE": "Zamknij"
 }

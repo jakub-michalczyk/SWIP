@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { environment } from '../../../../environments/enviroment';
 import { IconComponent } from '../../../core/components/icon/icon.component';
 import { LoaderComponent } from '../../../core/components/loader/loader.component';
+import { PwaModalComponent } from '../../../core/components/pwa-modal/pwa-modal.component';
 import { StandaloneService } from '../../../core/services/standalone/standalone.service';
 import { MobileService } from '../../../shared/services/mobile/mobile.service';
 import { RegisterFormComponent } from '../../register/register-form/register-form.component';
@@ -38,33 +40,20 @@ export class HomepageComponent implements OnInit {
   emailVerificationSent = false;
   isPWA = signal(false);
   loading = signal(true);
+  readonly dialog = inject(MatDialog);
 
   constructor(
     private mobileService: MobileService,
     private standaloneService: StandaloneService,
-    private registerService: RegisterService,
-    private router: Router,
-    private cdr: ChangeDetectorRef
+    private registerService: RegisterService
   ) {}
 
   ngOnInit() {
+    this.loading.set(true);
     this.registerServiceWorker();
     this.setUpMobileServiceSub();
     this.setUpPWASub();
     this.setUpRegisterService();
-    this.setUpLoader();
-  }
-
-  private setUpLoader() {
-    if (document.readyState === 'complete') {
-      this.loading.set(false);
-    } else {
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          this.loading.set(false);
-        }, 100);
-      });
-    }
   }
 
   registerServiceWorker() {
@@ -99,7 +88,22 @@ export class HomepageComponent implements OnInit {
   }
 
   installApp() {
-    this.standaloneService.installApp();
+    if (
+      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.userAgent.includes('Macintosh') && 'ontouchend' in document)
+    ) {
+      const buttonElement = document.activeElement as HTMLElement;
+      buttonElement.blur();
+
+      this.dialog.open(PwaModalComponent, {
+        width: '90%',
+        height: '90%',
+        enterAnimationDuration: '0ms',
+        exitAnimationDuration: '0ms',
+      });
+    } else {
+      this.standaloneService.installApp();
+    }
   }
 
   toggleForm() {

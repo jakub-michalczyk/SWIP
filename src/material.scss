@@ -3,6 +3,9 @@
 
 :root {
     --mat-expansion-header-collapsed-state-height: 3rem;
+    .mat-mdc-dialog-content {
+        max-height: 100vh;
+    }
 }
 
 @include mat.dialog-overrides((

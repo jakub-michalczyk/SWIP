@@ -5,16 +5,18 @@
     <mat-card class="p-6 md:p-12 w-full md:w-3/4 xl:w-1/2 max-w-xl" appearance="outlined">
       @if (!forgotPassword()) {
         <h3 class="mb-2 h3 text-red-650">{{ 'SIGN_IN' | translate }}</h3>
-        <swip-email-password [form]="form" [validationOn]="false"></swip-email-password>
-        <div>
-          <button
-            class="padding-0 bg-transparent border-none my-4 !text-white body-2"
-            (click)="remindPasswordViewToggle()"
-            (keydown)="remindPasswordViewToggle()"
-          >
-            <span class="border-b border-white"> {{ 'FORGOT_PASSWORD' | translate }}? </span>
-          </button>
-        </div>
+        <form [formGroup]="form">
+          <swip-email-password [form]="form" [validationOn]="false"></swip-email-password>
+          <div>
+            <button
+              class="padding-0 bg-transparent border-none my-4 !text-white body-2"
+              (click)="remindPasswordViewToggle()"
+            >
+              <span class="border-b border-white"> {{ 'FORGOT_PASSWORD' | translate }}? </span>
+            </button>
+          </div>
+        </form>
+
         <div class="mt-4 text-red-650 body-2">
           {{ errorCode() | translate }}
         </div>

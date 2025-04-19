@@ -43,11 +43,7 @@ export class NotVerifiedWrapComponent {
 
   private getCachedUserData() {
     const data = localStorage.getItem('pendingUserData');
-    if (data) {
-      this.userData = JSON.parse(data || '');
-    } else {
-      this.userExist.set(false);
-    }
+    data ? (this.userData = JSON.parse(data || '')) : this.userExist.set(false);
   }
 
   private init() {

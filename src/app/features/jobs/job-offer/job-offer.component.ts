@@ -1,16 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  ElementRef,
-  inject,
-  Input,
-  OnInit,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -66,8 +56,7 @@ export class JobOfferComponent implements OnInit {
 
   constructor(
     private renderer: Renderer2,
-    private jobService: JobService,
-    private cdr: ChangeDetectorRef
+    private jobService: JobService
   ) {}
 
   ngOnInit() {
@@ -140,7 +129,6 @@ export class JobOfferComponent implements OnInit {
 
   private addGradient(deltaX: number) {
     this.gradientColor = deltaX > 0 ? 'bg-green-500/30' : 'bg-red-500/30';
-    this.cdr.markForCheck();
   }
 
   private removeOffer() {
@@ -162,13 +150,11 @@ export class JobOfferComponent implements OnInit {
 
   private apply(deltaX: number) {
     if (this.jobOffer !== null) {
+      const status = deltaX > 0 ? EApplicationStatus.APPLIED : EApplicationStatus.REJECTED;
       this.jobService
-        .applyToJob(this.jobOffer, deltaX > 0 ? EApplicationStatus.APPLIED : EApplicationStatus.REJECTED)
+        .applyToJob(this.jobOffer, status)
         .pipe(takeUntilDestroyed(this.destroyerRef))
-        .subscribe(() => {
-          this.removeOffer();
-          this.jobService.needRefresh$.next();
-        });
+        .subscribe(() => this.jobService.needRefresh$.next());
     }
 
     this.isDragging = false;

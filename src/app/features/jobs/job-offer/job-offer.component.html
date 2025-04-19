@@ -1,6 +1,6 @@
 @if (jobOffer) {
   <div
-    class="absolute h-full flex justify-center pt-36 pb-12 md:pb-36 items-center select-none w-full transition-transform ease-in-out translate-y-full overflow-hidden"
+    class="md:min-h-[900px] absolute h-full flex justify-center pt-36 pb-12 md:pb-36 items-center select-none w-full transition-transform ease-in-out translate-y-full overflow-hidden"
     #offerWrap
     [@swipeAnimation]="swipeState"
   >
@@ -14,7 +14,7 @@
     </button>
     <div
       #offerContainer
-      class="rounded-3xl h-full border-white border w-full md:w-96 p-6 md:p-8 text-white relative transition-all duration-300 cursor-grab"
+      class="rounded-3xl h-full border-white border max-w-full w-96 p-6 md:p-8 text-white relative transition-all duration-300 cursor-grab"
       [ngClass]="gradientColor"
       [@swipeAnimation]="swipeState"
       (mousedown)="onDragStart($event)"

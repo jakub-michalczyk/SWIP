@@ -1,8 +1,9 @@
-@if (loading()) {
-  <div class="w-full h-screen flex justify-center items-center">
-    <swip-loader></swip-loader>
-  </div>
-} @else {
+<div class="{'overflow-hidden': loading()}">
+  @if (loading()) {
+    <div class="w-full h-screen flex justify-center items-center bg-neutral-950 absolute top-0 left-0 z-20">
+      <swip-loader></swip-loader>
+    </div>
+  }
   <!-- HERO -->
   <div class="flex items-center flex-col">
     <div class="absolute top-0 left-0 w-full h-full max-h-screen overflow-hidden">
@@ -11,6 +12,7 @@
         src="videos/bg.mp4"
         (canplay)="video.play()"
         (loadedmetadata)="video.muted = true"
+        (loadeddata)="loading.set(false)"
         class="object-cover h-full opacity-50 w-full"
         autoplay
         muted
@@ -18,20 +20,20 @@
         loop
       ></video>
     </div>
-    <div class="h-screen relative flex items-center justify-center w-full">
+    <div class="h-svh relative flex items-center justify-center w-full">
       <!-- CONTENT -->
       <div
-        class="relative z-10 opacity-100 transition-all delay-200 w-full md:max-w-lg"
+        class="relative z-10 opacity-100 transition-all delay-200 w-full md:max-w-3xl"
         [ngClass]="{ '!opacity-0': formExpanded() }"
       >
         <div class="text-white px-6 mx-auto text-center">
-          <h1 class="font-sans font-bold w-full text-9xl md:!text-[12.75rem] leading-none">
+          <h1 class="font-sans font-bold w-full text-8xl md:!text-[12.75rem] leading-none">
             {{ 'WAIT' | translate }}
           </h1>
           <p class="body-1 w-full">{{ 'ARE_YOU_TIRED' | translate }}</p>
           <div class="mt-10">
             @if (!isMobile) {
-              <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>We can help</button>
+              <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>{{ 'HELP' | translate }}</button>
               <button class="my-2" mat-stroked-button (click)="scrollToSection(about)">
                 {{ 'DISCOVER_MORE' | translate }}
               </button>
@@ -39,9 +41,11 @@
               <button (click)="toggleForm()" class="mr-4 my-2" mat-flat-button>
                 {{ 'SWIP' | translate }}
               </button>
-              <button class="my-2" mat-stroked-button (click)="installApp()">
-                {{ 'GET_APP' | translate }}
-              </button>
+              @if (!isPWA()) {
+                <button class="my-2" mat-stroked-button (click)="installApp()">
+                  {{ 'GET_APP' | translate }}
+                </button>
+              }
             }
           </div>
         </div>
@@ -77,11 +81,6 @@
         </div>
       }
     </div>
-    @if (isMobile) {
-      <div class="w-full">
-        <img src="/images/wave_2.svg" class="-mt-0.25 w-full" alt="Wave" />
-      </div>
-    }
   </div>
 
   <!-- GRADIENT -->
@@ -122,9 +121,11 @@
       </p>
       <div class="mt-10">
         @if (!isMobile) {
-          <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>
-            {{ 'GET_APP' | translate }}
-          </button>
+          @if (!isPWA()) {
+            <button (click)="installApp()" class="mr-4 my-2" mat-flat-button>
+              {{ 'GET_APP' | translate }}
+            </button>
+          }
           <button class="my-2" mat-stroked-button (click)="scrollToSection(howItWorks)">
             {{ 'DISCOVER_MORE' | translate }}
           </button>
@@ -165,7 +166,9 @@
       <p class="body-1 text-white mt-6">
         {{ 'WHAT_IS_SWIP' | translate }}
       </p>
-      <button (click)="installApp()" class="mt-12" mat-flat-button>{{ 'GET_APP' | translate }}</button>
+      @if (!isPWA()) {
+        <button (click)="installApp()" class="mt-12" mat-flat-button>{{ 'GET_APP' | translate }}</button>
+      }
     </div>
   </div>
 
@@ -203,4 +206,4 @@
       <div class="text-center" [innerHTML]="'SWIPE_INFO' | translate"></div>
     </div>
   </ng-template>
-}
+</div>

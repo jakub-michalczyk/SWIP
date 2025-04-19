@@ -1,0 +1,17 @@
+<mat-dialog-content>
+  <div class="p-6 transition-all">
+    <div class="w-full h-full relative">
+      @if (loading()) {
+        <div class="flex items-center justify-center w-full h-full bg-neutral-950 absolute top-0 left-0 z-20">
+          <swip-loader></swip-loader>
+        </div>
+      }
+      <img class="max-w-full max-h-full" src="/images/pwa_hint.gif" alt="PWA Hint" (load)="loading.set(false)" />
+      <div class="mt-12 text-center">
+        <button mat-flat-button (click)="cancel(false)">
+          {{ 'CLOSE' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

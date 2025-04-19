@@ -56,14 +56,14 @@ export class JobService {
   private getFilteredJobIds(user: User | null): Observable<Set<string>> {
     if (!user) throw new Error('No user logged in');
 
-    const applicationsRef = collection(this.firestore, `users/${user.uid}/applications`);
+    const applicationsRef = collection(this.firestore, 'applications');
     return from(getDocs(applicationsRef)).pipe(
       map(
         (snapshot) =>
           new Set(
             snapshot.docs
-              .map((doc) => ({ id: doc.id, status: doc.data()['status'] }))
-              .filter((app) => app.status === 'applied' || app.status === 'rejected')
+              .map((doc) => ({ id: doc.data()['jobId'], status: doc.data()['status'], userId: doc.data()['userId'] }))
+              .filter((app) => app.userId === user.uid && (app.status === 'applied' || app.status === 'rejected'))
               .map((app) => app.id)
           )
       )
